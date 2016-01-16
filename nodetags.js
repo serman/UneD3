@@ -37,7 +37,9 @@ var linkNodeTag=function(mtags,mnodes){
 }
 
 function updateNodesTags(){
-  var tagsElements = svg.selectAll("g.tag").data(d3.values(tags))
+   tagsElements = svg.selectAll("g.tag")
+  .data(d3.values(tags))
+
     tagsElements.enter().append("g")
       .attr("class","tag")
       .attr("transform", 
@@ -54,6 +56,8 @@ function updateNodesTags(){
         .attr("transform", function(d) { "translate(0,28)rotate(" + -(d.x)+ ")" })
         .text(function(d) { return  d.name });
 }
+
+
 
 function updateLinksTags(){
   link = svg.selectAll("path.linktag")

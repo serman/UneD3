@@ -1,0 +1,58 @@
+g.cat-edu circle {
+  fill: #B8E986;
+}
+g.cat-psico circle {
+  fill: #498FE8;
+}
+g.cat-ciencia circle {
+  fill: #CD1614;
+}
+g.cat-economia circle {
+  fill: #B8E986;
+}
+g.cat-idiomas circle {
+  fill: #4A4A4A;
+}
+g.cat-area {
+  display: none;
+}
+g.area text {
+  font: 15px sans-serif;
+  font-weight: bold;
+}
+g.node {
+  cursor: pointer;
+}
+.tag rect {
+  fill: #00dd22;
+}
+.tag text {
+  font: 10px sans-serif;
+}
+.node circle {
+  fill: #F5A623;
+  stroke: #979797;
+  stroke-width: 1px;
+}
+.node {
+  font: 10px sans-serif;
+}
+.node.area {
+  fill: #ee5555;
+}
+.node.area text {
+  fill: #333;
+}
+.link {
+  fill: none;
+  stroke: rgba(0, 200, 0, 0.4);
+  stroke-width: 1px;
+}
+.linktag {
+  fill: none;
+  stroke: rgba(100, 0, 0, 0.1);
+  stroke-width: 1px;
+}
+.node:hover {
+  fill: #1f77b4;
+}

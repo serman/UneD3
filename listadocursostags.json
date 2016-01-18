@@ -73,7 +73,7 @@
     "fecha_inicio": 0,
     "fecha_fin": 0,
     "tags": "cartografía, ciencia, 3D",
-    "very_short_title": 0,
+    "very_short_title": "Cartografía geológica",
     "status": "demanda",
     "emphasis": 0
   },
@@ -112,7 +112,7 @@
     "fecha_inicio": 0,
     "fecha_fin": 0,
     "tags": "competencias, información",
-    "very_short_title": 0,
+    "very_short_title": "compatencias genericas",
     "status": "comunidad",
     "emphasis": 0
   },
@@ -151,7 +151,7 @@
     "fecha_inicio": 0,
     "fecha_fin": 0,
     "tags": "Curso 0, inicial, básico, introducción, economía, ciencia",
-    "very_short_title": 0,
+    "very_short_title": "Curso 0 de Economía",
     "status": "comunidad",
     "emphasis": 0
   },
@@ -164,7 +164,7 @@
     "fecha_inicio": 0,
     "fecha_fin": 0,
     "tags": "Curso 0, inicial, básico, introducción, estadística, ciencia",
-    "very_short_title": 0,
+    "very_short_title": "Curso 0 de Estadística",
     "status": "comunidad",
     "emphasis": 0
   },

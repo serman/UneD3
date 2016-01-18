@@ -15,12 +15,34 @@ var tags;
 var linksTags;
 var tagsElements;
 
+
+
+
 $( document ).ready(function() {
+
+
+
 	svg = d3.select("body").append("svg")
     .attr("width", radius * 3)
     .attr("height", radius * 2.1)
     .append("g")
-    .attr("transform", "translate(" + radius + "," + 4*radius/5 + ")");
+    .attr("transform", "translate(" + radius + "," + 4*radius/5 + ")")
+    /*.call(d3.behavior.zoom().on("zoom", function () {
+        svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+      }))
+  .append("g")*/
+    
+
+  
+    var filter=svg.append("defs").append("filter")
+    .attr('x',0)
+    .attr('y',0)
+    .attr('width',1)
+    .attr('height',1)
+    .attr('id',"solid")
+   
+
+
 
 
   d3.json("listadocursostags.json", function(error, root) {
@@ -51,17 +73,14 @@ $( document ).ready(function() {
   d3.select(self.frameElement).style("height", radius * 2 + "px");
 /**** fin tags **/
 
-//interacciones        
+/********************INTERACCIONES *****************************************/        
 
-    svg.selectAll("g.node.area").on("click", function(d) {
-      console.log(d);      
-      updateNodeCursos(d)    
-
+    svg.selectAll("g.node.area").on("click", function(d) {      
+      updateNodeCursos(d)  
   //Mover toda la rueda a otro punto
       svg.transition().duration(750)
       .ease("linear")
        .attr("transform", "translate(" + 2*radius/5 + "," + 4*radius/5 + ")");
-
 
       updateLinksAreasCursos();
       updateLinksTags()
@@ -69,11 +88,53 @@ $( document ).ready(function() {
 
     svg.selectAll("g.node:not(.area)").on("click", function(d) {
       console.log(d);
-      console.log("despues");
+      $('#messages').show();
+      //img de fondo
+      if(d.img_src!=0){
+        $('#messages').css('background-image', 'url('+d.img_src+')')  
+      }
+      else{
+        $('#messages').css('background-image', 'none');
+      }
+
+      //contenido
+      $('#messages #titulo span').empty().text(d.titulo)
+      $('#messages #course-link').attr('href',d.url)
+      $('#messages #category-list').empty().text(d.categoria)
+      var  taglist="";
+      for (var i=0; i<d.tags.length; i++){
+        taglist+= '<a href="#" data-tag="'+d.tags[i]+'">' +d.tags[i]+ '</a> , '; 
+      }
+      $('#messages #tag-list').empty().html(taglist)
+
       centerNode(d);
     });
 
-  });
+  svg.selectAll("g.node.cat-area").on("click", function(d) {
+      svg.transition().duration(750)
+      .ease("linear")
+       .attr("transform", "translate(" + radius + "," + 4*radius/5 + ")" );
+     
+    });
+
+  svg.selectAll("g.tag").on("mouseover", function(d) {      
+      console.log(d)
+      //consigo todos los links salientes a ese path y les cambio el color
+       svg.selectAll("path.linktag.tag-"+d.slug)
+       .classed("selected",true).
+       each(updateNodeStyleTagSelected("nouso",true))
+      
+    }).on("mouseout", function(d) {      
+      console.log(d)
+      //consigo todos los links salientes a ese path y les cambio el color
+       svg.selectAll("path.linktag.tag-"+d.slug)
+       .classed("selected",false)
+       .each(updateNodeStyleTagSelected("nouso",false))
+      
+    });
+
+
+  }); //fin parseo archivo listado cursos
 
 
 
@@ -87,6 +148,15 @@ $( document ).ready(function() {
 });
 
 
+function updateNodeStyleTagSelected(name, value) {
+  return function(d) {
+   // if (value) this.parentNode.appendChild(this);
+    svg.selectAll(".node.tag-" + d.tag.slug).classed("selected", value);
+    console.log("curso de la category:" + d.tag.slug)
+    console.log(d)
+  };
+}
+
 
 var preprocessJson=function(root){
   jQuery.each(root.cursos, function(i, val) {
@@ -95,14 +165,28 @@ var preprocessJson=function(root){
     for(i=0; i<val.tags.length; i++){      
       val.tags[i]=val.tags[i].replace(/\s+/g, '');
     }
+
+
+    if(val.very_short_title === undefined){}
+    else{
+      //console.log(val.very_short_title)
+      if(val.very_short_title==0)
+        val.slug=val.titulo.replace(/[^A-Z0-9]+/ig, "_");
+      else
+        val.slug=val.very_short_title.replace(/[^A-Z0-9]+/ig, "_");
+    }
+    //val.slug="asdf"
   });
   tags=getTags(root);
-  var newRoot={"name":"areas","iscategory":true,"catSlug":"area",children:[
-      { "name":'Idiomas',"iscategory":true, "catSlug":"idiomas", "children":JSON.search(root.cursos,'//*[categoria="Idiomas"]')},
-      { "name":'Psicología y Servicios Sociales',"iscategory":true, "catSlug":"psico", "children":JSON.search(root.cursos,'//*[categoria="Psicología y Servicios Sociales"]') },
-      { "name":'Educación', "iscategory":true,"catSlug":"edu", "children":JSON.search(root.cursos,'//*[categoria="Educación"]')  },    
-      { "name":'Ciencias y Tecnología',"iscategory":true, "catSlug":"ciencia", "children":JSON.search(root.cursos,'//*[categoria="Ciencias y Tecnología"]') },
-      { "name":'Economía y Empresa', "iscategory":true,"catSlug":"economia", "children":JSON.search(root.cursos,'//*[categoria="Economía y Empresa"]') }  
+
+  var newRoot={"name":"home","iscategory":true,"slug":"area",children:[
+      { "name":'Idiomas',"iscategory":true, "slug":"idiomas", "children":JSON.search(root.cursos,'//*[categoria="Idiomas"]')},
+      { "name":'Psicología y Servicios Sociales',"iscategory":true, "slug":"psico", "children":JSON.search(root.cursos,'//*[categoria="Psicología y Servicios Sociales"]') },
+      { "name":'Educación', "iscategory":true,"slug":"edu", "children":JSON.search(root.cursos,'//*[categoria="Educación"]')  },    
+      { "name":'Ciencias y Tecnología',"iscategory":true, "slug":"ciencia", "children":JSON.search(root.cursos,'//*[categoria="Ciencias y Tecnología"]') },
+      { "name":'Economía y Empresa', "iscategory":true,"slug":"economia", "children":JSON.search(root.cursos,'//*[categoria="Economía y Empresa"]') },  
+      { "name":'Derecho', "iscategory":true,"slug":"derecho", "children":JSON.search(root.cursos,'//*[categoria="Derecho"]') }, 
+      { "name":'humanidades', "iscategory":true,"slug":"humanidades", "children":JSON.search(root.cursos,'//*[categoria="Humanidades"]') }  
     ]
   }
 
@@ -181,3 +265,5 @@ function wrap(text, width) {
     }
   });
 }
+
+

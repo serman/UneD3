@@ -2,8 +2,17 @@ function createNodeCursos(){
      var node = svg.selectAll("g.node")
         .data(nodes)
         .enter().append("g")
-        .attr("class", function(d){return ("iscategory" in d ) ? "node cat-"+d.catSlug : "node" })
+        .attr("class", function(d){return ("iscategory" in d ) ? "node cat-"+d.slug : "node" })
         .classed("area",function(d) { return ("iscategory" in d ) ? true : false; })
+        .attr("class", function(d){ 
+          var clases=d3.select(this).attr("class") 
+          if (! ("iscategory" in d) ){
+              for(var i=0; i<d.tags.length; i++){
+                clases = clases + " tag-" + d.tags[i];
+              }
+          }
+          return clases; 
+        })
 
         node.transition().delay(250).duration(2000).attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; }).ease("elastic")
   
@@ -26,7 +35,7 @@ function createNodeCursos(){
 function updateNodeCursos(d){
   var newRotation=d.x-90;
       /*****/
-        var node=svg.selectAll("g.node").transition().delay(00).duration(500)
+        var node=svg.selectAll("g.node").transition().delay(00).duration(1000)
         .attr("transform", function(d) { 
                       d.x=d.x  - newRotation; //los enlaces de la funcion "diagonal" se calculan con  un offset de 90 respecto al valor d.x por eso no se puede hacer d.x=d.x-90 y hay que arrastrar el -90 todo el tiempo
                       if( ( (normAngle(d.x - 90) < 50) || (normAngle(d.x-90)>300 )|| ("iscategory" in d) ) ==false) d.hidden=false
@@ -48,7 +57,6 @@ function updateLinksAreasCursos(){
     
         link = svg.selectAll("path.link")
           .data(cluster.links(nodes))
-
         link.enter().append("path");
         link.attr("class", "link")
         link.transition().delay(250).duration(1000).attr("d", diagonal);    

@@ -14,7 +14,7 @@ g.cat-idiomas circle{
 	fill:#4A4A4A;
 }
 g.cat-area{
-	display: none;
+	
 }
 
 g.area text{
@@ -26,24 +26,19 @@ g.node{
 	cursor:pointer;
 }
 
-.tag rect{
-	fill: #00dd22;
-}
-
-.tag text{
-	font: 10px sans-serif;
-}
-
-
-
 .node circle {
-  fill: #F5A623;
+  fill: #7ED321;
   stroke: #979797;
-  stroke-width: 1px;
+  stroke-width: 0px;
 }
 
 .node {
   font: 10px sans-serif;
+}
+
+g.node.selected text{
+	font: 20px sans-serif;
+	fill: #7ED321;
 }
 
 .node.area{
@@ -53,6 +48,25 @@ g.node{
   fill:#333;
 }
 
+
+.tag rect{
+	fill: #00dd22;
+}
+
+.tag text{
+	font: 9px sans-serif;
+	fill: #777;
+	text-transform: uppercase;
+	cursor: pointer;
+	&:hover{
+		fill:#000;
+		font: 12px sans-serif;
+	}
+}
+
+
+
+
 .link {
   fill: none;
   stroke: rgba(0,200,00,0.4);
@@ -61,10 +75,42 @@ g.node{
 
 .linktag {
   fill: none;
-  stroke: rgba(100,00,000,0.1);
+  stroke: rgba(208,2,27,0.1);
   stroke-width: 1px;
 }
 
 .node:hover {
   fill: #1f77b4;
 }
+
+path.linktag.selected{
+	stroke: rgba(208,2,27,0.3);
+  stroke-width: 2px;
+}
+
+#messages{
+	background-attachment: fixed;
+	background-size: cover;	
+	padding:1em;
+	display: none;
+	transition: background 0.5s;
+	a{
+		color:#222;
+		text-decoration: underline;
+	}
+	a.btn{
+		color:white;
+		text-decoration: none;
+	}
+	#titulo span{ background-color: white; }
+	#tag-list{ background-color: white; display: inline-block;}
+	span, #category-list{ background-color: white;}
+
+}
+
+
+
+
+
+
+

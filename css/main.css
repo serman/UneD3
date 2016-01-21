@@ -32,6 +32,10 @@ g.node.selected text {
   font: 20px sans-serif;
   fill: #7ED321;
 }
+g.node.cursocentrico text {
+  font: 20px sans-serif;
+  fill: #7ED321;
+}
 .node.area {
   fill: #ee5555;
 }

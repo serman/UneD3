@@ -14,14 +14,11 @@ var nodes;
 var tags;
 var linksTags;
 var tagsElements;
-
+var mode="normal" //cursocentrico //tagcentrico
 
 
 
 $( document ).ready(function() {
-
-
-
 	svg = d3.select("body").append("svg")
     .attr("width", radius * 3)
     .attr("height", radius * 2.1)
@@ -31,15 +28,6 @@ $( document ).ready(function() {
         svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
       }))
   .append("g")*/
-    
-
-  
-    var filter=svg.append("defs").append("filter")
-    .attr('x',0)
-    .attr('y',0)
-    .attr('width',1)
-    .attr('height',1)
-    .attr('id',"solid")
    
 
 
@@ -58,7 +46,7 @@ $( document ).ready(function() {
 
     updateLinksAreasCursos()
 //cursos
-  createNodeCursos();
+    createNodeCursos();
 
 
 /*****tags *******/
@@ -87,7 +75,6 @@ $( document ).ready(function() {
     })// end g.node.area click
 
     svg.selectAll("g.node:not(.area)").on("click", function(d) {
-      console.log(d);
       $('#messages').show();
       //img de fondo
       if(d.img_src!=0){
@@ -100,6 +87,8 @@ $( document ).ready(function() {
       //contenido
       $('#messages #titulo span').empty().text(d.titulo)
       $('#messages #course-link').attr('href',d.url)
+      $('#messages #course-center').data('courseObject',d)
+      $('#messages #course-center').data('courseNode',this)
       $('#messages #category-list').empty().text(d.categoria)
       var  taglist="";
       for (var i=0; i<d.tags.length; i++){
@@ -118,14 +107,14 @@ $( document ).ready(function() {
     });
 
   svg.selectAll("g.tag").on("mouseover", function(d) {      
-      console.log(d)
+      //console.log(d)
       //consigo todos los links salientes a ese path y les cambio el color
        svg.selectAll("path.linktag.tag-"+d.slug)
        .classed("selected",true).
        each(updateNodeStyleTagSelected("nouso",true))
       
     }).on("mouseout", function(d) {      
-      console.log(d)
+     // console.log(d)
       //consigo todos los links salientes a ese path y les cambio el color
        svg.selectAll("path.linktag.tag-"+d.slug)
        .classed("selected",false)
@@ -145,15 +134,39 @@ $( document ).ready(function() {
         }      
     });*/
 
+  $('#course-center').on('click',function(){
+    //console.log($(this).data('courseNode'))
+    var _course=$(this).data('courseObject');
+     _coursenode=$(this).data('courseNode');
+    //var rotacion=course.x-90;;
+    //centramos nodo
+       updateNodeCursos(_course) 
+       updateLinksAreasCursos();
+    updateLinksTags()
+    d3.select('.node.cursocentrico').classed("cursocentrico",false)
+    d3.select(_coursenode).classed("cursocentrico",true)
+    // 2º Construimos estructura con cursos relacionados:
+    var relatedcourses2=getRelatedCoursesCC(_course);
+
+    repositionNodesCC(relatedcourses2,_course)
+     updateNodeCursosCCMode();
+    
+    //rebuild
+  })
+
 });
+
+
+
+
 
 
 function updateNodeStyleTagSelected(name, value) {
   return function(d) {
    // if (value) this.parentNode.appendChild(this);
     svg.selectAll(".node.tag-" + d.tag.slug).classed("selected", value);
-    console.log("curso de la category:" + d.tag.slug)
-    console.log(d)
+    //console.log("curso de la category:" + d.tag.slug)
+    //console.log(d)
   };
 }
 
@@ -163,20 +176,23 @@ var preprocessJson=function(root){
     val.name=val.titulo;     
     val.tags=val.tags.split(",");
     for(i=0; i<val.tags.length; i++){      
-      val.tags[i]=val.tags[i].replace(/\s+/g, '');
+      //val.tags[i]=val.tags[i].replace(/\s+/g, '');
+      val.tags[i]=val.tags[i].replace(/[^A-Z0-9]+/ig, "_");
     }
 
-
     if(val.very_short_title === undefined){}
+
     else{
       //console.log(val.very_short_title)
       if(val.very_short_title==0)
         val.slug=val.titulo.replace(/[^A-Z0-9]+/ig, "_");
       else
         val.slug=val.very_short_title.replace(/[^A-Z0-9]+/ig, "_");
+      val.CCSelected=false;
     }
     //val.slug="asdf"
   });
+  console.log("numero de cursos " + root.cursos.length)
   tags=getTags(root);
 
   var newRoot={"name":"home","iscategory":true,"slug":"area",children:[

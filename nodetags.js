@@ -1,28 +1,39 @@
 var getTags=function(root){
-  mtags={}
+  var mtags={}
   var tagsHelper=[]
+  var tagList1=[]
   jQuery.each(root.cursos, function(i, curso) {
        jQuery.each(curso.tags, function(i, tag) {
+          
           var found = jQuery.inArray(tag, tagsHelper);
           if (found == -1) {
               // Element was not found,
               tagsHelper.push(tag)
-              mtags[tag]= { "x":0,"y":0, "name":tag, "slug":tag.replace(/[^A-Z0-9]+/ig, "_") }  ;
+              mtags[tag]= { "x":0,"y":0, "order":1, "name":tag, "slug":tag.replace(/[^A-Z0-9]+/ig, "_") }  ;
+              tagList1.push(mtags[tag])
           } 
        } );         
   });  
-  return mtags;
+  return {'diccio':mtags,"arr":tagList1}
+
 }
 
-var asignTagPosition=function(){
- var lngth=Object.keys(tags).length;
- var dist=360/lngth;
- var count=0;
- jQuery.each(tags, function(i, tag) {
-    tag.x=count;
-    count+=dist;
-    tag.y=250
- });
+function asignTagPosition(){
+   var lngth=tagsList.length;
+   var dist=360/lngth;
+   var count=dist/2;
+
+   //jQuery.each(tagsList, function(i, tag) {
+    for(var jj=0; jj< tagsList.length; jj++){
+      var t=tagsList[jj]
+      t.x=count;      
+      t.y=250
+      tagsList[jj].order=jj;      
+      count+=dist;
+    }
+    return
+      //tagsList.push(tag)
+   //});
 }
 
 var linkNodeTag=function(mtags,mnodes){
@@ -38,25 +49,27 @@ var linkNodeTag=function(mtags,mnodes){
 
 function updateNodesTags(){
    tagsElements = svg.selectAll("g.tag")
-  .data(d3.values(tags))
+   .data(tagsList,function(d) { return d.slug; })
+  //.data(d3.values(tagsList))
 
+//enter
     tagsElements.enter().append("g")
-      .attr("class","tag")
-      .attr("transform", 
-      function(d) {  return "rotate(" + (d.x ) + ")translate(" + d.y + ")"; } )    
+      .attr("class",function(d){return   "tag tag-"+d.slug})
+      .append("text")
+        .attr("dy", ".31em") 
+        .attr("transform", function(d) { "translate(10) rotate(" + -(d.x)+ ")" })
+        .text(function(d) { return  d.name });
 
+  //enter+update
+      tagsElements.transition().duration(2500).attr("transform", 
+      function(d) {  return "rotate(" + (d.x ) + ")translate(" + d.y + ")"; } ) 
     /*tagsElements.append("rect")
                              .attr("x", 0)
                              .attr("y", 0)
                             .attr("width", 10)
                             .attr("height", 5) */
+      tagsElements.exit().remove();
 
-
-    tagsElements.append("text")
-        .attr("dy", ".31em") 
-        //.attr('filter',"url(#solid)")
-        .attr("transform", function(d) { "translate(10) rotate(" + -(d.x)+ ")" })
-        .text(function(d) { return  d.name });
 }
 
 

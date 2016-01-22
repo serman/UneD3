@@ -33,16 +33,16 @@ function repositionNodesCC(relatedCourses,focusCourse){ //TBD quitar categorias
 //Etiqueto curso actual para que se ignore ya que no está en el loop de relatedCourses
 	focusCourse.hidden=false;
 	focusCourse.CCSelected=true;	
-
+	focusCourse.xCC=90;
 
 	//CURSOS CERCANOS
 	var j=0;
 	for(var j=0; j<relatedCourses.length; j++){ 
-		relatedCourses[j].x=90+ (  distance* ( 1+ Math.floor(j/2) ) * ( (j%2)?1:-1 ) )
+		relatedCourses[j].xCC=90+ (  distance* ( 1+ Math.floor(j/2) ) * ( (j%2)?1:-1 ) )
 		relatedCourses[j].hidden=false;
 		relatedCourses[j].CCSelected=true;
 	}
-	console.log("cursos repasado relacionados: "+ relatedCourses.length + " iterados "+ j);
+	//console.log("cursos repasado relacionados: "+ relatedCourses.length + " iterados "+ j);
 
 
 	//RESTO DE CURSOS
@@ -52,17 +52,17 @@ function repositionNodesCC(relatedCourses,focusCourse){ //TBD quitar categorias
 	var ccselectedTrue=0;
 
 	for(i=0;  i<nodes.length; i++){
-		//if(nodes[i].iscategory==true) continue;
+		if(nodes[i].iscategory==true) continue;
+
 		var currentCourse=nodes[i]
 		if(currentCourse.CCSelected==false){
-			currentCourse.x=90+ (distance* (1+Math.floor( (i+offset)/2) ) * ((i%2)?1:-1 ) ) ; 
+			currentCourse.xCC=90+ (distance* (1+Math.floor( (i+offset)/2) ) * ((i%2)?1:-1 ) ) ; 
 			currentCourse.hidden=true;
 			ccselectedFalse+=1;
 		}
 		else{
 			offset--;
-			console.log("courselength " + relatedCourses.length+ " "+ currentCourse.name + " "+ currentCourse.x)
-			console.log(offset)
+			//console.log("courselength " + relatedCourses.length+ " "+ currentCourse.name + " "+ currentCourse.xCC)		
 			ccselectedTrue+=1;
 		}
 	}
@@ -72,16 +72,61 @@ function repositionNodesCC(relatedCourses,focusCourse){ //TBD quitar categorias
 }
 
 function updateNodeCursosCCMode(){
-	var node=svg.selectAll("g.node").transition().delay(00).duration(1000)
+	var node=svg.selectAll("g.node:not(.area)").transition().delay(00).duration(2000)
         .attr("transform", function(d) {                                             
-                      return "rotate(" + normAngle(d.x - 90) + ")translate(" + d.y + ")"; 
+                      return "rotate(" + normAngle(d.xCC - 90) + ")translate(" + d.y + ")"; 
          })
 
-        svg.selectAll("g.node text").transition().delay(200).duration(1500)
+        svg.selectAll("g.node:not(.area) text").transition().delay(500).duration(1000)
         .attr("display", function(d) { return  (  d.hidden) ? "none" : "inherit"; })
-                //.text(function(d) { return"\n dx: "+  normAngle(d.x - 90 - newRotation)  })        
+                //.text(function(d) { return"\n dx: "+  normAngle(d.xCC - 90 - newRotation)  })        
         .attr("transform", function(d) { 
-          return"iscategory" in d ? "translate(0,28)rotate(" + -(d.x -90)+ ")":"translate(18)rotate(" + -(d.x -90)+ ")" ; 
+          return"iscategory" in d ? "translate(0,28)rotate(" + -(d.xCC -90)+ ")":"translate(18)rotate(" + -(d.xCC -90)+ ")" ; 
         })
-        .text(function(d) { return  d.name+" : "+ d.x });
+        .text(function(d) { return  d.name+" : "+ d.xCC });
+}
+
+
+function reOrderTags(course){
+	var _tags=course.tags;
+
+	var lngth=Object.keys(tags).length
+
+	var dist=360/lngth;
+	//svg.selectAll("g.tag")
+	//.attr("display","none")
+	for(var i=0; i< _tags.length; i++){		
+		svg.select("g.tag.tag-"+_tags[i])
+		.attr("display", /*"inherit")
+		.attr("transform",*/ function(d) {  
+      		/*console.log(d)
+      		d.x=  ( (i%2)?1:-1 ) * (0.5+ Math.floor (  i / 2  ) ) * ( dist )  ;
+      		d.x= normAngle(d.x)
+      		var that=d*/
+      		console.log(d.slug)	
+      		tagsList.splice(d.order,1)
+      		if(i%2==0){
+      			tagsList.unshift(d)
+      			//d.order=0;
+      		}else{
+      			tagsList.push(d)
+      			//d.order=tags.length-1;
+      		}
+      		for(var jj=0; jj< tagsList.length; jj++){				//hay que hacer esto porque cambian todos los indices
+				tagsList[jj].order=jj;      
+				
+			}
+
+      		return "inherit"      		
+      		//return "rotate(" + (d.x ) + ") translate(" + d.y + ")"; 
+      	} )
+      }
+
+      //recorro toda la rueda a partir del elemento que toque hasta la mitad rellenando los huecos
+
+
+
+	//busco la posición del tag y lo intercambio por el otro tag que esté en la posición que busco.
+
+
 }

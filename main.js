@@ -12,6 +12,7 @@ var svg;
 var link;
 var nodes;
 var tags;
+var tagsList;
 var linksTags;
 var tagsElements;
 var mode="normal" //cursocentrico //tagcentrico
@@ -140,9 +141,8 @@ $( document ).ready(function() {
      _coursenode=$(this).data('courseNode');
     //var rotacion=course.x-90;;
     //centramos nodo
-       updateNodeCursos(_course) 
-       updateLinksAreasCursos();
-    updateLinksTags()
+       //pdateNodeCursos(_course) 
+       
     d3.select('.node.cursocentrico').classed("cursocentrico",false)
     d3.select(_coursenode).classed("cursocentrico",true)
     // 2º Construimos estructura con cursos relacionados:
@@ -150,6 +150,13 @@ $( document ).ready(function() {
 
     repositionNodesCC(relatedcourses2,_course)
      updateNodeCursosCCMode();
+     updateLinksAreasCursos();
+
+    ///////////////////////////////////
+     reOrderTags(_course);
+     asignTagPosition()
+     updateNodesTags();
+     //updateLinksTags()
     
     //rebuild
   })
@@ -176,8 +183,12 @@ var preprocessJson=function(root){
     val.name=val.titulo;     
     val.tags=val.tags.split(",");
     for(i=0; i<val.tags.length; i++){      
-      //val.tags[i]=val.tags[i].replace(/\s+/g, '');
+      if(val.tags[i].length <2 ) val.tags.splice(i,1)
+    }
+    for(i=0; i<val.tags.length; i++){      
+      val.tags[i]=val.tags[i].replace(/\s+/g, '');
       val.tags[i]=val.tags[i].replace(/[^A-Z0-9]+/ig, "_");
+
     }
 
     if(val.very_short_title === undefined){}
@@ -189,11 +200,16 @@ var preprocessJson=function(root){
       else
         val.slug=val.very_short_title.replace(/[^A-Z0-9]+/ig, "_");
       val.CCSelected=false;
+      val.xCC=0;//posición en el modo cursocentrico
+
     }
     //val.slug="asdf"
   });
   console.log("numero de cursos " + root.cursos.length)
-  tags=getTags(root);
+
+  var t=getTags(root);
+  tags=t.diccio;
+  tagsList=t.arr;
 
   var newRoot={"name":"home","iscategory":true,"slug":"area",children:[
       { "name":'Idiomas',"iscategory":true, "slug":"idiomas", "children":JSON.search(root.cursos,'//*[categoria="Idiomas"]')},

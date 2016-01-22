@@ -1,3 +1,5 @@
+var sortedTagList=[]
+
 function createNodeCursos(){
      var node = svg.selectAll("g.node")
         .data(nodes)
@@ -13,7 +15,6 @@ function createNodeCursos(){
           }
           return clases; 
         })
-
         node.transition().delay(250).duration(2000).attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; }).ease("elastic")
   
   //circulos de los cursos

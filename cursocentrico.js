@@ -22,7 +22,8 @@ function getRelatedCoursesCC(course){
 
 
 function repositionNodesCC(relatedCourses,focusCourse){ //TBD quitar categorias
-	var distance=360/(nodes.length+2); //distance in degrees between nodes
+	var distance=360/(nodes.length-numAreas); //distance in degrees between nodes
+	if(mode=="tagcentric") distance=360/(nodes.length+1-numAreas);
 	//first the ones related
 	console.log("distance" + distance)
 
@@ -31,9 +32,11 @@ function repositionNodesCC(relatedCourses,focusCourse){ //TBD quitar categorias
 	}
 
 //Etiqueto curso actual para que se ignore ya que no está en el loop de relatedCourses
-	focusCourse.hidden=false;
-	focusCourse.CCSelected=true;	
-	focusCourse.xCC=90;
+	if(! (focusCourse===undefined) ){
+		focusCourse.hidden=false;
+		focusCourse.CCSelected=true;	
+		focusCourse.xCC=90;
+	}
 
 	//CURSOS CERCANOS
 	var j=0;
@@ -50,19 +53,23 @@ function repositionNodesCC(relatedCourses,focusCourse){ //TBD quitar categorias
 	var i=0;
 	var ccselectedFalse=0;
 	var ccselectedTrue=0;
-
+	var areaCounter=0;
+	
+	if(mode=="tagcentric") offset+=1
 	for(i=0;  i<nodes.length; i++){
-		if(nodes[i].iscategory==true) continue;
+		if(nodes[i].iscategory==true) { areaCounter++; continue};
 
 		var currentCourse=nodes[i]
 		if(currentCourse.CCSelected==false){
-			currentCourse.xCC=90+ (distance* (1+Math.floor( (i+offset)/2) ) * ((i%2)?1:-1 ) ) ; 
+			//currentCourse.xCC=90+ (distance* (1+Math.floor( (i+offset)/2) ) * ((i%2)?1:-1 ) ) ; 
+			currentCourse.xCC=90+ ( distance* Math.ceil(offset/2) )+(i-areaCounter)*distance;
 			currentCourse.hidden=true;
 			ccselectedFalse+=1;
 		}
 		else{
-			offset--;
-			//console.log("courselength " + relatedCourses.length+ " "+ currentCourse.name + " "+ currentCourse.xCC)		
+			//offset--;
+			//console.log("courselength " + relatedCourses.length+ " "+ currentCourse.name + " "+ currentCourse.xCC)
+			areaCounter++;		
 			ccselectedTrue+=1;
 		}
 	}
@@ -97,36 +104,19 @@ function reOrderTags(course){
 	//.attr("display","none")
 	for(var i=0; i< _tags.length; i++){		
 		svg.select("g.tag.tag-"+_tags[i])
-		.attr("display", /*"inherit")
-		.attr("transform",*/ function(d) {  
-      		/*console.log(d)
-      		d.x=  ( (i%2)?1:-1 ) * (0.5+ Math.floor (  i / 2  ) ) * ( dist )  ;
-      		d.x= normAngle(d.x)
-      		var that=d*/
+		.each(function(d) {       
       		console.log(d.slug)	
       		tagsList.splice(d.order,1)
       		if(i%2==0){
       			tagsList.unshift(d)
-      			//d.order=0;
       		}else{
       			tagsList.push(d)
-      			//d.order=tags.length-1;
       		}
       		for(var jj=0; jj< tagsList.length; jj++){				//hay que hacer esto porque cambian todos los indices
-				tagsList[jj].order=jj;      
-				
+				tagsList[jj].order=jj; 				
 			}
-
-      		return "inherit"      		
+      		//return "inherit"      		
       		//return "rotate(" + (d.x ) + ") translate(" + d.y + ")"; 
       	} )
       }
-
-      //recorro toda la rueda a partir del elemento que toque hasta la mitad rellenando los huecos
-
-
-
-	//busco la posición del tag y lo intercambio por el otro tag que esté en la posición que busco.
-
-
 }

@@ -16,7 +16,7 @@ var tagsList;
 var linksTags;
 var tagsElements;
 var mode="normal" //cursocentrico //tagcentrico
-
+var numAreas=0;
 
 
 $( document ).ready(function() {
@@ -123,6 +123,12 @@ $( document ).ready(function() {
       
     });
 
+    svg.selectAll("g.tag").on("click", function(d) {
+      mode="tagcentric"
+      var relatedC=getRelatedCoursesTC(d);
+      repositionTagsCourses(d,relatedC);
+      updateNodeCursosCCMode();
+    })
 
   }); //fin parseo archivo listado cursos
 
@@ -136,6 +142,7 @@ $( document ).ready(function() {
     });*/
 
   $('#course-center').on('click',function(){
+    mode="cursocentric"
     //console.log($(this).data('courseNode'))
     var _course=$(this).data('courseObject');
      _coursenode=$(this).data('courseNode');
@@ -221,6 +228,7 @@ var preprocessJson=function(root){
       { "name":'humanidades', "iscategory":true,"slug":"humanidades", "children":JSON.search(root.cursos,'//*[categoria="Humanidades"]') }  
     ]
   }
+  numAreas=7+1;
 
   return newRoot
 }

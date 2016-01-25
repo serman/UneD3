@@ -59,6 +59,7 @@ function updateLinksAreasCursos(){
         link = svg.selectAll("path.link")
           .data(cluster.links(nodes))
         link.enter().append("path");
+        
         link.attr("class", "link")
         link.transition().delay(250).duration(1000).attr("d", diagonal);    
 }

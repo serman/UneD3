@@ -4,7 +4,7 @@ var getTags=function(root){
   var tagList1=[]
   jQuery.each(root.cursos, function(i, curso) {
        jQuery.each(curso.tags, function(i, tag) {
-          
+
           var found = jQuery.inArray(tag, tagsHelper);
           if (found == -1) {
               // Element was not found,
@@ -18,6 +18,10 @@ var getTags=function(root){
 
 }
 
+
+/* 
+it uses the tagList array and give a new position
+*/
 function asignTagPosition(){
    var lngth=tagsList.length;
    var dist=360/lngth;
@@ -57,7 +61,7 @@ function updateNodesTags(){
       .attr("class",function(d){return   "tag tag-"+d.slug})
       .append("text")
         .attr("dy", ".31em") 
-        .attr("transform", function(d) { "translate(10) rotate(" + -(d.x)+ ")" })
+        .attr("transform", function(d) { "translate(10) rotate(" + -(d.x)+ ")" }) //TBD no hay return aqui?
         .text(function(d) { return  d.name });
 
   //enter+update
@@ -89,10 +93,21 @@ function updateLinksTags(){
   link.transition().delay(250).duration(5000).ease("elastic")
     .attr("d", function(d){ 
           //console.log("rehaciendo" + d);
+
             var ang1=(d.course.x-90) * (Math.PI / 180)
+            if(mode=="cursocentric") ang1=(d.course.xCC-90) * (Math.PI / 180)    
+
             var rad1=d.course.y
             var ang2=d.tag.x * (Math.PI / 180);
             var rad2=d.tag.y
             return "M"+ rad2*Math.cos(ang2) +","+rad2*Math.sin(ang2)+" L "+rad1*Math.cos(ang1)+","+rad1*Math.sin(ang1) } 
             );
+}
+
+function cleanTagSelections(){
+  svg.selectAll("g.tag.relevant")
+    .classed("relevant",false)  
+  svg.selectAll("path.linktag.selectedCC")
+  .classed("selectedCC",false)  
+  d3.select('.node.cursocentrico').classed("cursocentrico",false)
 }

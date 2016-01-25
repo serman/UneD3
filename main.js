@@ -7,7 +7,8 @@ var cluster = d3.layout.cluster()
     .size([radius - 120, radius - 120]);
 
 var diagonal = d3.svg.diagonal.radial()
-    .projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });    
+    .projection(function(d) { 
+      return [d.y, d.x / 180 * Math.PI]; });    
 var svg;
 var link;
 var nodes;
@@ -123,12 +124,22 @@ $( document ).ready(function() {
       
     });
 
+//TAGCENTRIC
     svg.selectAll("g.tag").on("click", function(d) {
+      cleanTagSelections();
+      d3.select(this).classed('relevant',true)
       mode="tagcentric"
+      updateLinksAreasCursos()
+      
       var relatedC=getRelatedCoursesTC(d);
       repositionTagsCourses(d,relatedC);
       updateNodeCursosCCMode();
+      updateLinksAreasCursos();
+
+      updateLinksTags();
+
     })
+
 
   }); //fin parseo archivo listado cursos
 
@@ -142,28 +153,29 @@ $( document ).ready(function() {
     });*/
 
   $('#course-center').on('click',function(){
+    cleanTagSelections()
     mode="cursocentric"
     //console.log($(this).data('courseNode'))
     var _course=$(this).data('courseObject');
-     _coursenode=$(this).data('courseNode');
-    //var rotacion=course.x-90;;
-    //centramos nodo
-       //pdateNodeCursos(_course) 
-       
-    d3.select('.node.cursocentrico').classed("cursocentrico",false)
+     _coursenode=$(this).data('courseNode');       
+    
     d3.select(_coursenode).classed("cursocentrico",true)
     // 2º Construimos estructura con cursos relacionados:
+    
+    //////////cursos  ////////////////
     var relatedcourses2=getRelatedCoursesCC(_course);
-
     repositionNodesCC(relatedcourses2,_course)
      updateNodeCursosCCMode();
      updateLinksAreasCursos();
 
-    ///////////////////////////////////
-     reOrderTags(_course);
-     asignTagPosition()
+    ///////////////// TAGS //////////////////
+     reOrderTagsCC(_course); //     
      updateNodesTags();
-     //updateLinksTags()
+
+     updateLinksTags();
+     
+     
+     updateSelectedLinksTagsCC(_course)
     
     //rebuild
   })
@@ -205,7 +217,7 @@ var preprocessJson=function(root){
       if(val.very_short_title==0)
         val.slug=val.titulo.replace(/[^A-Z0-9]+/ig, "_");
       else
-        val.slug=val.very_short_title.replace(/[^A-Z0-9]+/ig, "_");
+        val.slug=val.very_short_title.replace(/[^A-Z0-9]+/ig, "_")+val.titulo.length;
       val.CCSelected=false;
       val.xCC=0;//posición en el modo cursocentrico
 

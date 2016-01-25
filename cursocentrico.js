@@ -79,6 +79,8 @@ function repositionNodesCC(relatedCourses,focusCourse){ //TBD quitar categorias
 }
 
 function updateNodeCursosCCMode(){
+
+	//pintar nodos de nuevo
 	var node=svg.selectAll("g.node:not(.area)").transition().delay(00).duration(2000)
         .attr("transform", function(d) {                                             
                       return "rotate(" + normAngle(d.xCC - 90) + ")translate(" + d.y + ")"; 
@@ -91,10 +93,16 @@ function updateNodeCursosCCMode(){
           return"iscategory" in d ? "translate(0,28)rotate(" + -(d.xCC -90)+ ")":"translate(18)rotate(" + -(d.xCC -90)+ ")" ; 
         })
         .text(function(d) { return  d.name+" : "+ d.xCC });
+
+    //reordenar
 }
 
+/*change tag position in the array. 
+Moving related tags to a "course" to the right-center part of the circle.
+Then call "asignTagPosition" to give the tags its new graphic position
 
-function reOrderTags(course){
+*/
+function reOrderTagsCC(course){
 	var _tags=course.tags;
 
 	var lngth=Object.keys(tags).length
@@ -104,6 +112,7 @@ function reOrderTags(course){
 	//.attr("display","none")
 	for(var i=0; i< _tags.length; i++){		
 		svg.select("g.tag.tag-"+_tags[i])
+		.classed("relevant",true)		
 		.each(function(d) {       
       		console.log(d.slug)	
       		tagsList.splice(d.order,1)
@@ -112,11 +121,23 @@ function reOrderTags(course){
       		}else{
       			tagsList.push(d)
       		}
-      		for(var jj=0; jj< tagsList.length; jj++){				//hay que hacer esto porque cambian todos los indices
+      		for(var jj=0; jj< tagsList.length; jj++){	//hay que hacer esto porque cambian todos los indices
 				tagsList[jj].order=jj; 				
 			}
       		//return "inherit"      		
       		//return "rotate(" + (d.x ) + ") translate(" + d.y + ")"; 
       	} )
       }
+    asignTagPosition();
+}
+
+function updateSelectedLinksTagsCC(course){
+	var _tags=course.tags;
+	svg.selectAll("path.linktag.selectedCC")
+	.classed("selectedCC",false)
+	for(var i=0; i< _tags.length; i++){	
+		console.log(_tags[i])
+		link = svg.selectAll("path.linktag.tag-"+_tags[i])
+		.classed("selectedCC",true)
+	}
 }

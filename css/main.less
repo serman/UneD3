@@ -1,3 +1,6 @@
+
+//Caracteristicas especiales de los nodos que respresentan areas
+
 g.cat-edu circle{
 	fill:#B8E986;
 }
@@ -17,37 +20,7 @@ g.cat-area{
 	
 }
 
-g.area text{
-	font: 15px sans-serif;
-	font-weight: bold;
-}
 
-g.node{
-	cursor:pointer;
-}
-
-.node circle {
-  fill: #7ED321;
-  stroke: #979797;
-  stroke-width: 0px;
-}
-
-.node {
-  font: 10px sans-serif;
-}
-
-g.node.selected text{
-	font: 20px sans-serif;
-	fill: #7ED321;
-}
-
-g.node.cursocentrico {
-	text{
-		font: 20px sans-serif;
-		fill: #7ED321;
-	}
-
-}
 
 .node.area{
   fill:#ee5555;
@@ -57,45 +30,96 @@ g.node.cursocentrico {
 }
 
 
-.tag rect{
-	fill: #00dd22;
+
+g.area text{
+	font: 15px sans-serif;
+	font-weight: bold;
 }
 
-.tag text{
-	font: 9px sans-serif;
-	fill: #777;
-	text-transform: uppercase;
-	cursor: pointer;
-	&:hover{
-		fill:#000;
-		font: 12px sans-serif;
+
+g.node{
+	cursor:pointer;
+}
+
+//NODOS QUE REPRESENTAN CURSOS+ÁREAS
+//curso en general
+.node {
+  font: 10px sans-serif;
+  &:hover{
+  	fill: #1f77b4;
+  }
+  circle {
+	  fill: #7ED321;
+	  stroke: #979797;
+	  stroke-width: 0px;
+	}
+}
+
+//.selected se añade a un curso cuando se selecciona un tag similar
+g.node.selected text{
+	font: 20px sans-serif;
+	fill: #7ED321;
+}
+
+//.cursocentrico es la clase del "curso seleccionado" en modo cursocentrico
+g.node.cursocentrico {
+	text{
+		font: 20px sans-serif;
+		fill: #7ED321;
+	}
+
+}
+
+
+//TAGS:
+.tag {
+	text{
+		font: 9px sans-serif;
+		fill: #777;
+		text-transform: uppercase;
+		cursor: pointer;
+		&:hover{
+			fill:#000;
+			font: 12px sans-serif;
+		}
+	}
+}
+
+//TAGS conectados con el tag que está seleccionado
+.tag.relevant{
+	text{
+		font: 11px sans-serif;
+		fill: #B66;
+		text-transform: uppercase;
+		font-weight: bold;
 	}
 }
 
 
 
-
+//enlaces area-curso
 .link {
   fill: none;
   stroke: rgba(0,200,00,0.4);
   stroke-width: 1px;
 }
 
-.linktag {
+//enlaces tag-curso
+path.linktag {
   fill: none;
   stroke: rgba(208,2,27,0.1);
   stroke-width: 1px;
-}
-
-.node:hover {
-  fill: #1f77b4;
-}
-
-path.linktag.selected{
-	stroke: rgba(208,2,27,0.3);
+  &.selected{
+  	stroke: rgba(208,2,27,0.3);
   stroke-width: 2px;
+  }
+  &.selectedCC{
+	stroke: rgba(150,2,27,0.4);
+  	stroke-width: 2px;
+  }
 }
 
+//caja de texto con info
 #messages{
 	background-attachment: fixed;
 	background-size: cover;	

@@ -13,6 +13,12 @@ g.cat-economia circle {
 g.cat-idiomas circle {
   fill: #4A4A4A;
 }
+.node.area {
+  fill: #ee5555;
+}
+.node.area text {
+  fill: #333;
+}
 g.area text {
   font: 15px sans-serif;
   font-weight: bold;
@@ -20,13 +26,16 @@ g.area text {
 g.node {
   cursor: pointer;
 }
+.node {
+  font: 10px sans-serif;
+}
+.node:hover {
+  fill: #1f77b4;
+}
 .node circle {
   fill: #7ED321;
   stroke: #979797;
   stroke-width: 0px;
-}
-.node {
-  font: 10px sans-serif;
 }
 g.node.selected text {
   font: 20px sans-serif;
@@ -35,15 +44,6 @@ g.node.selected text {
 g.node.cursocentrico text {
   font: 20px sans-serif;
   fill: #7ED321;
-}
-.node.area {
-  fill: #ee5555;
-}
-.node.area text {
-  fill: #333;
-}
-.tag rect {
-  fill: #00dd22;
 }
 .tag text {
   font: 9px sans-serif;
@@ -55,21 +55,28 @@ g.node.cursocentrico text {
   fill: #000;
   font: 12px sans-serif;
 }
+.tag.relevant text {
+  font: 11px sans-serif;
+  fill: #B66;
+  text-transform: uppercase;
+  font-weight: bold;
+}
 .link {
   fill: none;
   stroke: rgba(0, 200, 0, 0.4);
   stroke-width: 1px;
 }
-.linktag {
+path.linktag {
   fill: none;
   stroke: rgba(208, 2, 27, 0.1);
   stroke-width: 1px;
 }
-.node:hover {
-  fill: #1f77b4;
-}
 path.linktag.selected {
   stroke: rgba(208, 2, 27, 0.3);
+  stroke-width: 2px;
+}
+path.linktag.selectedCC {
+  stroke: rgba(150, 2, 27, 0.4);
   stroke-width: 2px;
 }
 #messages {

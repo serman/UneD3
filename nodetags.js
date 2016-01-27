@@ -79,6 +79,12 @@ function updateNodesTags(){
 
 }
 
+function updateNodesWithRotation(nn){
+  tagContainer.selectAll("g.tag").attr("transform", 
+      function(d) {  d.x=d.x+nn; return "rotate(" + (d.x ) + ")translate(" + d.y + ")"; } ) 
+
+}
+
 
 
 function updateLinksTags(){

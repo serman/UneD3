@@ -23,29 +23,34 @@ var tagContainer,tagLinkContainer,courseContainer,courseLinkContainer;
 var myZoom=1;
 var myTranslate=[0, 0]
 
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = radius*3 - margin.left - margin.right,
-    height = radius * 2.1 - margin.top - margin.bottom;
 
 var drag = d3.behavior.drag()
-    .origin(function(d) { return d; })
-    .on("dragstart", dragstarted)
     .on("drag", dragged)
     .on("dragend", dragended);
+
+var dragCourse = d3.behavior.drag()
+    .on("drag", draggedCourse)
+    .on("dragend", dragendedCourse);
 
 $( document ).ready(function() {
 	svg = d3.select("body").append("svg")
     .attr("width", radius * 3)
     .attr("height", radius * 2)
+<<<<<<< HEAD
     .append("g")
     .attr("transform", "translate(" + radius + "," + radius + ")")
     //.call(drag)
+=======
+  .append("g")
+    .attr("transform", "translate(" + radius + "," + 4*radius/5 + ")")
+    
+>>>>>>> origin/master
 
     
     tagLinkContainer=svg.append("g").classed("tagLinkContainer",true)    
     courseLinkContainer=svg.append("g").classed("courseLinkContainer",true)
-    tagContainer=svg.append("g").classed("tagContainer",true)
-    courseContainer=svg.append("g").classed("courseContainer",true)
+    tagContainer=svg.append("g").classed("tagContainer",true).call(drag)
+    courseContainer=svg.append("g").classed("courseContainer",true).call(dragCourse)
     /*.call(d3.behavior.zoom().on("zoom", function () {
         svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
       }))
@@ -205,7 +210,22 @@ $( document ).ready(function() {
     //rebuild
   })
 
-});
+  
+    
+ $('#search').keyup(function(event){
+        var keyCode = event.which; // check which key was pressed
+        var term = $(this).val();
+        console.log(term);
+        if(term.length>3) nameFilter(term);
+        else nameFilter("")
+
+        //$('#example').children().hide(); // hide all
+        //$('#example').children(':Contains("' + term + '")').show(); // toggle based on term
+    })
+
+
+
+}); //document ready
 
 
 
@@ -320,53 +340,84 @@ var normAngle=function(angle){
   return angle
 }
 
-function wrap(text, width) {
-  text.each(function() {
-    var text = d3.select(this),
-        words = text.text().split(/\s+/).reverse(),
-        word,
-        line = [],
-        lineNumber = 0,
-        lineHeight = 0.6, // ems
-        y = text.attr("y"),
-        dy = parseFloat(text.attr("dy")),
-        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-    while (word = words.pop()) {
-      line.push(word);
-      tspan.text(line.join(" "));
-      if (tspan.node().getComputedTextLength() > width) {
-        line.pop();
-        tspan.text(line.join(" "));
-        line = [word];
-        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-      }
-    }
-  });
-}
 
 
-function dragstarted(d) {
-  console.log("dragStarted")
-  d3.event.sourceEvent.stopPropagation();
-  d3.select(this).classed("dragging", true);
-}
+var initX=0, initY=0;
+var ddy=0;
+var olddY=0;
+
 
 function dragged(d) {
-  //d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+  if(initX==0){
+    initX=d3.event.x
+    initY=d3.event.y
+    ddy=0;
+  }
+
+  d3.event.sourceEvent.stopPropagation();
+   dx=d3.event.x-initX
+   ddy+= (d3.event.y-initY)
+
+  svg.select('.tagContainer')
+  .attr("transform", function(d) { return "rotate(" + (ddy/50) + ")translate(0)"; })
+
 }
 
 function dragended(d) {
-  d3.select(this).classed("dragging", false);
+  olddY+=ddy/50
+  console.log("updatng nodes" + ddy/50)
+  updateNodesWithRotation(Math.round(ddy/50))
+  //updateNodesTags()
+   svg.select('.tagContainer')
+  .attr("transform", function(d) { return "rotate(" + (0) + ")translate(0)"; })
+  updateLinksTags();
+  initX=0
+  initY=0  
 }
+
+var initXCourse=0, initYCourse=0;
+var ddyCourse=0;
+var olddYCourse=0;
+
+function draggedCourse(d) {
+  if(initXCourse==0){
+    initXCourse=d3.event.x
+    initYCourse=d3.event.y
+    ddyCourse=0;
+  }
+  d3.event.sourceEvent.stopPropagation();
+   dx=d3.event.x-initXCourse
+   ddyCourse+=d3.event.y-initYCourse
+  //svg.select('.courseContainer')
+  //.attr("transform", function(d) { return "rotate(" + (ddyCourse/50) + ")translate(0)"; })
+   updateCoursesWithRotation(Math.round(ddyCourse/50))
+}
+
+function dragendedCourse(d) {
+  olddYCourse+=ddyCourse/50;
+  //console.log("updatng nodes" + ddyCourse/50)
+ 
+  //updateNodeCursos();
+  //updateNodesTags()
+  svg.select('.courseContainer')
+  .attr("transform", function(d) { return "rotate(" + (0) + ")translate(0)"; })
+  updateLinksTags();
+  updateLinksAreasCursos();
+  initXCourse=0
+  initYCourse=0  
+}
+
 
 
 function zoomed(){
   myZoom=1.3
   myTranslate[0]=50;
-  myTranslate[1]=365*myZoom;
+  myTranslate[1]=300*myZoom;
   console.log("zoom:" + myZoom);
   svg.transition().duration(1000).attr("transform",
         "translate(" + myTranslate + ")" +
         "scale(" + myZoom + ")"
     );
 }
+
+

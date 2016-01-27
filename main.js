@@ -23,13 +23,10 @@ var tagContainer,tagLinkContainer,courseContainer,courseLinkContainer;
 var myZoom=1;
 var myTranslate=[0, 0]
 
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = radius*3 - margin.left - margin.right,
-    height = radius * 2.1 - margin.top - margin.bottom;
 
 var drag = d3.behavior.drag()
-    .origin(function(d) { return d; })
-    .on("dragstart", dragstarted)
+    //.origin(function(d) { return d; })
+   // .on("dragstart", dragstarted)
     .on("drag", dragged)
     .on("dragend", dragended);
 
@@ -39,12 +36,12 @@ $( document ).ready(function() {
     .attr("height", radius * 2)
   .append("g")
     .attr("transform", "translate(" + radius + "," + radius + ")")
-    //.call(drag)
+    
 
     
     tagLinkContainer=svg.append("g").classed("tagLinkContainer",true)    
     courseLinkContainer=svg.append("g").classed("courseLinkContainer",true)
-    tagContainer=svg.append("g").classed("tagContainer",true)
+    tagContainer=svg.append("g").classed("tagContainer",true).call(drag)
     courseContainer=svg.append("g").classed("courseContainer",true)
     /*.call(d3.behavior.zoom().on("zoom", function () {
         svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
@@ -347,19 +344,37 @@ function wrap(text, width) {
   });
 }
 
+var initX, initY=0;
+var ddy=0;
+var olddY=0;
 
 function dragstarted(d) {
-  console.log("dragStarted")
-  d3.event.sourceEvent.stopPropagation();
-  d3.select(this).classed("dragging", true);
+  
 }
 
 function dragged(d) {
+  if(initX==0){
+    initX=d3.event.x
+    initY=d3.event.y
+    ddy=0;
+  }
+  d3.event.sourceEvent.stopPropagation();
+  //console.log(d3.event.x)
+  console.log(ddy)
+   dx=d3.event.x-initX
+   ddy+=d3.event.y-initY
+  console.log(ddy)
+  svg.select('.tagContainer')
+  .attr("transform", function(d) { return "rotate(" + (ddy/50+olddY) + ")translate(0)"; })
   //d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
 }
 
 function dragended(d) {
-  d3.select(this).classed("dragging", false);
+  olddY+=ddy/50
+  initX=0
+  initY=0
+  
+  
 }
 
 

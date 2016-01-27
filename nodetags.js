@@ -1,3 +1,6 @@
+/*
+Goes through all the courses creating a list&Dict of tags
+*/
 var getTags=function(root){
   var mtags={}
   var tagsHelper=[]
@@ -52,7 +55,7 @@ var linkNodeTag=function(mtags,mnodes){
 }
 
 function updateNodesTags(){
-   tagsElements = svg.selectAll("g.tag")
+   tagsElements = tagContainer.selectAll("g.tag")
    .data(tagsList,function(d) { return d.slug; })
   //.data(d3.values(tagsList))
 
@@ -79,7 +82,7 @@ function updateNodesTags(){
 
 
 function updateLinksTags(){
-  link = svg.selectAll("path.linktag")
+  link = tagLinkContainer.selectAll("path.linktag")
       .data(linksTags)
 //update + enter
 ///*("d", "M 0,0 L 1,1");
@@ -95,8 +98,7 @@ function updateLinksTags(){
           //console.log("rehaciendo" + d);
 
             var ang1=(d.course.x-90) * (Math.PI / 180)
-            if(mode=="cursocentric") ang1=(d.course.xCC-90) * (Math.PI / 180)    
-
+            //if(mode=="cursocentric") ang1=(d.course.xCC-90) * (Math.PI / 180) 
             var rad1=d.course.y
             var ang2=d.tag.x * (Math.PI / 180);
             var rad2=d.tag.y

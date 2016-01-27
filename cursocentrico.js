@@ -35,13 +35,13 @@ function repositionNodesCC(relatedCourses,focusCourse){ //TBD quitar categorias
 	if(! (focusCourse===undefined) ){
 		focusCourse.hidden=false;
 		focusCourse.CCSelected=true;	
-		focusCourse.xCC=90;
+		focusCourse.x=90;
 	}
 
 	//CURSOS CERCANOS
 	var j=0;
 	for(var j=0; j<relatedCourses.length; j++){ 
-		relatedCourses[j].xCC=90+ (  distance* ( 1+ Math.floor(j/2) ) * ( (j%2)?1:-1 ) )
+		relatedCourses[j].x=90+ (  distance* ( 1+ Math.floor(j/2) ) * ( (j%2)?1:-1 ) )
 		relatedCourses[j].hidden=false;
 		relatedCourses[j].CCSelected=true;
 	}
@@ -61,14 +61,14 @@ function repositionNodesCC(relatedCourses,focusCourse){ //TBD quitar categorias
 
 		var currentCourse=nodes[i]
 		if(currentCourse.CCSelected==false){
-			//currentCourse.xCC=90+ (distance* (1+Math.floor( (i+offset)/2) ) * ((i%2)?1:-1 ) ) ; 
-			currentCourse.xCC=90+ ( distance* Math.ceil(offset/2) )+(i-areaCounter)*distance;
+			//currentCourse.x=90+ (distance* (1+Math.floor( (i+offset)/2) ) * ((i%2)?1:-1 ) ) ; 
+			currentCourse.x=90+ ( distance* Math.ceil(offset/2) )+(i-areaCounter)*distance;
 			currentCourse.hidden=true;
 			ccselectedFalse+=1;
 		}
 		else{
 			//offset--;
-			//console.log("courselength " + relatedCourses.length+ " "+ currentCourse.name + " "+ currentCourse.xCC)
+			//console.log("courselength " + relatedCourses.length+ " "+ currentCourse.name + " "+ currentCourse.x)
 			areaCounter++;		
 			ccselectedTrue+=1;
 		}
@@ -83,16 +83,16 @@ function updateNodeCursosCCMode(){
 	//pintar nodos de nuevo
 	var node=svg.selectAll("g.node:not(.area)").transition().delay(00).duration(2000)
         .attr("transform", function(d) {                                             
-                      return "rotate(" + normAngle(d.xCC - 90) + ")translate(" + d.y + ")"; 
+                      return "rotate(" + normAngle(d.x - 90) + ")translate(" + d.y + ")"; 
          })
 
         svg.selectAll("g.node:not(.area) text").transition().delay(500).duration(1000)
         .attr("display", function(d) { return  (  d.hidden) ? "none" : "inherit"; })
-                //.text(function(d) { return"\n dx: "+  normAngle(d.xCC - 90 - newRotation)  })        
+                //.text(function(d) { return"\n dx: "+  normAngle(d.x - 90 - newRotation)  })        
         .attr("transform", function(d) { 
-          return"iscategory" in d ? "translate(0,28)rotate(" + -(d.xCC -90)+ ")":"translate(18)rotate(" + -(d.xCC -90)+ ")" ; 
+          return"iscategory" in d ? "translate(0,28)rotate(" + -(d.x -90)+ ")":"translate(18)rotate(" + -(d.x -90)+ ")" ; 
         })
-        .text(function(d) { return  d.name+" : "+ d.xCC });
+        .text(function(d) { return  d.name });
 
     //reordenar
 }

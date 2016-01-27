@@ -61,10 +61,13 @@ g.node.cursocentrico text {
   text-transform: uppercase;
   font-weight: bold;
 }
-.link {
+path.link {
   fill: none;
-  stroke: rgba(0, 200, 0, 0.4);
+  stroke: rgba(0, 200, 0, 0.2);
   stroke-width: 1px;
+}
+path.link.areacentric {
+  stroke: rgba(0, 200, 0, 0.4);
 }
 path.linktag {
   fill: none;

@@ -1,7 +1,7 @@
 var sortedTagList=[]
 
 function createNodeCursos(){
-     var node = svg.selectAll("g.node")
+     var node = courseContainer.selectAll("g.node")
         .data(nodes)
         .enter().append("g")
         .attr("class", function(d){return ("iscategory" in d ) ? "node cat-"+d.slug : "node" })
@@ -10,7 +10,7 @@ function createNodeCursos(){
           var clases=d3.select(this).attr("class") 
           if (! ("iscategory" in d) ){
               for(var i=0; i<d.tags.length; i++){
-                clases = clases + " tag-" + d.tags[i];
+                clases = clases + " tag-" + d.tagsSlug[i];
               }
           }
           return clases; 
@@ -56,10 +56,12 @@ function updateNodeCursos(d){
 function updateLinksAreasCursos(){
   //Links entre áreas y cursos
     
-        link = svg.selectAll("path.link")
+        link = courseLinkContainer.selectAll("path.link")
           .data(cluster.links(nodes))
         link.enter().append("path");
         
         link.attr("class", "link")
-        link.transition().delay(250).duration(1000).attr("d", diagonal);    
+        .classed("areacentric",function(){return mode=="areacentric" ? true:false })
+        .transition().delay(250).duration(1000).attr("d", diagonal); 
+
 }

@@ -1,7 +1,7 @@
 
 
 
-var radius = 960 / 2;
+var radius = 960 / 2; 
 
 var cluster = d3.layout.cluster()
     .size([radius - 120, radius - 120]);
@@ -16,20 +16,42 @@ var tags;
 var tagsList;
 var linksTags;
 var tagsElements;
-var mode="normal" //cursocentrico //tagcentrico
+var mode="areacentric" //cursocentric //tagcentric areacentric
 var numAreas=0;
+var tagContainer,tagLinkContainer,courseContainer,courseLinkContainer;
 
+var myZoom=1;
+var myTranslate=[0, 0]
+
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = radius*3 - margin.left - margin.right,
+    height = radius * 2.1 - margin.top - margin.bottom;
+
+var drag = d3.behavior.drag()
+    .origin(function(d) { return d; })
+    .on("dragstart", dragstarted)
+    .on("drag", dragged)
+    .on("dragend", dragended);
 
 $( document ).ready(function() {
 	svg = d3.select("body").append("svg")
     .attr("width", radius * 3)
-    .attr("height", radius * 2.1)
-    .append("g")
-    .attr("transform", "translate(" + radius + "," + 4*radius/5 + ")")
+    .attr("height", radius * 2)
+  .append("g")
+    .attr("transform", "translate(" + radius + "," + radius + ")")
+    //.call(drag)
+
+    
+    tagLinkContainer=svg.append("g").classed("tagLinkContainer",true)    
+    courseLinkContainer=svg.append("g").classed("courseLinkContainer",true)
+    tagContainer=svg.append("g").classed("tagContainer",true)
+    courseContainer=svg.append("g").classed("courseContainer",true)
     /*.call(d3.behavior.zoom().on("zoom", function () {
         svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
       }))
   .append("g")*/
+
+
    
 
 
@@ -64,14 +86,17 @@ $( document ).ready(function() {
 /**** fin tags **/
 
 /********************INTERACCIONES *****************************************/        
-
-    svg.selectAll("g.node.area").on("click", function(d) {      
+//click en un area
+    svg.selectAll("g.node.area").on("click", function(d) { 
+      mode="areacentric";
+      cleanTagSelections();
+      nodes = cluster.nodes(newRoot)     
       updateNodeCursos(d)  
   //Mover toda la rueda a otro punto
-      svg.transition().duration(750)
-      .ease("linear")
-       .attr("transform", "translate(" + 2*radius/5 + "," + 4*radius/5 + ")");
-
+      //svg.transition().duration(750)
+      //.ease("linear")
+       //.attr("transform", "translate(" + 2*radius/5 + "," + 4*radius/5 + ")");
+      zoomed();
       updateLinksAreasCursos();
       updateLinksTags()
     })// end g.node.area click
@@ -101,6 +126,7 @@ $( document ).ready(function() {
       centerNode(d);
     });
 
+//click en HOME
   svg.selectAll("g.node.cat-area").on("click", function(d) {
       svg.transition().duration(750)
       .ease("linear")
@@ -139,6 +165,8 @@ $( document ).ready(function() {
       updateLinksTags();
 
     })
+
+    //svg.selectAll("g.tagContainer").call(drag)
 
 
   }); //fin parseo archivo listado cursos
@@ -202,11 +230,12 @@ var preprocessJson=function(root){
     val.name=val.titulo;     
     val.tags=val.tags.split(",");
     for(i=0; i<val.tags.length; i++){      
-      if(val.tags[i].length <2 ) val.tags.splice(i,1)
+      if(val.tags[i].length <=2 ) val.tags.splice(i,1) //we don't like tags smaller than 2 char. Probably file parsing error
     }
+    val.tagsSlug=[];
     for(i=0; i<val.tags.length; i++){      
       val.tags[i]=val.tags[i].replace(/\s+/g, '');
-      val.tags[i]=val.tags[i].replace(/[^A-Z0-9]+/ig, "_");
+      val.tagsSlug[i]=val.tags[i].replace(/[^A-Z0-9]+/ig, "_");
 
     }
 
@@ -319,3 +348,28 @@ function wrap(text, width) {
 }
 
 
+function dragstarted(d) {
+  console.log("dragStarted")
+  d3.event.sourceEvent.stopPropagation();
+  d3.select(this).classed("dragging", true);
+}
+
+function dragged(d) {
+  //d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+}
+
+function dragended(d) {
+  d3.select(this).classed("dragging", false);
+}
+
+
+function zoomed(){
+  myZoom=1.3
+  myTranslate[0]=50;
+  myTranslate[1]=365*myZoom;
+  console.log("zoom:" + myZoom);
+  svg.transition().duration(1000).attr("transform",
+        "translate(" + myTranslate + ")" +
+        "scale(" + myZoom + ")"
+    );
+}

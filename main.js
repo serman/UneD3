@@ -36,15 +36,15 @@ $( document ).ready(function() {
 	svg = d3.select("body").append("svg")
     .attr("width", radius * 3)
     .attr("height", radius * 2)
-<<<<<<< HEAD
+// HEAD
     .append("g")
     .attr("transform", "translate(" + radius + "," + radius + ")")
     //.call(drag)
-=======
+// =======
   .append("g")
     .attr("transform", "translate(" + radius + "," + 4*radius/5 + ")")
     
->>>>>>> origin/master
+//origin/master
 
     
     tagLinkContainer=svg.append("g").classed("tagLinkContainer",true)    

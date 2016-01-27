@@ -383,7 +383,7 @@ function draggedCourse(d) {
   }
   d3.event.sourceEvent.stopPropagation();
    dx=d3.event.x-initXCourse
-   ddyCourse+=d3.event.y-initYCourse
+   ddyCourse=d3.event.y-initYCourse
   //svg.select('.courseContainer')
   //.attr("transform", function(d) { return "rotate(" + (ddyCourse/50) + ")translate(0)"; })
    updateCoursesWithRotation(Math.round(ddyCourse/50))

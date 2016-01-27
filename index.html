@@ -8,28 +8,26 @@
 
           <link rel="stylesheet" href="css/bootstrap.min.css">
           <link rel="stylesheet" href="css/main.css">
-            <link href="css/jquery-ui.css" rel="stylesheet">
-
+          <link href="css/jquery-ui.css" rel="stylesheet">
+          <!-- font awesome -->
+          <link rel="stylesheet" href="css/font-awesome.min.css">
 
         <style>
             body {
-                padding-top: 0px;
-                padding-bottom: 0px;
-        
+              padding-top: 0px;
+              padding-bottom: 0px;
               background: white;
-
-
             }
+
             #canvas-container{
               position: absolute;
               top:0px;
               right:0px;             
             }
+
             #canvas-container{
               position: relative;
             }
-
-
 
         </style>
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
@@ -41,19 +39,39 @@
      <div id="canvas-container">
     </div>
     
-    <div id="messages" style="position:absolute; right:20px; top:30px; box-shadow:2px 2px rgba(0,0,0,0.2); width:300px; height:auto; background:rgba(255,255,255,0.8);z-index:1" >
-      <h2 id="titulo"> <span> </span></h2>
+    <div id="messages" style="position:absolute; right:20px; top:30px; width:300px; height:auto; background:rgba(255,255,255,0.8);z-index:1" >
 
-      <div><a href="#" id="course-link" class="btn btn-success" taget="_blank"> Ver curso </a></div>
+      <h2 id="titulo"><span> </span></h2>
 
-      <div style="margin-top:1em"><a href="#" id="course-center" class="btn btn-warning"> Centrar vista </a> </div>
-      
-      <div > <span>Categoría: </span><br/><a href="#" id="category-list"> </a> </div>
-      <h4> <span>Tags:</span> </h4>
-      <div id="tag-list"> </div>
+<!-- version 00
+      <div><a href="#" id="course-link" class="btn btn-success" taget="_blank"><i class="fa fa-arrow-circle-right"></i>
+ Ver curso </a></div>
 
+      <div style="margin-top:1em"><a href="#" id="course-center" class="btn btn-warning"><i class="fa fa-sort"></i>
+ Centrar vista </a> </div>
 
-    </div>
+    -->  
+
+      <hr/>
+    <div ><a href="#" id="category-list"> </a></div>
+      <!-- <div ><span>Categoría: </span><br/><a href="#" id="category-list"> </a> </div> -->
+     <!-- <h4><span>Tags:</span></h4>-->
+     <hr/>
+      <div id="tag-list"></div>
+
+<hr/>
+
+<div id="actions">
+  <a href="#" id="course-center" class="btn"><i class="fa fa-sort"></i>
+ Centrar vista </a>
+ 
+<a href="#" id="course-link" class="btn" taget="_blank"><i class="fa fa-arrow-circle-right"></i>
+ Ver curso </a>
+
+ 
+ </div>
+    </div> <!-- end messages -->
+
 </div>
   <script language="javascript" type="text/javascript" src="libraries/jquery-1.11.3.min.js"></script>
   <script language="javascript" type="text/javascript" src="libraries/p5.js"></script>

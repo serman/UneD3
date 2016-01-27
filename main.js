@@ -37,7 +37,7 @@ $( document ).ready(function() {
 	svg = d3.select("body").append("svg")
     .attr("width", radius * 3)
     .attr("height", radius * 2)
-  .append("g")
+    .append("g")
     .attr("transform", "translate(" + radius + "," + radius + ")")
     //.call(drag)
 
@@ -50,10 +50,6 @@ $( document ).ready(function() {
         svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
       }))
   .append("g")*/
-
-
-   
-
 
 
 
@@ -118,8 +114,9 @@ $( document ).ready(function() {
       $('#messages #course-center').data('courseNode',this)
       $('#messages #category-list').empty().text(d.categoria)
       var  taglist="";
+      // sin coma
       for (var i=0; i<d.tags.length; i++){
-        taglist+= '<a href="#" data-tag="'+d.tags[i]+'">' +d.tags[i]+ '</a> , '; 
+        taglist+= '<a href="#" data-tag="'+d.tags[i]+'">' +d.tags[i]+ '</a>'; 
       }
       $('#messages #tag-list').empty().html(taglist)
 
@@ -259,14 +256,14 @@ var preprocessJson=function(root){
   tags=t.diccio;
   tagsList=t.arr;
 
-  var newRoot={"name":"home","iscategory":true,"slug":"area",children:[
+  var newRoot={"name":"Home","iscategory":true,"slug":"area",children:[
       { "name":'Idiomas',"iscategory":true, "slug":"idiomas", "children":JSON.search(root.cursos,'//*[categoria="Idiomas"]')},
       { "name":'Psicología y Servicios Sociales',"iscategory":true, "slug":"psico", "children":JSON.search(root.cursos,'//*[categoria="Psicología y Servicios Sociales"]') },
       { "name":'Educación', "iscategory":true,"slug":"edu", "children":JSON.search(root.cursos,'//*[categoria="Educación"]')  },    
       { "name":'Ciencias y Tecnología',"iscategory":true, "slug":"ciencia", "children":JSON.search(root.cursos,'//*[categoria="Ciencias y Tecnología"]') },
       { "name":'Economía y Empresa', "iscategory":true,"slug":"economia", "children":JSON.search(root.cursos,'//*[categoria="Economía y Empresa"]') },  
       { "name":'Derecho', "iscategory":true,"slug":"derecho", "children":JSON.search(root.cursos,'//*[categoria="Derecho"]') }, 
-      { "name":'humanidades', "iscategory":true,"slug":"humanidades", "children":JSON.search(root.cursos,'//*[categoria="Humanidades"]') }  
+      { "name":'Humanidades', "iscategory":true,"slug":"humanidades", "children":JSON.search(root.cursos,'//*[categoria="Humanidades"]') }  
     ]
   }
   numAreas=7+1;

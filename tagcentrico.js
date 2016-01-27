@@ -23,6 +23,10 @@ function repositionTagsCourses(focusTag,relatedCourses){
 	//2º muevo cursos alrededor del tag
 	repositionNodesCC(relatedCourses)
 
+	//pinto links entre el tag
+	svg.selectAll("path.linktag.tag-"+focusTag.slug)
+		.classed("selectedCC",true)
+
 
 
 }

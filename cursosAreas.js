@@ -1,3 +1,6 @@
+
+
+
 var sortedTagList=[]
 
 function createNodeCursos(){
@@ -28,11 +31,13 @@ function createNodeCursos(){
         .attr("display", function(d) { return (d.x < 140 && d.x>40 || "iscategory" in d ) ? "inherit" : "none"; })
         .attr("transform", function(d) { return"iscategory" in d ? "translate(0,28)rotate(" + -(d.x -90)+ ")":"translate(18)rotate(" + -(d.x -90)+ ")" ; })
         //.text(function(d) { return"\n dx: "+  d.x +" dy: "+  d.y });
-        .text(function(d) { return  d.name });
-    
-      node.selectAll("g.area text").call(wrap,140) //saltos de linea palabas
+        .text(function(d) { return  d.name });    
+      
+      node.selectAll("g.area text").call(wrap,160) //saltos de linea palabas
 }
 
+
+/****gira los cursos poniendo en el centro al curso d ***/
 function updateNodeCursos(d){
   var newRotation=d.x-90;
       /*****/
@@ -43,6 +48,11 @@ function updateNodeCursos(d){
                       else d.hidden=true;
                       return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; 
                             })
+        //TBD filtros
+        /*.filter(function(d) { return d.name.indexOf("Estado")==-1? true:false})
+        .attr("display", function(d) {return "none"})*/
+       // .call(function(d){d.hidden=false})
+
 
         svg.selectAll("g.node text").transition().delay(00).duration(500)
         .attr("display", function(d) { return  (  d.hidden) ? "inherit" : "none"; })
@@ -51,11 +61,12 @@ function updateNodeCursos(d){
         .attr("transform", function(d) { 
           return"iscategory" in d ? "translate(0,28)rotate(" + -(d.x -90)+ ")":"translate(18)rotate(" + -(d.x -90)+ ")" ; 
         })
+        
 }
 
-
-function updateCoursesWithRotation(nn){
-  courseContainer.selectAll("g.node").attr("transform", 
+/*****gira los cursos nn grados ***/
+function updateCoursesWithRotation(nn){ 
+  courseContainer.selectAll("g.node").transition().duration(300).attr("transform", 
       function(d) {  
         d.x=d.x+nn; 
         if( ( (normAngle(d.x - 90) < 50) || (normAngle(d.x-90)>300 )|| ("iscategory" in d) ) ==false) d.hidden=false
@@ -63,11 +74,24 @@ function updateCoursesWithRotation(nn){
         return "rotate(" + normAngle(d.x -90) + ") translate(" + d.y + ")"; 
       }) 
 
-  svg.selectAll("g.node text").transition().duration(500)
+  svg.selectAll("g.node text").transition().duration(300)
    .attr("display", function(d) { return  (  d.hidden) ? "inherit" : "none"; })       
         .attr("transform", function(d) { 
           return"iscategory" in d ? "translate(0,28)rotate(" + -(d.x -90)+ ")":"translate(18)rotate(" + -(d.x -90)+ ")" ; 
         })
+}
+
+function nameFilter(mstring){
+  svg.selectAll("g.node")        
+        .filter(function(d) { return d.name.indexOf(mstring)==-1? true:false})
+        .attr("display", function(d) {return "none"})
+
+  svg.selectAll("g.node")        
+        .filter(function(d) { return d.name.indexOf(mstring)==-1? false:true})
+        .attr("display", function(d) {return "inherit"})
+       // .call(function(d){d.hidden=false})
+   if(mstring=="")
+    svg.selectAll("g.node").attr("display", function(d) {return "inherit"})
 }
 
 
@@ -81,4 +105,30 @@ function updateLinksAreasCursos(){
         .classed("areacentric",function(){return mode=="areacentric" ? true:false })
         .transition().delay(250).duration(1000).attr("d", diagonal); 
 
+}
+
+
+//wrap text
+function wrap(text, width) {
+  text.each(function() {
+    var text = d3.select(this),
+        words = text.text().split(/\s+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 0.6, // ems
+        y = text.attr("y"),
+        dy = parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+    while (word = words.pop()) {
+      line.push(word);
+      tspan.text(line.join(" "));
+      if (tspan.node().getComputedTextLength() > width) {
+        line.pop();
+        tspan.text(line.join(" "));
+        line = [word];
+        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+      }
+    }
+  });
 }

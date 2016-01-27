@@ -53,9 +53,26 @@ function updateNodeCursos(d){
         })
 }
 
+
+function updateCoursesWithRotation(nn){
+  courseContainer.selectAll("g.node").attr("transform", 
+      function(d) {  
+        d.x=d.x+nn; 
+        if( ( (normAngle(d.x - 90) < 50) || (normAngle(d.x-90)>300 )|| ("iscategory" in d) ) ==false) d.hidden=false
+                      else d.hidden=true;
+        return "rotate(" + normAngle(d.x -90) + ") translate(" + d.y + ")"; 
+      }) 
+
+  svg.selectAll("g.node text").transition().duration(500)
+   .attr("display", function(d) { return  (  d.hidden) ? "inherit" : "none"; })       
+        .attr("transform", function(d) { 
+          return"iscategory" in d ? "translate(0,28)rotate(" + -(d.x -90)+ ")":"translate(18)rotate(" + -(d.x -90)+ ")" ; 
+        })
+}
+
+
 function updateLinksAreasCursos(){
-  //Links entre áreas y cursos
-    
+  //Links entre áreas y cursos    
         link = courseLinkContainer.selectAll("path.link")
           .data(cluster.links(nodes))
         link.enter().append("path");

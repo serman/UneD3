@@ -3,6 +3,9 @@
 //size variables
 var radius = 960 / 2; 
 
+
+var areaPosition=130
+
 var cluster
 
  
@@ -15,7 +18,7 @@ var tagsDict; //tags sorted by tagsDict[tagslug] for easy access to a certain ta
 var tagsList; //tags as an array
 var linksTags; //links betwen courses and tags
 
-var mode="areacentric" //cursocentric //tagcentric areacentric
+var mode="zoomout" //cursocentric //tagcentric areacentric //zoomout
 var numAreas=0;
 var tagContainer,tagLinkContainer,courseContainer,courseLinkContainer;
 
@@ -129,22 +132,9 @@ $( document ).ready(function() {
 
 //TAGCENTRIC
     svg.selectAll("g.tag").on("click", function(d) {
-      cleanTagSelections();
-      d3.select(this).classed('relevant',true)
-      mode="tagcentric"
-
-      var relatedC=getRelatedCoursesTC(d);
-      //tags
-      centerTagRepositionCourses(d);
-      updateNodesTags();
-
-      repositionNodesCC(relatedC)
-      updateNodeCursosCCMode();
-      
-      //links
-      updateLinksAreasCursos();
-      updateLinksTags();
-
+        ttt=this
+        ddd=d
+        tagCentric(d,this);
     })
 
   }); //fin parseo archivo listado cursos. No se pueden sacar los eventos fuera de aqui
@@ -153,7 +143,9 @@ $( document ).ready(function() {
 
 /****** eventos JQUERY*****/
 
-  $('#course-center').on('click',function(){
+  $('#course-center').on('click',function(e){
+    e.preventDefault();
+
     cleanTagSelections()
     mode="cursocentric"
     //console.log($(this).data('courseNode'))
@@ -174,14 +166,22 @@ $( document ).ready(function() {
      reOrderTagsCC(_course); //     
      updateNodesTags();
 
-     updateLinksTags();
-     
+     updateLinksTags();   
      
      updateSelectedLinksTagsCC(_course)
     
     //rebuild
   })
 
+  
+
+    $('#tag-list').on('click','a', function(e){
+        bbb=this
+        e.preventDefault();
+        var myTag=$(this).data("tag");
+        tagCentric(tagsDict[myTag],$('g.tag.tag-'+tagsDict[myTag].slug)[0])
+
+    })
   
     
  $('#search').keyup(function(event){
@@ -212,14 +212,6 @@ function updateNodeStyleTagSelected(name, value) {
   };
 }
 
-
-
-
-
-
-
-
-
 function zoomed(){
   myZoom=1.3
   myTranslate[0]=50;
@@ -228,6 +220,26 @@ function zoomed(){
         "translate(" + myTranslate + ")" +
         "scale(" + myZoom + ")"
     );
+}
+
+
+function tagCentric(tagObject,tagNode){
+  cleanTagSelections();
+  d3.selectAll([tagNode]).classed('relevant',true) //TBD
+
+  mode="tagcentric"
+  var d=tagObject;
+  var relatedC=getRelatedCoursesTC(d);
+  //tags
+  centerTagRepositionCourses(d);
+  updateNodesTags();
+
+  repositionNodesCC(relatedC)
+  updateNodeCursosCCMode();
+  
+  //links
+  updateLinksAreasCursos();
+  updateLinksTags();
 }
 
 

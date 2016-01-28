@@ -7,8 +7,7 @@ function createNodeCursos(){
       var g=node.enter().append("g")
         .attr("class", function(d){return ("iscategory" in d ) ? "node cat-"+d.slug : "node" })
         .classed("area",function(d) { return ("iscategory" in d ) ? true : false; })
-        .attr("class", function(d){ 
-          if(d.iscategory) d.y=d.y-50;
+        .attr("class", function(d){           
           var clases=d3.select(this).attr("class") 
           if (! ("iscategory" in d) ){
               for(var i=0; i<d.tags.length; i++){
@@ -16,6 +15,9 @@ function createNodeCursos(){
               }
           }
           return clases; 
+        }).each(function(d){
+          if(d.y>0 && d.iscategory)
+            d.y=areaPosition;
         })
 
       //circulos de los cursos
@@ -34,6 +36,7 @@ function createNodeCursos(){
       //update + enter
       node.transition().delay(250).duration(2000).attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; }).ease("elastic")        
       node.selectAll("g.area text").call(wrap,160) //saltos de linea palabas
+      
 }
 
 
@@ -61,6 +64,7 @@ function createNodeCursos(){
 
 /*****gira los cursos nn grados ***/
 function updateCoursesWithRotation(nn,transitionLength){ 
+  setAreasPosition()
   if (nn===undefined) nn=0
   if(transitionLength===undefined) transitionLength=300
   courseContainer.selectAll("g.node").transition().duration(transitionLength)
@@ -75,7 +79,8 @@ function updateCoursesWithRotation(nn,transitionLength){
             return"iscategory" in d ? "translate(0,28)rotate(" + -(d.x -90)+ ")":"translate(18)rotate(" + -(d.x -90)+ ")" ; 
       })
       .transition().duration(300)
-      .attr("display", function(d) { return  (  d.hidden) ? "inherit" : "none"; })       
+      .attr("display", function(d) { return  (  d.hidden) ? "inherit" : "none"; })   
+
 }
 
 function nameFilter(mstring){
@@ -170,6 +175,15 @@ function repositionNodesCC(relatedCourses,focusCourse){ //TBD quitar categorias
       ccselectedTrue+=1;
     }
   }
+}
+
+function setAreasPosition(){
+  courseContainer.selectAll("g.node.area")
+  .each(function(d){
+    if(d.y>0)      d.y=areaPosition;
+
+  }).
+  classed("zoomArea",function(){return mode=="areacentric"?true:false})
 }
 
 

@@ -8,6 +8,7 @@ function createNodeCursos(){
         .attr("class", function(d){return ("iscategory" in d ) ? "node cat-"+d.slug : "node" })
         .classed("area",function(d) { return ("iscategory" in d ) ? true : false; })
         .attr("class", function(d){ 
+          if(d.iscategory) d.y=d.y-50;
           var clases=d3.select(this).attr("class") 
           if (! ("iscategory" in d) ){
               for(var i=0; i<d.tags.length; i++){
@@ -19,7 +20,7 @@ function createNodeCursos(){
 
       //circulos de los cursos
       g.append("circle")
-        .attr("r", function(d) { return ("iscategory" in d ) ? 10 : 5; })
+        .attr("r", function(d) { return ("iscategory" in d ) ? 5 : 5; })
 
       //texto de los cursos 
       g.append("text")

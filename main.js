@@ -33,15 +33,17 @@ var dragCourse = d3.behavior.drag()
     .on("dragend", dragendedCourse);
 
 $( document ).ready(function() {
-	svg = d3.select("body").append("svg")
+	svg = d3.select("#canvas-container").append("svg")
     .attr("width", radius * 3)
     .attr("height", radius * 2)
+
 // HEAD
-    .append("g")
-    .attr("transform", "translate(" + radius + "," + radius + ")")
+    //.append("g")
+    //.attr("transform", "translate(" + radius + "," + radius + ")")
+   
     //.call(drag)
 // =======
-  .append("g")
+    .append("g")
     .attr("transform", "translate(" + radius + "," + 4*radius/5 + ")")
     
 //origin/master

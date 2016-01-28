@@ -22,7 +22,8 @@ function createNodeCursos(){
   
   //circulos de los cursos
     node.append("circle")
-        .attr("r", function(d) { return ("iscategory" in d ) ? 10 : 5; });
+        //.attr("r", function(d) { return ("iscategory" in d ) ? 10 : 5; });
+        .attr("r", function(d) { return ("iscategory" in d ) ? 5 : 5; });
 
     //texto de los cursos
     node.append("text")

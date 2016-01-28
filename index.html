@@ -1,8 +1,11 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-
+<title>Template</title>
   <!-- <script language="javascript" type="text/javascript" src="sketch.js"></script>
   this line removes any default padding and style. you might only need one of these values set. -->
 
@@ -17,6 +20,7 @@
               padding-top: 0px;
               padding-bottom: 0px;
               background: white;
+              font-family:'Roboto Condensed',sans-serif;font-size:16px;font-weight:300;
             }
 
             #canvas-container{
@@ -28,35 +32,98 @@
             #canvas-container{
               position: relative;
             }
+            
+            select{
+            	-webkit-appearance: none;
+            }
 
+			#toggle a{
+				color: inherit;
+				
+				text-decoration: none;
+				margin-right: 1em;
+			}
+			
+			#toggle a i, #toggle i{
+				color: #ccc;
+				margin-right: 0.5em;
+			}
+			
+			#toggle label{
+				font-weight: 300;
+			}
         </style>
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 </head>
 
 <body>
-</body>
-  <div>
-    <div id="topbar"> <input type="text" name="search" id="search"> </div> 
-     <div id="canvas-container">
+
+  <div class="container">
+  
+  <div class="row" style="margin-top: 1.5em;">
+  <div class="col-md-3">
+  <div class="input-group">
+  <div class="input-group-addon">Area</div>
+  <select class="form-control">
+   	<option>Todas</option>
+    <option>Educación</option>
+    <option>Ciencia y Tecnología</option>
+    <option>Economia y Empresa</option>
+    <option>4</option>
+    <option>5</option>
+  </select>
+   
+   <div class="input-group-addon"><i class="fa fa-dot-circle-o"></i></div>
+  </div>
+  </div>
+  
+   <div class="col-md-3">
+   
+   <div class="input-group" id="topbar">
+         <div class="input-group-addon">
+         <!--<i class="fa fa-filter"></i>-->
+         <i class="fa fa-search"></i>
+         
+         </div>
+         <input type="text" class="form-control" id="search" name="search" placeholder="Curso">
+         
+       </div>
+   
+   <!--<div id="topbar"><input type="text" name="search" id="search"><hr/></div> -->
     </div>
+    
+    <!--
+     <div class="col-md-6" id="toggle">
+    <a href="#"><i class="fa fa-toggle-on fa-2x"></i> MOOC</a>
+    <a href="#"><i class="fa fa-toggle-off fa-2x"></i> Activos</a>
+     </div>
+     
+     -->
+     
+     <div class="col-md-6" id="toggle">
+     <i class="fa fa-calendar-o fa-2x"></i>
+     
+     <label class="checkbox-inline">
+       <input type="checkbox" id="inlineCheckbox1" value="option1"> En Curso
+     </label>
+     <label class="checkbox-inline">
+       <input type="checkbox" id="inlineCheckbox2" value="option2"> Próximamente
+     </label>
+     <label class="checkbox-inline">
+       <input type="checkbox" id="inlineCheckbox3" value="option3" checked> Todos
+     </label>
+     </div>
+     
+   </div>
+    
+     <div id="canvas-container"></div>
     
     <div id="messages" style="position:absolute; right:20px; top:30px; width:300px; height:auto; background:rgba(255,255,255,0.8);z-index:1" >
 
       <h2 id="titulo"><span> </span></h2>
 
-<!-- version 00
-      <div><a href="#" id="course-link" class="btn btn-success" taget="_blank"><i class="fa fa-arrow-circle-right"></i>
- Ver curso </a></div>
-
-      <div style="margin-top:1em"><a href="#" id="course-center" class="btn btn-warning"><i class="fa fa-sort"></i>
- Centrar vista </a> </div>
-
-    -->  
-
       <hr/>
     <div ><a href="#" id="category-list"> </a></div>
-      <!-- <div ><span>Categoría: </span><br/><a href="#" id="category-list"> </a> </div> -->
-     <!-- <h4><span>Tags:</span></h4>-->
      <hr/>
       <div id="tag-list"></div>
 
@@ -95,5 +162,5 @@
   <script type="text/javascript" src="main.js"></script>
           <script type="text/javascript" src="cursocentrico.js"></script>
           <script type="text/javascript" src="tagcentrico.js"></script>
-
+</body>
 </html>

@@ -31,7 +31,7 @@ var dragCourse = d3.behavior.drag()
 
 function dragended(d) {
   olddY+=ddy/50
-  updateNodesWithRotation(Math.round(ddy/50))
+  updateTagsWithRotation(Math.round(ddy/50))
   //updateNodesTags()
    svg.select('.tagContainer')
   .attr("transform", function(d) { return "rotate(" + (0) + ")translate(0)"; })

@@ -1,12 +1,10 @@
 
-
-
-var sortedTagList=[]
-
 function createNodeCursos(){
      var node = courseContainer.selectAll("g.node")
-        .data(nodes)
-        .enter().append("g")
+        .data(nodes) //update
+
+      //enter
+      var g=node.enter().append("g")
         .attr("class", function(d){return ("iscategory" in d ) ? "node cat-"+d.slug : "node" })
         .classed("area",function(d) { return ("iscategory" in d ) ? true : false; })
         .attr("class", function(d){ 
@@ -18,21 +16,24 @@ function createNodeCursos(){
           }
           return clases; 
         })
-        node.transition().delay(250).duration(2000).attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; }).ease("elastic")
-  
-  //circulos de los cursos
-    node.append("circle")
-        .attr("r", function(d) { return ("iscategory" in d ) ? 10 : 5; });
 
-    //texto de los cursos
-    node.append("text")
+      //circulos de los cursos
+      g.append("circle")
+        .attr("r", function(d) { return ("iscategory" in d ) ? 10 : 5; })
+
+      //texto de los cursos 
+      g.append("text")
         .attr("dy", ".31em")
         .attr("text-anchor", function(d) { return "iscategory" in d ? "middle" : "start"; })
         .attr("display", function(d) { return (d.x < 140 && d.x>40 || "iscategory" in d ) ? "inherit" : "none"; })
         .attr("transform", function(d) { return"iscategory" in d ? "translate(0,28)rotate(" + -(d.x -90)+ ")":"translate(18)rotate(" + -(d.x -90)+ ")" ; })
         //.text(function(d) { return"\n dx: "+  d.x +" dy: "+  d.y });
-        .text(function(d) { return  d.name });    
-      
+        .text(function(d) { return  d.name }); 
+
+
+      //update + enter
+      node.transition().delay(250).duration(2000).attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; }).ease("elastic")
+        
       node.selectAll("g.area text").call(wrap,160) //saltos de linea palabas
 }
 
@@ -96,39 +97,87 @@ function nameFilter(mstring){
 
 
 function updateLinksAreasCursos(){
-  //Links entre áreas y cursos    
-        link = courseLinkContainer.selectAll("path.link")
-          .data(cluster.links(nodes))
-        link.enter().append("path");
-        
-        link.attr("class", "link")
-        .classed("areacentric",function(){return mode=="areacentric" ? true:false })
-        .transition().delay(250).duration(1000).attr("d", diagonal); 
+    //Links entre áreas y cursos    
+    link = courseLinkContainer.selectAll("path.link")
+      .data(cluster.links(nodes)) //update
+
+      //enter
+    link.enter().append("path")
+      .attr("class", "link")
+
+    //enter + update         
+    link.classed("areacentric",function(){return mode=="areacentric" ? true:false })
+    .transition().delay(250).duration(1000).attr("d", diagonal); 
 
 }
 
 
-//wrap text
-function wrap(text, width) {
-  text.each(function() {
-    var text = d3.select(this),
-        words = text.text().split(/\s+/).reverse(),
-        word,
-        line = [],
-        lineNumber = 0,
-        lineHeight = 0.6, // ems
-        y = text.attr("y"),
-        dy = parseFloat(text.attr("dy")),
-        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-    while (word = words.pop()) {
-      line.push(word);
-      tspan.text(line.join(" "));
-      if (tspan.node().getComputedTextLength() > width) {
-        line.pop();
-        tspan.text(line.join(" "));
-        line = [word];
-        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-      }
+/************************ antiguo cursocentrico *************/
+
+function repositionNodesCC(relatedCourses,focusCourse){ //TBD quitar categorias
+  var distance=360/(nodes.length-numAreas); //distance in degrees between nodes
+  if(mode=="tagcentric") distance=360/(nodes.length+1-numAreas);
+  //first the ones related
+
+  for(var i=0; i<nodes.length; i+=1){
+    nodes[i].CCSelected=false;
+  }
+
+//Etiqueto curso actual para que se ignore ya que no está en el loop de relatedCourses
+  if(! (focusCourse===undefined) ){
+    focusCourse.hidden=false;
+    focusCourse.CCSelected=true;  
+    focusCourse.x=90;
+  }
+
+  //CURSOS CERCANOS
+  var j=0;
+  for(var j=0; j<relatedCourses.length; j++){ 
+    relatedCourses[j].x=90+ (  distance* ( 1+ Math.floor(j/2) ) * ( (j%2)?1:-1 ) )
+    relatedCourses[j].hidden=false;
+    relatedCourses[j].CCSelected=true;
+  }
+
+  //RESTO DE CURSOS
+  var offset=relatedCourses.length;
+  var i=0;
+  var ccselectedFalse=0;
+  var ccselectedTrue=0;
+  var areaCounter=0;
+  
+  if(mode=="tagcentric") offset+=1
+  for(i=0;  i<nodes.length; i++){
+    if(nodes[i].iscategory==true) { areaCounter++; continue};
+
+    var currentCourse=nodes[i]
+    if(currentCourse.CCSelected==false){
+      //currentCourse.x=90+ (distance* (1+Math.floor( (i+offset)/2) ) * ((i%2)?1:-1 ) ) ; 
+      currentCourse.x=90+ ( distance* Math.ceil(offset/2) )+(i-areaCounter)*distance;
+      currentCourse.hidden=true;
+      ccselectedFalse+=1;
     }
-  });
+    else{
+      areaCounter++;    
+      ccselectedTrue+=1;
+    }
+  }
 }
+
+function updateNodeCursosCCMode(){
+  var node=svg.selectAll("g.node:not(.area)").transition().delay(00).duration(2000)
+        .attr("transform", function(d) {                                             
+                      return "rotate(" + normAngle(d.x - 90) + ")translate(" + d.y + ")"; 
+         })
+
+        svg.selectAll("g.node:not(.area) text").transition().delay(500).duration(1000)
+        .attr("display", function(d) { return  (  d.hidden) ? "none" : "inherit"; })
+        .attr("transform", function(d) { 
+          return"iscategory" in d ? "translate(0,28)rotate(" + -(d.x -90)+ ")":"translate(18)rotate(" + -(d.x -90)+ ")" ; 
+        })
+        .text(function(d) { return  d.name });
+
+    //reordenar
+}
+
+
+

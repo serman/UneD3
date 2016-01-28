@@ -1,21 +1,20 @@
 
 
-
+//size variables
 var radius = 960 / 2; 
 
-var cluster = d3.layout.cluster()
-    .size([radius - 120, radius - 120]);
+var cluster
 
-var diagonal = d3.svg.diagonal.radial()
-    .projection(function(d) { 
-      return [d.y, d.x / 180 * Math.PI]; });    
+ 
 var svg;
-var link;
-var nodes;
-var tags;
-var tagsList;
-var linksTags;
-var tagsElements;
+var link; //links between courses and areas
+
+var nodes; //courses + areas
+
+var tagsDict; //tags sorted by tagsDict[tagslug] for easy access to a certain tag object
+var tagsList; //tags as an array
+var linksTags; //links betwen courses and tags
+
 var mode="areacentric" //cursocentric //tagcentric areacentric
 var numAreas=0;
 var tagContainer,tagLinkContainer,courseContainer,courseLinkContainer;
@@ -28,52 +27,47 @@ var myTranslate=[0, 0]
 
 $( document ).ready(function() {
 	svg = d3.select("body").append("svg")
-    .attr("width", radius * 3)
-    .attr("height", radius * 2)
-
-  .append("g")
-    .attr("transform", "translate(" + radius + "," + 4*radius/5 + ")")
-    
-
-
+        .attr("width", radius * 3)
+        .attr("height", radius * 2)
+        .append("g")
+        .attr("transform", "translate(" + radius + "," + 4*radius/5 + ")")
     
     tagLinkContainer=svg.append("g").classed("tagLinkContainer",true)    
     courseLinkContainer=svg.append("g").classed("courseLinkContainer",true)
     tagContainer=svg.append("g").classed("tagContainer",true).call(drag)
     courseContainer=svg.append("g").classed("courseContainer",true).call(dragCourse)
-    /*.call(d3.behavior.zoom().on("zoom", function () {
-        svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
-      }))
-  .append("g")*/
 
 
 
-  d3.json("listadocursostags.json", function(error, root) {
+    d3.json("listadocursostags.json", function(error, root) {
     if (error) throw error;
  /* preprocesado de los datos */   
     newRoot=preprocessJson(root)
+    //lista de tags
+    var t=getTags(root);
+    tagsDict=t.diccio;
+    tagsList=t.arr;
+    
+    cluster=d3.layout.cluster().size([radius - 120, radius - 120]);
+
     nodes = cluster.nodes(newRoot)
     for (i=0; i<nodes.length; i++){
       nodes[i].order=i;
     }
 
-
-
-    updateLinksAreasCursos()
 //cursos
     createNodeCursos();
-
+    updateLinksAreasCursos();
 
 /*****tags *******/
-    asignTagPosition()
-
+    asignTagPosition();
     updateNodesTags();
 
     //generamos uniones entre nodos y links
-    linksTags=linkNodeTag(tags,nodes)
+    linksTags=linkNodeTag(tagsDict,nodes)
     updateLinksTags();
 
-  d3.select(self.frameElement).style("height", radius * 2 + "px");
+    d3.select(self.frameElement).style("height", radius * 2 + "px");
 /**** fin tags **/
 
 /********************INTERACCIONES *****************************************/        
@@ -83,15 +77,12 @@ $( document ).ready(function() {
       cleanTagSelections();
       nodes = cluster.nodes(newRoot)     
       updateNodeCursos(d)  
-  //Mover toda la rueda a otro punto
-      //svg.transition().duration(750)
-      //.ease("linear")
-       //.attr("transform", "translate(" + 2*radius/5 + "," + 4*radius/5 + ")");
       zoomed();
       updateLinksAreasCursos();
       updateLinksTags()
     })// end g.node.area click
 
+//Click en un curso
     svg.selectAll("g.node:not(.area)").on("click", function(d) {
       $('#messages').show();
       //img de fondo
@@ -150,7 +141,7 @@ $( document ).ready(function() {
       updateLinksAreasCursos()
       
       var relatedC=getRelatedCoursesTC(d);
-      repositionTagsCourses(d,relatedC);
+      centerTagRepositionCourses(d,relatedC);
       updateNodeCursosCCMode();
       updateLinksAreasCursos();
 
@@ -158,15 +149,11 @@ $( document ).ready(function() {
 
     })
 
-    //svg.selectAll("g.tagContainer").call(drag)
-
-
-  }); //fin parseo archivo listado cursos
+  }); //fin parseo archivo listado cursos. No se pueden sacar los eventos fuera de aqui
 
 
 
-/****** eventos *****/
-
+/****** eventos JQUERY*****/
 
   $('#course-center').on('click',function(){
     cleanTagSelections()
@@ -227,61 +214,10 @@ function updateNodeStyleTagSelected(name, value) {
 }
 
 
-var preprocessJson=function(root){
-  jQuery.each(root.cursos, function(i, val) {
-    val.name=val.titulo;     
-    val.tags=val.tags.split(",");
-    for(i=0; i<val.tags.length; i++){      
-      if(val.tags[i].length <=2 ) val.tags.splice(i,1) //we don't like tags smaller than 2 char. Probably file parsing error
-    }
-    val.tagsSlug=[];
-    for(i=0; i<val.tags.length; i++){      
-      val.tags[i]=val.tags[i].replace(/\s+/g, '');
-      val.tagsSlug[i]=val.tags[i].replace(/[^A-Z0-9]+/ig, "_");
-
-    }
-
-    if(val.very_short_title === undefined){}
-
-    else{
-      //console.log(val.very_short_title)
-      if(val.very_short_title==0)
-        val.slug=val.titulo.replace(/[^A-Z0-9]+/ig, "_");
-      else
-        val.slug=val.very_short_title.replace(/[^A-Z0-9]+/ig, "_")+val.titulo.length;
-      val.CCSelected=false;
-      val.xCC=0;//posición en el modo cursocentrico
-
-    }
-    //val.slug="asdf"
-  });
-
-  var t=getTags(root);
-  tags=t.diccio;
-  tagsList=t.arr;
-
-  var newRoot={"name":"Home","iscategory":true,"slug":"area",children:[
-      { "name":'Idiomas',"iscategory":true, "slug":"idiomas", "children":JSON.search(root.cursos,'//*[categoria="Idiomas"]')},
-      { "name":'Psicología y Servicios Sociales',"iscategory":true, "slug":"psico", "children":JSON.search(root.cursos,'//*[categoria="Psicología y Servicios Sociales"]') },
-      { "name":'Educación', "iscategory":true,"slug":"edu", "children":JSON.search(root.cursos,'//*[categoria="Educación"]')  },    
-      { "name":'Ciencias y Tecnología',"iscategory":true, "slug":"ciencia", "children":JSON.search(root.cursos,'//*[categoria="Ciencias y Tecnología"]') },
-      { "name":'Economía y Empresa', "iscategory":true,"slug":"economia", "children":JSON.search(root.cursos,'//*[categoria="Economía y Empresa"]') },  
-      { "name":'Derecho', "iscategory":true,"slug":"derecho", "children":JSON.search(root.cursos,'//*[categoria="Derecho"]') }, 
-      { "name":'Humanidades', "iscategory":true,"slug":"humanidades", "children":JSON.search(root.cursos,'//*[categoria="Humanidades"]') }  
-    ]
-  }
-  numAreas=7+1;
-
-  return newRoot
-}
 
 
-var normAngle=function(angle){
-  angle =  angle % 360; 
-// force it to be the positive remainder, so that 0 <= angle < 360  
-  angle = (angle + 360) % 360;  
-  return angle
-}
+
+
 
 
 

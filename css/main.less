@@ -3,33 +3,32 @@
 //Caracteristicas especiales de los nodos que respresentan areas
 
 g.cat-edu circle{
-  fill:#cccc28;
-  fill:hsl(60, 67%, 48%);
-  //fill:#e6e617;
+  fill:#6AB21B;
+  //fill:hsl(60, 67%, 48%);
 }
 g.cat-psico circle{
-	fill:#cc7a28;
-  fill:hsl(30, 67%, 48%);
+	  fill:#6AB21B;
+  //fill:hsl(30, 67%, 48%);
 }
 g.cat-idiomas circle{
-  fill:#cc2828;
-  fill:hsl(0, 67%, 48%);
+    fill:#6AB21B;
+ // fill:hsl(0, 67%, 48%);
 }
 g.cat-humanidades circle{
-  fill:#cc287a;
-  fill:hsl(330, 67%, 48%);
+    fill:#6AB21B;
+  //fill:hsl(330, 67%, 48%);
 }
 g.cat-derecho circle{
-  fill:#cc28cc;
-  fill:hsl(300, 67%, 48%);
+    fill:#6AB21B;
+  //fill:hsl(300, 67%, 48%);
 }
 g.cat-economia circle{
-  fill:#7a28cc;
-   fill:hsl(270, 67%, 48%);
+    fill:#6AB21B;
+   //fill:hsl(270, 67%, 48%);
 }
 g.cat-ciencia circle{
-	fill:#2828cc;
-   fill:hsl(240, 67%, 48%);
+	  fill:#6AB21B;
+   //fill:hsl(240, 67%, 48%);
 }
 
 
@@ -59,7 +58,7 @@ g.cat-area{
 g.area text{
 	font-family: 'Roboto Condensed', sans-serif;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 300;
 }
 
 
@@ -74,12 +73,16 @@ g.area text{
   fill:#666;
   cursor: pointer;
 
+  circle{
+    fill: #6AB21B;
+  }
+
   &:hover{
   	//fill: #1f77b4;
   	fill:#333;
 
     circle{
-     fill: #7ED321;
+     fill: #97FF26;
 	   stroke: #979797;
 	   stroke-width: 0px;
     }
@@ -173,15 +176,18 @@ path.link {
 //enlaces tag-curso
 path.linktag {
   fill: none;
-  stroke: rgba(208,2,27,0.1);
+  // stroke: rgba(208,2,27,0.1);
+  stroke: rgba(141, 191, 86, 0.2);
   stroke-width: 1px;
   &.selected{
-  	stroke: rgba(208,2,27,0.3);
+  	// stroke: rgba(208,2,27,0.3);
   stroke-width: 2px;
+  stroke: rgba(151, 255, 38, 1);
   }
   &.selectedCC{
-	stroke: rgba(150,2,27,0.4);
-  	stroke-width: 2px;
+	//stroke: rgba(150,2,27,0.4);
+  stroke: rgba(151, 255, 38, 1);
+  stroke-width: 2px;
   }
 }
 

@@ -137,18 +137,13 @@ function updateSelectedLinksTagsCC(course){
 
 /*
 1º Reorder the tagList puting the @focusTag in the focus Position ( 0º )and gives each tag a new position
-2º put the @relatedCourses around the selectedTag 
 3º add class to  the linktags
 */
-function centerTagRepositionCourses(focusTag,relatedCourses){ 
+function centerTagRepositionCourses(focusTag){ 
   //muevo tag al centro
   var newList=tagsList.splice(0, focusTag.order)
   tagsList=tagsList.concat(newList)
-  asignTagPosition();
-  updateNodesTags();
-
-  //2º muevo cursos alrededor del tag
-  repositionNodesCC(relatedCourses)
+  asignTagPosition();  
 
   //pinto links entre el tag
   svg.selectAll("path.linktag.tag-"+focusTag.slug)

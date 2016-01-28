@@ -76,7 +76,8 @@ $( document ).ready(function() {
       mode="areacentric";
       cleanTagSelections();
       nodes = cluster.nodes(newRoot)     
-      updateNodeCursos(d)  
+      //updateNodeCursos(d)  
+      updateCoursesWithRotation(-(d.x-90),1000);
       zoomed();
       updateLinksAreasCursos();
       updateLinksTags()
@@ -92,7 +93,6 @@ $( document ).ready(function() {
       else{
         $('#messages').css('background-image', 'none');
       }
-
       //contenido
       $('#messages #titulo span').empty().text(d.titulo)
       $('#messages #course-link').attr('href',d.url)
@@ -105,8 +105,6 @@ $( document ).ready(function() {
         taglist+= '<a href="#" data-tag="'+d.tags[i]+'">' +d.tags[i]+ '</a>'; 
       }
       $('#messages #tag-list').empty().html(taglist)
-
-      //centerNode(d);
     });
 
 //click en HOME
@@ -118,19 +116,15 @@ $( document ).ready(function() {
     });
 
   svg.selectAll("g.tag").on("mouseover", function(d) {      
-      //console.log(d)
       //consigo todos los links salientes a ese path y les cambio el color
        svg.selectAll("path.linktag.tag-"+d.slug)
        .classed("selected",true).
        each(updateNodeStyleTagSelected("nouso",true))
       
     }).on("mouseout", function(d) {      
-     // console.log(d)
-      //consigo todos los links salientes a ese path y les cambio el color
        svg.selectAll("path.linktag.tag-"+d.slug)
        .classed("selected",false)
-       .each(updateNodeStyleTagSelected("nouso",false))
-      
+       .each(updateNodeStyleTagSelected("nouso",false))      
     });
 
 //TAGCENTRIC
@@ -138,13 +132,17 @@ $( document ).ready(function() {
       cleanTagSelections();
       d3.select(this).classed('relevant',true)
       mode="tagcentric"
-      updateLinksAreasCursos()
-      
-      var relatedC=getRelatedCoursesTC(d);
-      centerTagRepositionCourses(d,relatedC);
-      updateNodeCursosCCMode();
-      updateLinksAreasCursos();
 
+      var relatedC=getRelatedCoursesTC(d);
+      //tags
+      centerTagRepositionCourses(d);
+      updateNodesTags();
+
+      repositionNodesCC(relatedC)
+      updateNodeCursosCCMode();
+      
+      //links
+      updateLinksAreasCursos();
       updateLinksTags();
 
     })
@@ -169,6 +167,7 @@ $( document ).ready(function() {
     var relatedcourses2=getRelatedCoursesCC(_course);
     repositionNodesCC(relatedcourses2,_course)
      updateNodeCursosCCMode();
+     //updateCoursesWithRotation()
      updateLinksAreasCursos();
 
     ///////////////// TAGS //////////////////

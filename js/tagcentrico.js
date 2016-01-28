@@ -5,7 +5,6 @@ function getRelatedCoursesTC(focusTag){
   .each(function(d){
   	relatedCourses.push(d)
   });
-  console.log(relatedCourses);
   return relatedCourses;
 }
 

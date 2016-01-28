@@ -25,7 +25,6 @@ function repositionNodesCC(relatedCourses,focusCourse){ //TBD quitar categorias
 	var distance=360/(nodes.length-numAreas); //distance in degrees between nodes
 	if(mode=="tagcentric") distance=360/(nodes.length+1-numAreas);
 	//first the ones related
-	console.log("distance" + distance)
 
 	for(var i=0; i<nodes.length; i+=1){
 		nodes[i].CCSelected=false;
@@ -45,7 +44,6 @@ function repositionNodesCC(relatedCourses,focusCourse){ //TBD quitar categorias
 		relatedCourses[j].hidden=false;
 		relatedCourses[j].CCSelected=true;
 	}
-	//console.log("cursos repasado relacionados: "+ relatedCourses.length + " iterados "+ j);
 
 
 	//RESTO DE CURSOS
@@ -114,7 +112,6 @@ function reOrderTagsCC(course){
 		svg.select("g.tag.tag-"+_tags[i])
 		.classed("relevant",true)		
 		.each(function(d) {       
-      		console.log(d.slug)	
       		tagsList.splice(d.order,1)
       		if(i%2==0){
       			tagsList.unshift(d)
@@ -136,7 +133,6 @@ function updateSelectedLinksTagsCC(course){
 	svg.selectAll("path.linktag.selectedCC")
 	.classed("selectedCC",false)
 	for(var i=0; i< _tags.length; i++){	
-		console.log(_tags[i])
 		link = svg.selectAll("path.linktag.tag-"+_tags[i])
 		.classed("selectedCC",true)
 	}

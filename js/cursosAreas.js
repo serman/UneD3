@@ -13,6 +13,7 @@ function createNodeCursos(){
               for(var i=0; i<d.tags.length; i++){
                 clases = clases + " tag-" + d.tagsSlug[i];
               }
+              clases = clases + " area-" + d.parent.slug;
           }
           return clases; 
         }).each(function(d){
@@ -91,7 +92,8 @@ function nameFilter(mstring){
 
   svg.selectAll("g.node:not(.area)")        
         .filter(function(d) { return d.searchable.indexOf(mstring)==-1? false:true})
-        .attr("display", function(d) {return "inherit"})
+        .attr("display", function(d) {return "inherit"}) //TODO evitar hacer dos busquedas por ejemplo marcar primero a todos
+
        // .call(function(d){d.hidden=false})
    if(mstring=="")
     svg.selectAll("g.node").attr("display", function(d) {return "inherit"})
@@ -129,18 +131,20 @@ function updateNodeCursosCCMode(focusCourse){
           })
         .transition().duration(50)
           .attr("display", function(d) { return  (  d.hidden) ? "none" : "inherit"; })
+  if(!(focusCourse===undefined)){
+    var giro=-(focusCourse.parent.x-90) //-(d.x-90)
+    console.log(focusCourse.parent)
+    svg.selectAll("g.node.area").transition().duration(1000)
+          .attr("transform", function(d) {    
+                d.x=d.x+giro;                                          
+                return "rotate(" + normAngle(d.x - 90) + ")translate(" + d.y + ")"; 
+           })
+          .select("text")
+          .attr("transform", function(d) { 
+              return "translate(0,28)rotate(" + normAngle(-(d.x -90))+ ")";
+            })    
 
-  var giro=-(focusCourse.parent.x-90) //-(d.x-90)
-  console.log(focusCourse.parent)
-  svg.selectAll("g.node.area").transition().duration(1000)
-        .attr("transform", function(d) {    
-              d.x=d.x+giro;                                          
-              return "rotate(" + normAngle(d.x - 90) + ")translate(" + d.y + ")"; 
-         })
-        .select("text")
-        .attr("transform", function(d) { 
-            return "translate(0,28)rotate(" + normAngle(-(d.x -90))+ ")";
-          })        
+  }    
 
 }
 

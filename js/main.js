@@ -146,10 +146,14 @@ $( document ).ready(function() {
       //consigo todos los links salientes a ese path y les cambio el color
        courseLinkContainer.selectAll("path.link.source-"+d.slug)
        .classed("mouseHover",true);
+       courseContainer.selectAll("g.node.area-"+d.slug)
+       .classed("mouseHover",true)
        //each(updateNodeStyleTagSelected("nouso",true))      
     }).on("mouseout", function(d) {      
        courseLinkContainer.selectAll("path.link.source-"+d.slug)
        .classed("mouseHover",false);
+       courseContainer.selectAll("g.node.area-"+d.slug)
+       .classed("mouseHover",false)
        //.each(updateNodeStyleTagSelected("nouso",false))      
     });
 

@@ -84,12 +84,13 @@ function updateCoursesWithRotation(nn,transitionLength){
 }
 
 function nameFilter(mstring){
-  svg.selectAll("g.node")        
-        .filter(function(d) { return d.name.indexOf(mstring)==-1? true:false})
+  mstring=removeDiacritics(mstring)
+  svg.selectAll("g.node:not(.area)")        
+        .filter(function(d) { return d.searchable.indexOf(mstring)==-1? true:false})
         .attr("display", function(d) {return "none"})
 
-  svg.selectAll("g.node")        
-        .filter(function(d) { return d.name.indexOf(mstring)==-1? false:true})
+  svg.selectAll("g.node:not(.area)")        
+        .filter(function(d) { return d.searchable.indexOf(mstring)==-1? false:true})
         .attr("display", function(d) {return "inherit"})
        // .call(function(d){d.hidden=false})
    if(mstring=="")

@@ -238,7 +238,7 @@ $( document ).ready(function() {
  $('#search').keyup(function(event){
         var keyCode = event.which; // check which key was pressed
         var term = $(this).val();
-        if(term.length>3) nameFilter(term);
+        if(term.length>2) nameFilter(term);
         else nameFilter("")
 
         //$('#example').children().hide(); // hide all

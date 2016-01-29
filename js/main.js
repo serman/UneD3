@@ -102,6 +102,7 @@ $( document ).ready(function() {
       $('#messages #course-center').data('courseObject',d)
       $('#messages #course-center').data('courseNode',this)
       $('#messages #category-list').empty().text(d.categoria)
+      $('#messages #category-list').data('category',d.parent)
       var  taglist="";
       // sin coma
       for (var i=0; i<d.tags.length; i++){
@@ -141,7 +142,7 @@ $( document ).ready(function() {
 
 
 
-/****** eventos JQUERY*****/
+/****** eventos JQUERY (fuera del canvas SVG) *****************/
 
   $('#course-center').on('click',function(e){
     e.preventDefault();
@@ -174,15 +175,26 @@ $( document ).ready(function() {
   })
 
   
-
     $('#tag-list').on('click','a', function(e){
-        bbb=this
         e.preventDefault();
         var myTag=$(this).data("tag");
         tagCentric(tagsDict[myTag],$('g.tag.tag-'+tagsDict[myTag].slug)[0])
 
     })
   
+   $('a#category-list').on('click', function(e){
+        e.preventDefault();
+        var cat=$(this).data("category");
+        console.log(cat)
+        mode="areacentric";
+        cleanTagSelections();
+        nodes = cluster.nodes(newRoot)     
+        //updateNodeCursos(d)  
+        updateCoursesWithRotation(-(cat.x-90),1000);
+        zoomed();
+        updateLinksAreasCursos();
+        updateLinksTags()
+   });
     
  $('#search').keyup(function(event){
         var keyCode = event.which; // check which key was pressed

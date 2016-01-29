@@ -117,7 +117,7 @@ function updateLinksAreasCursos(){
 
 /************************ antiguo cursocentrico *************/
 
-function updateNodeCursosCCMode(){
+function updateNodeCursosCCMode(focusCourse){
   var node=svg.selectAll("g.node:not(.area)").transition().duration(2000)
         .attr("transform", function(d) {                                             
                       return "rotate(" + normAngle(d.x - 90) + ")translate(" + d.y + ")"; 
@@ -128,6 +128,19 @@ function updateNodeCursosCCMode(){
           })
         .transition().duration(50)
           .attr("display", function(d) { return  (  d.hidden) ? "none" : "inherit"; })
+
+  var giro=-(focusCourse.parent.x-90) //-(d.x-90)
+  console.log(focusCourse.parent)
+  svg.selectAll("g.node.area").transition().duration(1000)
+        .attr("transform", function(d) {    
+              d.x=d.x+giro;                                          
+              return "rotate(" + normAngle(d.x - 90) + ")translate(" + d.y + ")"; 
+         })
+        .select("text")
+        .attr("transform", function(d) { 
+            return "translate(0,28)rotate(" + normAngle(-(d.x -90))+ ")";
+          })        
+
 }
 
 function repositionNodesCC(relatedCourses,focusCourse){ //TBD quitar categorias

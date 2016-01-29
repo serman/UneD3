@@ -198,7 +198,7 @@ $( document ).ready(function() {
     //////////cursos  ////////////////
     var relatedcourses2=getRelatedCoursesCC(_course);
     repositionNodesCC(relatedcourses2,_course)
-     updateNodeCursosCCMode();
+     updateNodeCursosCCMode(_course);
      //updateCoursesWithRotation()
      updateLinksAreasCursos();
 

@@ -91,12 +91,17 @@ g.area text{
 }
 
 //.selected se añade a un curso cuando se selecciona un tag similar
-g.node.selected text{
+g.node.tagSelected text{
 
 font-family: 'Roboto Condensed', sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
   fill: #7ED321;
+   fill:#333;
+}
+
+g.node.clicked text{
+  font-weight: 800;
    fill:#333;
 }
 
@@ -147,8 +152,8 @@ g.node.cursocentrico {
 	}
 }
 
-//TAGS conectados con el tag que está seleccionado
-.tag.relevant{
+//TAGS conectados con el curso que está seleccionado
+.tag.relevant, {
 	text{
 		font-family: 'Roboto Condensed', sans-serif;
 
@@ -170,6 +175,10 @@ path.link {
   stroke-width: 1px;
   &.areacentric{
   	stroke: rgba(0,200,00,0.4);
+  }
+  &.mouseHover{
+    transition: stroke 0.2s ease;
+   stroke: rgba(0,200,00,0.8); 
   }
 }
 

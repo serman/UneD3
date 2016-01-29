@@ -88,6 +88,10 @@ $( document ).ready(function() {
 
 //Click en un curso
     svg.selectAll("g.node:not(.area)").on("click", function(d) {
+        d3.selectAll('.clicked').classed("clicked",false);
+
+        d3.select(this)
+        .classed("clicked",true);
       $('#messages').show();
       //img de fondo
       if(d.img_src!=0){
@@ -121,12 +125,11 @@ $( document ).ready(function() {
 
   svg.selectAll("g.tag").on("mouseover", function(d) {      
       //consigo todos los links salientes a ese path y les cambio el color
-       svg.selectAll("path.linktag.tag-"+d.slug)
-       .classed("selected",true).
-       each(updateNodeStyleTagSelected("nouso",true))
-      
+       tagLinkContainer.selectAll("path.linktag.tag-"+d.slug)
+       .classed("selected",true)
+       .each(updateNodeStyleTagSelected("nouso",true))      
     }).on("mouseout", function(d) {      
-       svg.selectAll("path.linktag.tag-"+d.slug)
+       tagLinkContainer.selectAll("path.linktag.tag-"+d.slug)
        .classed("selected",false)
        .each(updateNodeStyleTagSelected("nouso",false))      
     });
@@ -137,6 +140,42 @@ $( document ).ready(function() {
         ddd=d
         tagCentric(d,this);
     })
+
+//mouse over/out over Area: highlights links
+    svg.selectAll("g.node.area").on("mouseover", function(d) {   
+      //consigo todos los links salientes a ese path y les cambio el color
+       courseLinkContainer.selectAll("path.link.source-"+d.slug)
+       .classed("mouseHover",true);
+       //each(updateNodeStyleTagSelected("nouso",true))      
+    }).on("mouseout", function(d) {      
+       courseLinkContainer.selectAll("path.link.source-"+d.slug)
+       .classed("mouseHover",false);
+       //.each(updateNodeStyleTagSelected("nouso",false))      
+    });
+
+//mouse over/out  course: highlights link with área and tags
+    svg.selectAll("g.node:not(.area)").on("mouseover", function(d) {   
+      //consigo todos los links salientes a ese path y les añado clase
+       courseLinkContainer.selectAll("path.link.target-"+d.slug)
+       .classed("mouseHover",true);
+       //all taglinks
+       tagLinkContainer.selectAll("path.linktag.course-"+d.slug)
+       .classed("selected",true)
+       .each(function (d){ 
+            tagContainer.select("g.tag-"+d.tag.slug)
+            .classed("relevant",true)
+       })
+       
+    }).on("mouseout", function(d) {      
+       courseLinkContainer.selectAll("path.link.target-"+d.slug)
+       .classed("mouseHover",false)
+       tagLinkContainer.selectAll("path.linktag.course-"+d.slug)
+       .classed("selected",false).each(function (d){ 
+            tagContainer.select("g.tag-"+d.tag.slug)
+            .classed("relevant",false)
+       })
+    });
+
 
   }); //fin parseo archivo listado cursos. No se pueden sacar los eventos fuera de aqui
 
@@ -218,7 +257,7 @@ $( document ).ready(function() {
 function updateNodeStyleTagSelected(name, value) {
   return function(d) {
    // if (value) this.parentNode.appendChild(this);
-    svg.selectAll(".node.tag-" + d.tag.slug).classed("selected", value);
+    svg.selectAll(".node.tag-" + d.tag.slug).classed("tagSelected", value);
     //console.log("curso de la category:" + d.tag.slug)
     //console.log(d)
   };

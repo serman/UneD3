@@ -105,6 +105,8 @@ function updateLinksAreasCursos(){
       //enter
     link.enter().append("path")
       .attr("class", "link")
+      .attr("class", function(d){return d3.select(this).attr("class") + " source-"+d.source.slug + " target-"+d.target.slug})
+        //.attr("class", function(d){return d3.select(this).attr("class") + " target-"+d.target.slug})
 
     //enter + update         
     link.classed("areacentric",function(){return mode=="areacentric" ? true:false })

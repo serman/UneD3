@@ -3,7 +3,7 @@
 //size variables
 var radius = 960 / 2; 
 
-
+var tagRadius = 250;
 var areaPosition=130
 
 var cluster
@@ -20,7 +20,7 @@ var linksTags; //links betwen courses and tags
 
 var mode="zoomout" //cursocentric //tagcentric areacentric //zoomout
 var numAreas=0;
-var tagContainer,tagLinkContainer,courseContainer,courseLinkContainer;
+var tagContainer,tagLinkContainer,courseContainer,courseLinkContainer,backgroundContainer;
 
 var myZoom=1;
 var myTranslate=[0, 0]
@@ -35,12 +35,21 @@ $( document ).ready(function() {
         .append("g")
         .attr("transform", "translate(" + radius + "," + 4*radius/5 + ")")
     
+    backgroundContainer=svg.append("g").classed("backgroundContainer",true)    
     tagLinkContainer=svg.append("g").classed("tagLinkContainer",true)    
     courseLinkContainer=svg.append("g").classed("courseLinkContainer",true)
     tagContainer=svg.append("g").classed("tagContainer",true).call(drag)
     courseContainer=svg.append("g").classed("courseContainer",true).call(dragCourse)
 
+    backgroundContainer.append("circle")
+    .attr('cx',0)
+    .attr('cx',0)
+    .attr('r',360).classed('tagCircle',true).call(drag);
 
+    backgroundContainer.append("circle")
+    .attr('cx',0)
+    .attr('cx',0)
+    .attr('r',tagRadius-10).classed('areaCircle',true);
 
     d3.json("listadocursostags.json", function(error, root) {
     if (error) throw error;

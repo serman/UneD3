@@ -10,7 +10,7 @@ function asignTagPosition(){
     for(var jj=0; jj< tagsList.length; jj++){
       var t=tagsList[jj]
       t.x=count;      
-      t.y=250
+      t.y=tagRadius
       tagsList[jj].order=jj;      
       count+=dist;
     }
@@ -42,12 +42,19 @@ function updateNodesTags(){
   //.data(d3.values(tagsList))
 
 //enter
-    tagsElements.enter().append("g")
+    var g=tagsElements.enter().append("g")
       .attr("class",function(d){return   "tag tag-"+d.slug})
-      .append("text")
+
+      g.append("text")
         .attr("dy", ".31em") 
         .attr("transform", function(d) { "translate(10) rotate(" + -(d.x)+ ")" }) //TBD no hay return aqui?
         .text(function(d) { return  d.name });
+
+      g.append("line").attr("x1", -10)
+                            .attr("y1", 5)
+                            .attr("x2", -2)
+                            .attr("y2", 5)
+                            .classed("tick",true);
 
   //enter+update
       tagsElements.transition().duration(2500).attr("transform", 

@@ -128,6 +128,8 @@ function updateLinksAreasCursos(){
 
 
 /************************ antiguo cursocentrico *************/
+//with focuscourse rotate areas to be aligned
+//
 
 function updateNodeCursosCCMode(focusCourse){
   var node=svg.selectAll("g.node:not(.area)").transition().duration(2000)
@@ -140,6 +142,7 @@ function updateNodeCursosCCMode(focusCourse){
           })
         .transition().duration(50)
           .attr("display", function(d) { return  (  d.hidden) ? "none" : "inherit"; })
+  
   if(!(focusCourse===undefined)){
     var giro=-(focusCourse.parent.x-90) //-(d.x-90)
     console.log(focusCourse.parent)
@@ -151,7 +154,10 @@ function updateNodeCursosCCMode(focusCourse){
           .select("text")
           .attr("transform", function(d) { 
               return "translate(0,28)rotate(" + normAngle(-(d.x -90))+ ")";
-            })    
+            })
+
+    courseContainer.select("g.node.area.cat-"+focusCourse.parent.slug)
+    .classed('relevant',true)
 
   }    
 

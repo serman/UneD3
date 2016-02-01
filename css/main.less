@@ -75,6 +75,8 @@ g.area text{
 
   circle{
     fill: #6AB21B;
+    stroke: #fff;
+    stroke-width: 2px;
   }
 
   &:hover{
@@ -83,8 +85,9 @@ g.area text{
 
     circle{
      fill: #97FF26;
-	   stroke: #979797;
-	   stroke-width: 0px;
+	   //stroke: #979797;
+	   stroke: #fff;
+     stroke-width: 2px;
     }
 
 	}
@@ -93,7 +96,8 @@ g.area text{
     transition: fill 0.2s ease;
     circle{
       fill: #97FF26;
-      stroke-width: 0px;
+      stroke: #fff;
+     stroke-width: 2px;
     }
   }
 }
@@ -228,6 +232,7 @@ path.linktag {
 -moz-box-shadow: 0px 3px 8px -1px rgba(0,0,0,0.5);
 box-shadow: 0px 3px 8px -1px rgba(0,0,0,0.5); 
 
+
 }
 #messages a {
   color: #222;
@@ -237,19 +242,33 @@ box-shadow: 0px 3px 8px -1px rgba(0,0,0,0.5);
   color: white;
   text-decoration: none;
 }
+
 #messages #titulo span {
   background-color: white;
 }
+
 #messages #tag-list {
   background-color: none;
   display: inline-block;
 
 }
+
+#messages .fecha{
+  background-color: #fff;
+  padding: 4px 8px;
+  font-size: 0.9em;
+
+  i{
+    color: #757575;
+    padding-right: 8px;
+    font-size: 1.1em;
+  }
+}
+
 #messages span,
 #messages #category-list {
-background-color: white;
-
-background-color: rgba(255,255,255,0.9);
+// background-color: white;
+// background-color: rgba(255,255,255,0.9);
 }
 
 #messages h2{
@@ -265,11 +284,20 @@ background-color: rgba(255,255,255,0.9);
 
 #messages hr{
   border-color: rgba(0,0,0,0.1);
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+ .cat i{
+  color: #7ED321;
+  float: left;
+  margin-top: 6px;
+  margin-left: 6px;
 }
 
 a#category-list{
  display: block;
- text-align: center;
+ text-align: left;
  text-decoration: none;
 
   font-family: 'Roboto Condensed', sans-serif;
@@ -277,10 +305,21 @@ a#category-list{
   font-weight: 700;
 
 color: #333;
-border-radius: 22px;
-padding: 8px 4px;
-border: 1px solid #ccc;
+ border-radius: 4px;
+padding: 0;
+padding-left: 1.5em;
+padding-top: 2px;
 
+ border: 1px solid #ccc;
+
+ margin-bottom: 0.75em;
+background-color: rgba(255,255,255,1);
+
+}
+
+a:hover#category-list{
+  background-color: rgba(0, 0, 0, 0.75);
+    color: #fff;
 }
 
 #tag-list a{
@@ -299,7 +338,14 @@ border: 1px solid #ccc;
 
   margin-right: 4px;
   margin-bottom: 4px;
+
+  &:hover{
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #fff;
+  }
 }
+
+
 
 #actions{
   

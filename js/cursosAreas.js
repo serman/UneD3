@@ -86,14 +86,23 @@ function updateCoursesWithRotation(nn,transitionLength){
 
 function nameFilter(mstring){
   mstring=removeDiacritics(mstring)
-  svg.selectAll("g.node:not(.area)")        
-        .filter(function(d) { return d.searchable.indexOf(mstring)==-1? true:false})
-        .attr("display", function(d) {return "none"})
+  var no=[];
 
-  svg.selectAll("g.node:not(.area)")        
+  filtered=svg.selectAll("g.node:not(.area)")        
+      .filter(function(d) { return d.searchable.indexOf(mstring)==-1? false:true}).each(function(d){
+        no.push(d)
+      })
+
+      repositionNodesCC(no)
+      updateNodeCursosCCMode();
+      updateLinksAreasCursos();
+      updateLinksTags();
+        //.attr("display", function(d) {return "none"})
+
+ /* svg.selectAll("g.node:not(.area)")        
         .filter(function(d) { return d.searchable.indexOf(mstring)==-1? false:true})
         .attr("display", function(d) {return "inherit"}) //TODO evitar hacer dos busquedas por ejemplo marcar primero a todos
-
+*/
        // .call(function(d){d.hidden=false})
    if(mstring=="")
     svg.selectAll("g.node").attr("display", function(d) {return "inherit"})

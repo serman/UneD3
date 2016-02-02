@@ -60,25 +60,19 @@ g.cat-ciencia circle{
 
 
 
-/*
-g.cat-area{
-	fill:#7a7a7a;
-  fill:hsl(240, 0%, 48%);
-}
-
-.node.cat-area circle{
-  fill:#7a7a7a;
-  fill:hsl(240, 0%, 48%);
-}
-*/
-
-
-.node.area{
+.node.area {
   fill:#ee5555;
-}
-.node.area text{
-  fill:#333;
-  fill:#efefef;
+
+  &:hover{
+    text{
+      fill:#efefef;
+    }
+  }
+
+    text{
+      fill:#999;
+    }
+
 }
 
 g.area text{
@@ -96,8 +90,7 @@ g.area text{
 
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 12px;
-  font-weight: 400;
-  color: #333;
+  font-weight: 300;
   fill:#666;
   cursor: pointer;
 
@@ -109,13 +102,15 @@ g.area text{
 
   &:hover{
   	//fill: #1f77b4;
-  	fill:#333;
+  	//fill:#999;
 
     circle{
-     fill: #97FF26;
-	   //stroke: #979797;
+
+     //fill: #97FF26;
 	   stroke: #fff;
      stroke-width: 2px;
+
+     
     }
 
 	}
@@ -123,9 +118,8 @@ g.area text{
   &.mouseHover{
     transition: fill 0.2s ease;
     circle{
-      fill: #97FF26;
       stroke: #fff;
-     stroke-width: 2px;
+      stroke-width: 2px;
     }
   }
 
@@ -190,18 +184,21 @@ font-family: 'Roboto Condensed', sans-serif;
 }
 
 g.node.clicked text{
-  font-weight: 800;
-   fill:#333;
+  font-weight: 400;
+  fill:#ccc;
+}
+
+g.node.clicked circle{
+  stroke:#fff;
 }
 
 //.cursocentrico es la clase del "curso seleccionado" en modo cursocentrico
 g.node.cursocentrico {
 	text{
 
-	 font-family: 'Roboto Condensed', sans-serif;
+	  font-family: 'Roboto Condensed', sans-serif;
   	font-size: 18px;
   	font-weight: 400;
-
    	fill:#fff;
 	}
 
@@ -209,7 +206,6 @@ g.node.cursocentrico {
     stroke:#fff;
     stroke-width: 2px;
   }
-
 
 }
 
@@ -315,7 +311,7 @@ a.btn {
 
 
 #messages #titulo span {
-  background-color: white;
+  background-color: black;
 }
 
 #messages #tag-list {
@@ -345,7 +341,8 @@ a.btn {
 #messages h2{
   line-height: 1.3em;
   font-weight: 300;
-  background-color: white;
+  background-color: black;
+  color: #fff;
   padding: 4px;
 }
 
@@ -466,10 +463,10 @@ path.source-psico{
   stroke-width: 1px;
 
   &.mouseHover{
-  transition: stroke 0.2s ease;
+   transition: stroke 0.2s ease;
    stroke: @col-psico; 
 
-     &.areacentric{
+    &.areacentric{
       stroke: @col-psico; 
     }
   }
@@ -484,8 +481,16 @@ path.source-ciencia{
   stroke-width: 1px;
 
   &.mouseHover{
-  transition: stroke 0.2s ease;
+   transition: stroke 0.2s ease;
    stroke: @col-cyt; 
+
+    &.areacentric{
+      stroke: @col-cyt; 
+    }
+  }
+
+  &.areacentric{
+    stroke: shade(@col-cyt, 50);
   }
 }
 
@@ -493,9 +498,17 @@ path.source-economia{
   stroke: shade(@col-eco, 50);
   stroke-width: 1px;
 
-  &.mouseHover{
-  transition: stroke 0.2s ease;
+ &.mouseHover{
+   transition: stroke 0.2s ease;
    stroke: @col-eco; 
+
+    &.areacentric{
+      stroke: @col-eco; 
+    }
+  }
+
+  &.areacentric{
+    stroke: shade(@col-eco, 50);
   }
 }
 
@@ -504,8 +517,16 @@ path.source-idiomas{
   stroke-width: 1px;
 
   &.mouseHover{
-  transition: stroke 0.2s ease;
+   transition: stroke 0.2s ease;
    stroke: @col-idi; 
+
+    &.areacentric{
+      stroke: @col-idi; 
+    }
+  }
+
+  &.areacentric{
+    stroke: shade(@col-idi, 50);
   }
 }
 
@@ -514,8 +535,16 @@ path.source-humanidades{
   stroke-width: 1px;
 
   &.mouseHover{
-  transition: stroke 0.2s ease;
+   transition: stroke 0.2s ease;
    stroke: @col-hum; 
+
+    &.areacentric{
+      stroke: @col-hum; 
+    }
+  }
+
+  &.areacentric{
+    stroke: shade(@col-hum, 50);
   }
 }
 
@@ -524,8 +553,16 @@ path.source-edu{
   stroke-width: 1px;
 
   &.mouseHover{
-  transition: stroke 0.2s ease;
+   transition: stroke 0.2s ease;
    stroke: @col-edu; 
+
+    &.areacentric{
+      stroke: @col-edu; 
+    }
+  }
+
+  &.areacentric{
+    stroke: shade(@col-edu, 50);
   }
 }
 
@@ -534,8 +571,16 @@ path.source-derecho{
   stroke-width: 1px;
 
   &.mouseHover{
-  transition: stroke 0.2s ease;
+   transition: stroke 0.2s ease;
    stroke: @col-der; 
+
+    &.areacentric{
+      stroke: @col-der; 
+    }
+  }
+
+  &.areacentric{
+    stroke: shade(@col-der, 50);
   }
 }
 

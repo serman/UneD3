@@ -100,7 +100,7 @@ $( document ).ready(function() {
 //Click en un curso
     svg.selectAll("g.node:not(.area)").on("click", function(d) {
         d3.selectAll('.clicked').classed("clicked",false);
-        zoomed();
+        //zoomed();
 
         d3.select(this)
         .classed("clicked",true);
@@ -204,6 +204,7 @@ $( document ).ready(function() {
     e.preventDefault();
 
     cleanTagSelections()
+    zoomed();
     mode="cursocentric"
     //console.log($(this).data('courseNode'))
     var _course=$(this).data('courseObject');

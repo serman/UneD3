@@ -2,50 +2,67 @@
 
 //Caracteristicas especiales de los nodos que respresentan areas
 
+// colors
+
+@col-edu: #e517a1; // H:320 S:90 B:90
+@col-psico: #a117e5; // H:280 S:90 B:90
+@col-idi: #1717e5; // H:240 S:90 B:90
+@col-hum: #17a1e5; // H:200 S:90 B:90
+@col-der: #17e5a1; // H:160 S:90 B:90
+@col-eco: #17e517; // H:160 S:90 B:90
+@col-cyt: #e51717; // H:0 S:90 B:90
+
+
+
+
 g.cat-edu circle{
-  fill:#6AB21B;
-  fill:hsl(60, 67%, 48%);
+  fill:@col-edu;
   &:hover{
-    //fill: #1f77b4;
-    //fill:#333;
-
-    
-     fill:hsl(60, 90%, 48%);
-
+    fill: saturate(@col-edu, 10%);
   }
 }
+
 g.cat-psico circle{
-	fill:#6AB21B;
-  fill:hsl(30, 67%, 48%);
+  fill:@col-psico;
 
   &:hover{
-   //  fill:hsl(30, 90%, 48%);
+   fill: saturate(@col-psico, 10%);
   }
 }
 g.cat-idiomas circle{
-  fill:#6AB21B;
-  fill:hsl(0, 67%, 48%);
+  fill:@col-idi;
+  &:hover{
+   fill: saturate(@col-idi, 10%);
+  }
 }
 g.cat-humanidades circle{
-  fill:#6AB21B;
-  fill:hsl(330, 67%, 48%);
+  fill:@col-hum;
+  &:hover{
+   fill: saturate(@col-hum, 10%);
+  }
 }
 g.cat-derecho circle{
-  fill:#6AB21B;
-  fill:hsl(300, 67%, 48%);
+  fill:@col-der;
+  &:hover{
+   fill: saturate(@col-der, 10%);
+  }
 }
 g.cat-economia circle{
-  fill:#6AB21B;
-  fill:hsl(270, 67%, 48%);
+  fill:@col-eco;
+  &:hover{
+   fill: saturate(@col-eco, 10%);
+  }
 }
 g.cat-ciencia circle{
-	  fill:#6AB21B;
-   fill:hsl(240, 67%, 48%);
+	 fill:@col-cyt;
+  &:hover{
+   fill: saturate(@col-cyt, 10%);
+  }
 }
 
 
 
-
+/*
 g.cat-area{
 	fill:#7a7a7a;
   fill:hsl(240, 0%, 48%);
@@ -55,7 +72,7 @@ g.cat-area{
   fill:#7a7a7a;
   fill:hsl(240, 0%, 48%);
 }
-
+*/
 
 
 .node.area{
@@ -116,43 +133,43 @@ g.area text{
 
 .node.area-edu {
   circle{
-    fill:hsl(60, 67%, 48%);
+    fill:@col-edu;
   }
 }
 
 .node.area-ciencia {
   circle{
-    fill:hsl(240, 67%, 48%);
+    fill:@col-cyt;
   }
 }
 
 .node.area-economia {
   circle{
-    fill:hsl(270, 67%, 48%);
+    fill:@col-eco;
   }
 }
 
 .node.area-derecho {
   circle{
-    fill:hsl(300, 67%, 48%);
+    fill:@col-der;
   }
 }
 
 .node.area-humanidades {
   circle{
-    fill:hsl(330, 67%, 48%);
+    fill:@col-hum;
   }
 }
 
 .node.area-idiomas {
   circle{
-     fill:hsl(0, 67%, 48%);
+     fill:@col-idi;
   }
 }
 
 .node.area-psico {
   circle{
-     fill:hsl(30, 67%, 48%);
+     fill:@col-psico;
   }
 }
 
@@ -163,7 +180,7 @@ font-family: 'Roboto Condensed', sans-serif;
   font-size: 16px;
   font-weight: 400;
   fill: #7ED321;
-   fill:#333;
+  fill:#333;
 }
 
 g.node.clicked text{
@@ -448,7 +465,7 @@ circle.areaCircle{
 
 
 path.source-psico{
-stroke: rgba(255, 0, 0, 1);
-
+  stroke: shade(@col-psico, 50);
+  stroke-width: 1px;
 }
 

@@ -43,6 +43,9 @@ $( document ).ready(function() {
     tagContainer=svg.append("g").classed("tagContainer",true).call(drag)
     courseContainer=svg.append("g").classed("courseContainer",true).call(dragCourse)
 
+    backgroundContainer.append("rect")
+    .attr('x','-50%').attr('y','-50%').
+    attr('width',"100%").attr('height',"100%").classed("backgroundRect",true)
     backgroundContainer.append("circle")
     .attr('cx',0)
     .attr('cx',0)

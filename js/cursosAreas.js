@@ -74,7 +74,7 @@ function nameFilter(mstring){
   mstring=removeDiacritics(mstring)
   var no=[];
 
-  filtered=svg.selectAll("g.node:not(.area)")        
+  filtered=courseContainer.selectAll("g.node:not(.area)")        
       .filter(function(d) { return d.searchable.indexOf(mstring)==-1? false:true}).each(function(d){
         no.push(d)
       })
@@ -85,7 +85,7 @@ function nameFilter(mstring){
       updateLinksTags();
        
    if(mstring=="")
-    svg.selectAll("g.node").classed("hiddentext", false)
+    courseContainer.selectAll("g.node").classed("hiddentext", false)
 }
 
 
@@ -108,30 +108,32 @@ function updateLinksAreasCursos(){
 
 
 /************************ antiguo cursocentrico *************/
-//with focuscourse rotate areas to be aligned
+//with focuscourse rotate areas to be aligned (cursocentrico)
+//without focurcourse //do not rotate areas
 //
 
 function updateNodeCursosCCMode(focusCourse){
-  var nodeSelection=svg.selectAll("g.node:not(.area)")
+  var nodeSelection=courseContainer.selectAll("g.node:not(.area)")
+
+ 
+  nodeSelection.select("text")        
+          
+          .classed("hiddentext",  function(d) { return d.hidden ? true : false; }).transition().delay(400)
+          .attr("text-anchor", function(d) { //posicion del texto
+                return textAnchor(d)
+            })//.attr("display", function(d) { return  (  d.hidden) ? "none" : "inherit"; })
+          .attr("transform", function(d) { 
+            return"iscategory" in d ? "translate(0,28)rotate(" + -(d.x -90)+ ")":"translate(18)rotate(" + -(d.x -90)+ ")" ; 
+          })
+  //rotar todos los nodos
   nodeSelection.transition().duration(2000)
         .attr("transform", function(d) {                                             
                       return "rotate(" + normAngle(d.x - 90) + ")translate(" + d.y + ")"; 
          })
-  nodeSelection.select(" text")
-        .attr("transform", function(d) { 
-            return"iscategory" in d ? "translate(0,28)rotate(" + -(d.x -90)+ ")":"translate(18)rotate(" + -(d.x -90)+ ")" ; 
-          })
-          //.attr("display", function(d) { return  (  d.hidden) ? "none" : "inherit"; })
-          .classed("hiddentext",  function(d) { return d.hidden ? true : false; })
-          .attr("text-anchor", function(d) { //posicion del texto
-                return textAnchor(d)
-            }) 
-
   
   if(!(focusCourse===undefined)){
     var giro=-(focusCourse.parent.x-90) //-(d.x-90)
-    console.log(focusCourse.parent)
-    svg.selectAll("g.node.area").transition().duration(1000)
+    courseContainer.selectAll("g.node.area").transition().duration(1000)
           .attr("transform", function(d) {    
                 d.x=d.x+giro;                                          
                 return "rotate(" + normAngle(d.x - 90) + ")translate(" + d.y + ")"; 

@@ -101,8 +101,8 @@ $( document ).ready(function() {
     })// end g.node.area click
 
 //Click en un curso
-    svg.selectAll("g.node:not(.area)").on("click", function(d) {
-        d3.selectAll('.clicked').classed("clicked",false);
+    courseContainer.selectAll("g.node:not(.area)").on("click", function(d) {
+        courseContainer.selectAll('.clicked').classed("clicked",false);
         //zoomed();
 
         d3.select(this)
@@ -152,8 +152,6 @@ $( document ).ready(function() {
 //TAGCENTRIC
     svg.selectAll("g.tag").on("click", function(d) {
         zoomed();
-        ttt=this
-        ddd=d
         tagCentric(d,this);
     })
 
@@ -287,7 +285,7 @@ function zoomed(){
   myZoom=1.3
   myTranslate[0]=50;
   myTranslate[1]=300*myZoom;
-  svg.transition().duration(1000).attr("transform",
+  svg.transition().delay(400).duration(1000).attr("transform",
         "translate(" + myTranslate + ")" +
         "scale(" + myZoom + ")"
     );
@@ -296,6 +294,7 @@ function zoomed(){
 
 function tagCentric(tagObject,tagNode){
   cleanTagSelections();
+  console.log(tagNode)
   d3.selectAll([tagNode]).classed('relevant',true) //TBD
 
   mode="tagcentric"

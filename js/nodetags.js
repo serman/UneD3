@@ -115,7 +115,7 @@ function reOrderTagsCC(course){
   //svg.selectAll("g.tag")
   //.attr("display","none")
   for(var i=0; i< _tags.length; i++){   
-    svg.select("g.tag.tag-"+_tags[i])
+    tagContainer.select("g.tag.tag-"+_tags[i])
     .classed("relevant",true)   
     .each(function(d) {       
           tagsList.splice(d.order,1);
@@ -138,7 +138,7 @@ function reOrderTagsCC(course){
 function updateSelectedLinksTagsCC(course){
   var _tags=course.tags;
   for(var i=0; i< _tags.length; i++){ 
-    link = svg.selectAll("path.linktag.tag-"+_tags[i])
+    link = tagLinkContainer.selectAll("path.linktag.tag-"+_tags[i])
     .classed("selectedCC",true)
   }
 }
@@ -158,7 +158,7 @@ function centerTagRepositionCourses(focusTag){
   asignTagPosition();  
 
   //pinto links entre el tag
-  svg.selectAll("path.linktag.tag-"+focusTag.slug)
+  tagLinkContainer.selectAll("path.linktag.tag-"+focusTag.slug)
     .classed("selectedCC",true)
 }
 

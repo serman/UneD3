@@ -3,8 +3,10 @@
 //size variables
 var radius = 960 / 2; 
 
-var tagRadius = 250;
+var tagRadius = 250; //TAG CIRCLE position. 
 var areaPosition=130
+
+
 
 var cluster
 
@@ -49,7 +51,7 @@ $( document ).ready(function() {
     backgroundContainer.append("circle")
     .attr('cx',0)
     .attr('cx',0)
-    .attr('r',tagRadius-10).classed('areaCircle',true);
+    .attr('r',tagRadius-20).classed('areaCircle',true);
 
     d3.json("listadocursostags.json", function(error, root) {
     if (error) throw error;
@@ -98,6 +100,7 @@ $( document ).ready(function() {
 //Click en un curso
     svg.selectAll("g.node:not(.area)").on("click", function(d) {
         d3.selectAll('.clicked').classed("clicked",false);
+        zoomed();
 
         d3.select(this)
         .classed("clicked",true);
@@ -128,11 +131,11 @@ $( document ).ready(function() {
   svg.selectAll("g.node.cat-area").on("click", function(d) {
       svg.transition().duration(750)
       .ease("linear")
-       .attr("transform", "translate(" + radius + "," + 4*radius/5 + ")" );
+       .attr("transform", "translate(" + radius + "," + 4*radius/5 + ")" );//zoomout
      
     });
 
-  svg.selectAll("g.tag").on("mouseover", function(d) {      
+  svg.selectAll("g.tag").on("mouseover", function(d) {  
       //consigo todos los links salientes a ese path y les cambio el color
        tagLinkContainer.selectAll("path.linktag.tag-"+d.slug)
        .classed("selected",true)
@@ -145,6 +148,7 @@ $( document ).ready(function() {
 
 //TAGCENTRIC
     svg.selectAll("g.tag").on("click", function(d) {
+        zoomed();
         ttt=this
         ddd=d
         tagCentric(d,this);
@@ -219,8 +223,7 @@ $( document ).ready(function() {
      reOrderTagsCC(_course); //     
      updateNodesTags();
 
-     updateLinksTags();   
-     
+     updateLinksTags();          
      updateSelectedLinksTagsCC(_course)
     
     //rebuild

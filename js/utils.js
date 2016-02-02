@@ -255,3 +255,9 @@ var defaultDiacriticsRemovalap = [
         });
     }    
 
+    function textAnchor(d){
+    	if( "iscategory" in d ) return "middle"
+        else if(d.x>180) return "end"; 
+        else return "start"
+    }
+

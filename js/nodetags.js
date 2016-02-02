@@ -50,10 +50,15 @@ function updateNodesTags(){
         .attr("transform", function(d) { "translate(10) rotate(" + -(d.x)+ ")" }) //TBD no hay return aqui?
         .text(function(d) { return  d.name });
 
-      g.append("line").attr("x1", -10)
-                            .attr("y1", 5)
-                            .attr("x2", -2)
-                            .attr("y2", 5)
+      g.append("line").attr("x1", -25)
+                            .attr("y1",7)
+                            .attr("x2", -15)
+                            .attr("y2",7)
+                            .classed("tick",true);
+      g.append("line").attr("x1", -25)
+                            .attr("y1", 0)
+                            .attr("x2", -15)
+                            .attr("y2", 0)
                             .classed("tick",true);
 
   //enter+update

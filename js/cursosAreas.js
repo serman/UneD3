@@ -28,8 +28,10 @@ function createNodeCursos(){
       //texto de los cursos 
       g.append("text")
         .attr("dy", ".31em")
-        .attr("text-anchor", function(d) { return "iscategory" in d ? "middle" : "start"; })
-        .attr("display", function(d) { return (d.x < 140 && d.x>40 || "iscategory" in d ) ? "inherit" : "none"; })
+        .attr("text-anchor", function(d) { //posicion del texto
+            return textAnchor(d)
+        })
+        .classed("hiddentext", function(d) {  return ( ( (d.x > 30 && d.x<150)||  (d.x > 210 && d.x<330) ) || ("iscategory" in d) ) ? false : true; })
         .attr("transform", function(d) { return"iscategory" in d ? "translate(0,28)rotate(" + -(d.x -90)+ ")":"translate(18)rotate(" + -(d.x -90)+ ")" ; })
         //.text(function(d) { return"\n dx: "+  d.x +" dy: "+  d.y });
         .text(function(d) { return  d.name }); 
@@ -41,46 +43,30 @@ function createNodeCursos(){
 }
 
 
-/****gira los cursos poniendo en el centro al area d ***/
-/*function updateNodeCursos(dd){
-  var newRotation=dd.x-90;
-        var node=svg.selectAll("g.node").transition().duration(1000)
-        .attr("transform", function(d) { 
-                      d.x=d.x  - newRotation; //los enlaces de la funcion "diagonal" se calculan con  un offset de 90 respecto al valor d.x por eso no se puede hacer d.x=d.x-90 y hay que arrastrar el -90 todo el tiempo
-                      if( ( (normAngle(d.x - 90) < 50) || (normAngle(d.x-90)>300 )|| ("iscategory" in d) ) ==false) d.hidden=false
-                      else d.hidden=true;
-                      return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; 
-                            })
-
-
-        svg.selectAll("g.node text").transition().delay(00).duration(500)
-          .attr("display", function(d) { return  (  d.hidden) ? "inherit" : "none"; })
-          //.text(function(d) { return"\n dx: "+  normAngle(d.x - 90 - newRotation)  })
-          .attr("text-anchor", function(d) { return "iscategory" in d ? "middle" : "start"; })
-          .attr("transform", function(d) { 
-            return"iscategory" in d ? "translate(0,28)rotate(" + -(d.x -90)+ ")":"translate(18)rotate(" + -(d.x -90)+ ")" ; 
-          })
-        
-} */
-
 /*****gira los cursos nn grados ***/
 function updateCoursesWithRotation(nn,transitionLength){ 
   setAreasPosition()
   if (nn===undefined) nn=0
   if(transitionLength===undefined) transitionLength=300
-  courseContainer.selectAll("g.node").transition().duration(transitionLength)
+  var nodeSelection=courseContainer.selectAll("g.node")
+    nodeSelection.transition().duration(transitionLength)
     .attr("transform", function(d) {  
         d.x=d.x+nn; 
-        if( ( (normAngle(d.x - 90) < 50) || (normAngle(d.x-90)>300 )|| ("iscategory" in d) ) ==false) d.hidden=false
+        d.x=normAngle(d.x)
+        //d.hidden=  ( ( (d.x > 30 && d.x<150)||  (d.x > 210 && d.x<330) ) || ("iscategory" in d) ) ? true : false
+        if( ( ( (d.x > 30 && d.x<150)||  (d.x > 210 && d.x<330) ) || ("iscategory" in d) ) ==false) d.hidden=false
         else d.hidden=true;
         return "rotate(" + normAngle(d.x -90) + ") translate(" + d.y + ")"; 
       })
-    .select("text")     
+    nodeSelection.select("text")     
       .attr("transform", function(d) { 
             return"iscategory" in d ? "translate(0,28)rotate(" + -(d.x -90)+ ")":"translate(18)rotate(" + -(d.x -90)+ ")" ; 
       })
+      .classed("hiddentext",  function(d) { return d.hidden ? false : true; })
       .transition().duration(300)
-      .attr("display", function(d) { return  (  d.hidden) ? "inherit" : "none"; })   
+      .attr("text-anchor", function(d) { //posicion del texto
+                return textAnchor(d)
+            })   
 
 }
 
@@ -97,15 +83,9 @@ function nameFilter(mstring){
       updateNodeCursosCCMode();
       updateLinksAreasCursos();
       updateLinksTags();
-        //.attr("display", function(d) {return "none"})
-
- /* svg.selectAll("g.node:not(.area)")        
-        .filter(function(d) { return d.searchable.indexOf(mstring)==-1? false:true})
-        .attr("display", function(d) {return "inherit"}) //TODO evitar hacer dos busquedas por ejemplo marcar primero a todos
-*/
-       // .call(function(d){d.hidden=false})
+       
    if(mstring=="")
-    svg.selectAll("g.node").attr("display", function(d) {return "inherit"})
+    svg.selectAll("g.node").classed("hiddentext", false)
 }
 
 
@@ -132,16 +112,21 @@ function updateLinksAreasCursos(){
 //
 
 function updateNodeCursosCCMode(focusCourse){
-  var node=svg.selectAll("g.node:not(.area)").transition().duration(2000)
+  var nodeSelection=svg.selectAll("g.node:not(.area)")
+  nodeSelection.transition().duration(2000)
         .attr("transform", function(d) {                                             
                       return "rotate(" + normAngle(d.x - 90) + ")translate(" + d.y + ")"; 
          })
-        .select(" text")
+  nodeSelection.select(" text")
         .attr("transform", function(d) { 
             return"iscategory" in d ? "translate(0,28)rotate(" + -(d.x -90)+ ")":"translate(18)rotate(" + -(d.x -90)+ ")" ; 
           })
-        .transition().duration(50)
-          .attr("display", function(d) { return  (  d.hidden) ? "none" : "inherit"; })
+          //.attr("display", function(d) { return  (  d.hidden) ? "none" : "inherit"; })
+          .classed("hiddentext",  function(d) { return d.hidden ? true : false; })
+          .attr("text-anchor", function(d) { //posicion del texto
+                return textAnchor(d)
+            }) 
+
   
   if(!(focusCourse===undefined)){
     var giro=-(focusCourse.parent.x-90) //-(d.x-90)
@@ -154,7 +139,9 @@ function updateNodeCursosCCMode(focusCourse){
           .select("text")
           .attr("transform", function(d) { 
               return "translate(0,28)rotate(" + normAngle(-(d.x -90))+ ")";
-            })
+            }).attr("text-anchor", function(d) { //posicion del texto
+                return textAnchor(d)
+            }) 
 
     courseContainer.select("g.node.area.cat-"+focusCourse.parent.slug)
     .classed('relevant',true)

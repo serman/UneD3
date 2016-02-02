@@ -31,6 +31,10 @@ g.cat-ciencia circle{
    //fill:hsl(240, 67%, 48%);
 }
 
+g.node text.hiddentext{
+  transition: opacity 0.2s ease;
+  opacity:0
+}
 
 
 
@@ -72,7 +76,10 @@ g.area text{
   color: #333;
   fill:#666;
   cursor: pointer;
-
+  text{
+    transition: opacity 0.6s ease;
+    opacity:1;
+  }
   circle{
     fill: #6AB21B;
     stroke: #fff;
@@ -385,8 +392,11 @@ line.tick{
   stroke: #fff;
   stroke-width: 2px;
 }
-circle.tagCircle{
+circle.tagCircle:hover{
   fill: #eee;  
+}
+circle.tagCircle{
+  fill: #f9f9f9;  
 }
 
 circle.areaCircle{

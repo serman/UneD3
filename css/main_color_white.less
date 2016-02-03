@@ -58,6 +58,7 @@ g.cat-ciencia circle{
   }
 }
 
+
 g.node text.hiddentext{
   transition: opacity 0.4s ease;
   opacity:0;
@@ -70,12 +71,12 @@ g.node text.hiddentext{
 
   &:hover{
     text{
-      fill:#efefef;
+      fill:#333;
     }
   }
 
     text{
-      fill:#999;
+      fill:#666;
     }
 
 }
@@ -101,21 +102,15 @@ g.area text{
 
   circle{
     fill:#084f35;
-    stroke: #000;
+    stroke: #fff;
     stroke-width: 2px;
   }
 
   &:hover{
-  	//fill: #1f77b4;
-  	//fill:#999;
 
     circle{
-
-     //fill: #97FF26;
 	   stroke: #fff;
-     stroke-width: 2px;
-
-     
+     stroke-width: 2px; 
     }
 
 	}
@@ -131,7 +126,7 @@ g.area text{
   &.relevant{
     text{
       font-weight: 400;
-      fill:#fff;
+      fill:#333;
     }
   }
 }
@@ -190,7 +185,7 @@ font-family: 'Roboto Condensed', sans-serif;
 
 g.node.clicked text{
   font-weight: 400;
-  fill:#ccc;
+  fill:#333;
 }
 
 g.node.clicked circle{
@@ -204,7 +199,7 @@ g.node.cursocentrico {
 	  font-family: 'Roboto Condensed', sans-serif;
   	font-size: 18px;
   	font-weight: 400;
-   	fill:#fff;
+   	fill:#333;
 	}
 
   circle{
@@ -228,7 +223,7 @@ g.node.cursocentrico {
   	fill: #666;
 
 		&:hover{
-			fill:#efefef;
+			fill:#000;
 			font-family: 'Roboto Condensed', sans-serif;
   		font-size: 12px;
   		font-weight: 300;
@@ -242,10 +237,9 @@ g.node.cursocentrico {
 		font-family: 'Roboto Condensed', sans-serif;
 
   		font-size: 12px;
-  		font-weight: 300;
-  		fill: #fff;
+  		fill: #333;
   		text-transform: uppercase;
-  		font-weight: 400;
+  		font-weight: 700;
 		
 
 	}
@@ -268,20 +262,20 @@ path.link {
 //enlaces tag-curso
 path.linktag {
   fill: none;
-  stroke: rgba(255, 255, 255, 0.1);
+  stroke: rgba(0, 0, 0, 0.1);
   stroke-width: 1px;
   &.selected{
   stroke-width: 1px;
-  stroke: rgba(255, 255, 255, 0.3);
+  stroke: rgba(0, 0, 0, 0.25);
   }
   &.selectedCC{
   transition: stroke 0.2s ease;
-  stroke: rgba(255, 255, 255, 0.5);
+  stroke: rgba(0, 0, 0, 0.4);
   stroke-width: 1px;
   }
   &.mouseHover{
    transition: stroke 0.2s ease;
-   stroke: rgba(255,255,255,0.3); 
+   stroke: rgba(0,0,0,0.25); 
   }
 }
 
@@ -302,21 +296,18 @@ path.linktag {
 box-shadow: 0px 3px 8px -1px rgba(0,0,0,0.5); 
 
 
-a {
+}
+#messages a {
   color: #222;
   text-decoration: underline;
 }
-
-a.btn {
+#messages a.btn {
   color: white;
   text-decoration: none;
 }
 
-}
-
-
 #messages #titulo span {
-  background-color: black;
+  background-color: white;
 }
 
 #messages #tag-list {
@@ -346,11 +337,13 @@ a.btn {
 #messages h2{
   line-height: 1.3em;
   font-weight: 300;
-  background-color: black;
-  color: #fff;
+  background-color: white;
   padding: 4px;
 }
 
+#messages h4{
+
+}
 
 #messages hr{
   border-color: rgba(0,0,0,0.1);
@@ -419,10 +412,12 @@ a:hover#category-list{
 
 #actions{
   
+  /*margin-top: 12px;*/
 }
 
 #actions a{
-  
+  /*min-width: 33%;*/
+  /*background-color: rgba(0,0,0,0.8);*/
 }
 
 #actions i{
@@ -449,28 +444,30 @@ background-color: rgba(0,0,0,1);
 
 
 line.tick{
-  stroke: #1a1a1a;
+  stroke: #f9f9f9;;
   stroke-width: 2px;
 }
 
 //background elements
 rect.backgroundRect{ //backgrond
-  fill:#000;
+  fill:#fff;
 }
 
-circle.tagCircle{
-  fill: #666; 
-  fill:#1a1a1a;
+circle.tagCircle{ 
+  fill: #f9f9f9;  
+  &:hover{
+    fill: #eee;  
+  }
 }
 
 circle.areaCircle{
-  fill: rgba(0, 0, 0, 1);  
+  fill: rgba(255, 255, 255, 1);  
 }
 
 // color path
 
 path.source-psico{
-  stroke: shade(@col-psico, 50);
+  stroke: fade(@col-psico, 30);
   stroke-width: 1px;
 
   &.mouseHover{
@@ -483,12 +480,12 @@ path.source-psico{
   }
 
   &.areacentric{
-    stroke: shade(@col-psico, 50);
+    stroke: fade(@col-psico, 30);
   }
 }
 
 path.source-ciencia{
-  stroke: shade(@col-cyt, 50);
+  stroke: fade(@col-cyt, 30);
   stroke-width: 1px;
 
   &.mouseHover{
@@ -501,12 +498,12 @@ path.source-ciencia{
   }
 
   &.areacentric{
-    stroke: shade(@col-cyt, 50);
+    stroke: fade(@col-cyt, 30);
   }
 }
 
 path.source-economia{
-  stroke: shade(@col-eco, 50);
+  stroke: fade(@col-eco, 30);
   stroke-width: 1px;
 
  &.mouseHover{
@@ -519,12 +516,12 @@ path.source-economia{
   }
 
   &.areacentric{
-    stroke: shade(@col-eco, 50);
+    stroke: fade(@col-eco, 30);
   }
 }
 
 path.source-idiomas{
-  stroke: shade(@col-idi, 50);
+  stroke: fade(@col-idi, 30);
   stroke-width: 1px;
 
   &.mouseHover{
@@ -537,12 +534,12 @@ path.source-idiomas{
   }
 
   &.areacentric{
-    stroke: shade(@col-idi, 50);
+    stroke: fade(@col-idi, 30);
   }
 }
 
 path.source-humanidades{
-  stroke: shade(@col-hum, 50);
+  stroke: fade(@col-hum, 30);
   stroke-width: 1px;
 
   &.mouseHover{
@@ -555,12 +552,12 @@ path.source-humanidades{
   }
 
   &.areacentric{
-    stroke: shade(@col-hum, 50);
+    stroke: fade(@col-hum, 30);
   }
 }
 
 path.source-edu{
-  stroke: shade(@col-edu, 50);
+  stroke: fade(@col-edu, 30);
   stroke-width: 1px;
 
   &.mouseHover{
@@ -573,12 +570,12 @@ path.source-edu{
   }
 
   &.areacentric{
-    stroke: shade(@col-edu, 50);
+    stroke: fade(@col-edu, 30);
   }
 }
 
 path.source-derecho{
-  stroke: shade(@col-der, 50);
+  stroke: fade(@col-der, 30);
   stroke-width: 1px;
 
   &.mouseHover{
@@ -591,7 +588,7 @@ path.source-derecho{
   }
 
   &.areacentric{
-    stroke: shade(@col-der, 50);
+    stroke: fade(@col-der, 30);
   }
 }
 

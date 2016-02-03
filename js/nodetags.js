@@ -48,7 +48,7 @@ function updateNodesTags(transition_length){
 
       g.append("text")
         .attr("dy", ".31em") 
-        .text(function(d) { return  d.name });
+        .text(function(d) { return  d.name.substring(0,17) });
 
       g.append("line").attr("x1", -25)
                             .attr("y1",7)

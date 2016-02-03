@@ -20,6 +20,7 @@ function createNodeCursos(){
           if(d.y>0 && d.iscategory)
             d.y=areaPosition;
         })
+        .classed("emphasis",function(d){return "emphasis" in d && d.emphasis==true ?true:false})
 
       //circulos de los cursos
       g.append("circle")

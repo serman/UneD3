@@ -4,7 +4,7 @@ it goes by tagList array and give each tag a new position according to its posit
 function asignTagPosition(){
    var lngth=tagsList.length;
    var dist=360/lngth;
-   var count=dist/2;
+   var count=0;//  dist/2; //no empiezo en 0 sino en count/2 si quiero que el tag no coincida justo con la linea central sino que se situe arededor
 
    //jQuery.each(tagsList, function(i, tag) {
     for(var jj=0; jj< tagsList.length; jj++){
@@ -36,7 +36,8 @@ var linkNodeTag=function(mtagsDict,mnodes){
 /*
 map tags list to the visual representation (360 circle)
 */
-function updateNodesTags(){
+function updateNodesTags(transition_length){
+  if(transition_length===undefined) transition_length=1500
    var tagsElements = tagContainer.selectAll("g.tag")
    .data(tagsList,function(d) { return d.slug; })
   //.data(d3.values(tagsList))
@@ -47,7 +48,6 @@ function updateNodesTags(){
 
       g.append("text")
         .attr("dy", ".31em") 
-        .attr("transform", function(d) { "translate(10) rotate(" + -(d.x)+ ")" }) //TBD no hay return aqui?
         .text(function(d) { return  d.name });
 
       g.append("line").attr("x1", -25)
@@ -62,9 +62,12 @@ function updateNodesTags(){
                             .classed("tick",true);
 
   //enter+update
-      tagsElements.transition().duration(2500).attr("transform", 
-      function(d) {  return "rotate(" + (d.x ) + ")translate(" + d.y + ")"; } ) 
-    
+      tagsElements.transition().duration(transition_length) //con los nuevos tags sólo se rota todo
+      .attr("transform", function(d) {          
+        return "rotate(" + (d.x ) + ")translate(" + d.y + ")"; 
+      }) 
+   
+   //esto en realidad creo que no hace falta en este caso. sección exit 
       tagsElements.exit().remove();
 
 }
@@ -109,7 +112,7 @@ Moving related tags to a "course" to the right-center part of the circle.
 Then call "asignTagPosition" to give the tags its new graphic position
 */
 function reOrderTagsCC(course){
-  var _tags=course.tags;
+  var _tags=course.tagsSlug;
   var lngth=tagsList.length
   var dist=360/lngth;
   //svg.selectAll("g.tag")

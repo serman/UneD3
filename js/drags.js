@@ -14,8 +14,15 @@ function dragged(d) {
    dx=d3.event.x-initX
    ddy+= (d3.event.y-initY)
 
+  var lngth=tagsList.length;
+   var step=360/lngth;
+   var desplazamiento=ddy/50;
+   //var resto=desplazamiento%step;
+    //desplazamiento=(resto<(step/2)?desplazamiento:desplazamiento+step); 
+    //desplazamiento+=aumento;
+
   svg.select('.tagContainer')
-  .attr("transform", function(d) { return "rotate(" + (ddy/50) + ")translate(0)"; })
+  .attr("transform", function(d) { return "rotate(" + desplazamiento + ")translate(0)"; })
 
 }
 
@@ -31,8 +38,19 @@ var dragCourse = d3.behavior.drag()
 
 function dragended(d) {
   olddY+=ddy/50
-  updateTagsWithRotation(Math.round(ddy/50))
-  //updateNodesTags()
+
+  //el nuevo tag que esté en el centro será el qeu estaba antes a ddy/50 
+  var lngth=tagsList.length;
+   var step=360/lngth;
+   var desplazamiento=ddy/50;
+   //var resto=desplazamiento%step;
+    //desplazamiento+= (resto>(step/2)?desplazamiento:0); 
+   var num_items=Math.round(desplazamiento/step)
+   num_items*=-1;
+   if(num_items<0) num_items=lngth+num_items;
+   centerTagRepositionCourses(tagsList[num_items]);
+  
+  updateNodesTags(0)
    svg.select('.tagContainer')
   .attr("transform", function(d) { return "rotate(" + (0) + ")translate(0)"; })
   updateLinksTags();

@@ -79,13 +79,18 @@ function nameFilter(mstring){
         no.push(d)
       })
 
-      repositionNodesCC(no)
+      
+       
+   if(mstring==""){
+    courseContainer.selectAll("g.node:not(.area)").classed("hiddentext", false)
+    .attr("text-anchor", function(d) { //posicion del texto
+                return textAnchor(d)
+            }) 
+    }
+    repositionNodesCC(no)
       updateNodeCursosCCMode();
       updateLinksAreasCursos();
       updateLinksTags();
-       
-   if(mstring=="")
-    courseContainer.selectAll("g.node").classed("hiddentext", false)
 }
 
 

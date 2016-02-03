@@ -89,7 +89,8 @@ $( document ).ready(function() {
 
 /********************INTERACCIONES *****************************************/        
 //click en un area
-    svg.selectAll("g.node.area").on("click", function(d) { 
+    svg.selectAll("g.node.area:not(.cat-area)").on("click", function(d) { 
+        $('select').val(d.slug)
       mode="areacentric";
       cleanTagSelections();
       nodes = cluster.nodes(newRoot)     
@@ -209,9 +210,10 @@ $( document ).ready(function() {
     mode="cursocentric"
     //console.log($(this).data('courseNode'))
     var _course=$(this).data('courseObject');
-     _coursenode=$(this).data('courseNode');       
+     var _coursedom=$(this).data('courseNode');       
     
-    d3.select(_coursenode).classed("cursocentrico",true)
+    d3.select(_coursedom).classed("cursocentrico",true)
+    $('select#area-select').val(_course.parent.slug)
     // 2º Construimos estructura con cursos relacionados:
     
     //////////cursos  ////////////////
@@ -262,6 +264,25 @@ $( document ).ready(function() {
         //$('#example').children().hide(); // hide all
         //$('#example').children(':Contains("' + term + '")').show(); // toggle based on term
     })
+
+ $('select').on( "change", function(){
+    var optionSelected = $("option:selected", this);
+    valueSelected = this.value;
+
+    mselection=courseContainer.selectAll('.area.cat-'+valueSelected)
+    .each(function(d){        
+            mode="areacentric";
+          cleanTagSelections();
+          nodes = cluster.nodes(newRoot)     
+          //updateNodeCursos(d)  
+          updateCoursesWithRotation(-(d.x-90),1000);
+          zoomed();
+          updateLinksAreasCursos();
+          updateLinksTags()
+    })
+    
+
+ } )
 
 
 

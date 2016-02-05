@@ -47,13 +47,11 @@
 	background-color: rgba(200,0,0,1);
 }
 
-
-
 #cierre a:hover i{
 	/*color: #cc0000;*/
 }
 
-#site-nav{
+#viz-nav{
 	 border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -76,6 +74,8 @@
 		font-weight: 500;
 		display: block;
 
+		padding-right: 0.5em;
+
 		i{
 			padding-left: 0.5em;
 			color: rgba(255, 255, 255, 0.8);
@@ -92,4 +92,85 @@
 
 	}
 
+}
+
+
+#cajon{
+	background-color: #707277;
+	padding-bottom: 1.5em;
+	padding-top: 3em;
+
+	p{
+		color: rgba(255, 255, 255, 0.8);
+		font-weight: 300;
+
+		strong{
+			color: rgba(255, 255, 255, 0.9);
+			font-weight: 500;
+		}
+	}
+
+	ul{
+		list-style-type: none;
+		text-align: right;
+		padding: 0;
+		margin:0;
+
+		border-top: 1px solid #929497;
+
+		li{
+			line-height: 1.5em;
+
+			a{
+				color: rgba(255, 255, 255, 0.8);
+				display: block;
+				border-bottom: 1px solid #929497;
+
+
+				//padding-right: 0.5em;
+
+				&.active{
+					font-weight: 500;
+					color: rgba(255, 255, 255, 1);
+					background-color: @verde-uned;
+				}
+
+				&:hover{
+					color: rgba(255, 255, 255, 1);
+					text-decoration: none;
+					background-color: #929497;
+
+					&.active{
+						background-color: @verde-uned;
+						color: rgba(255, 255, 255, 0.8);
+					}
+				}
+
+			}
+
+			a:after{
+				display:inline-block;
+				font:normal normal normal 14px/1 FontAwesome;
+				font-size:inherit;
+				text-rendering:auto;
+				-webkit-font-smoothing:antialiased;
+				-moz-osx-font-smoothing:grayscale;
+
+				
+				content: "\f10c";
+				font-size: 0.5em;
+				vertical-align: middle;
+				padding-left: 1em;
+				padding-right: 0.5em;
+
+				&.active{
+					
+				}
+			}
+
+			a.active:after{
+				content:"\f111";
+			}
+		}
+	}
 }

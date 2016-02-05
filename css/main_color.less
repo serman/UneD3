@@ -59,6 +59,9 @@ g.cat-ciencia circle{
 }
 
 
+g.cat-home{
+  opacity: 0;
+}
 
 .node.area {
   fill:#ee5555;
@@ -68,9 +71,9 @@ g.cat-ciencia circle{
       fill:#efefef;
     }
   }
-
     text{
       fill:#999;
+
     }
 
 }
@@ -200,23 +203,26 @@ font-family: 'Roboto Condensed', sans-serif;
   fill:#333;
 }
 
-g.node.clicked text{
-  font-weight: 400;
-  fill:#ccc;
-}
+g.node.clicked {
+  text{
+    font-weight: 400;
+    fill:#ccc;
+    text-decoration: underline;
+  }
 
-g.node.clicked circle{
-  stroke:#fff;
+  circle{
+    stroke:#fff;
+  }
 }
 
 //.cursocentrico es la clase del "curso seleccionado" en modo cursocentrico
 g.node.cursocentrico {
 	text{
-
 	  font-family: 'Roboto Condensed', sans-serif;
   	font-size: 18px;
   	font-weight: 400;
    	fill:#fff;
+    text-decoration: none !important;
 	}
 
   circle{
@@ -249,7 +255,7 @@ g.node.cursocentrico {
 }
 
 //TAGS conectados con el curso que está seleccionado
-.tag.relevant, {
+.tag.relevant, .tag.selectedTagCentric, .tag.relevantCC {
 	text{
 		font-family: 'Roboto Condensed', sans-serif;
 

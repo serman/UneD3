@@ -37,13 +37,19 @@ function wrap(text, width) {
 
 
 function cleanTagSelections(){
+  svg.selectAll("g.tag.selectedTagCentric")
+    .classed("selectedTagCentric",false) 
   svg.selectAll("g.tag.relevant")
     .classed("relevant",false)  
+   svg.selectAll("g.tag.relevantCC")
+    .classed("relevantCC",false)  
   svg.selectAll("path.linktag.selectedCC")
   .classed("selectedCC",false)  
+
   d3.select('.node.cursocentrico').classed("cursocentrico",false)
   d3.select('.node.area.relevant').classed("relevant",false)
 
+  d3.select("g.cat-home").style("opacity",1)
 }
 
 
@@ -81,7 +87,7 @@ function cleanTagSelections(){
 
   
 
-  var newRoot={"name":"Home","iscategory":true,"slug":"area",children:[
+  var newRoot={"name":"Home","iscategory":true,"slug":"home",children:[
       { "name":'Idiomas',"iscategory":true, "slug":"idiomas", "children":JSON.search(root.cursos,'//*[categoria="Idiomas"]')},
       { "name":'Psicología y Servicios Sociales',"iscategory":true, "slug":"psico", "children":JSON.search(root.cursos,'//*[categoria="Psicología y Servicios Sociales"]') },
       { "name":'Educación', "iscategory":true,"slug":"edu", "children":JSON.search(root.cursos,'//*[categoria="Educación"]')  },    

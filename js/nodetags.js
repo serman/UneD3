@@ -122,21 +122,23 @@ function reOrderTagsCC(course){
   //.attr("display","none")
   for(var i=0; i< _tags.length; i++){   
     tagContainer.select("g.tag.tag-"+_tags[i])
-    .classed("relevant",true)   
+    .classed("relevantCC",true)   
     .each(function(d) {       
-          tagsList.splice(d.order,1);
-          if(i%2==0){
-            tagsList.unshift(d);
-          }else{
-            tagsList.push(d);
-          }
-          for(var jj=0; jj< tagsList.length; jj++){ //hay que hacer esto porque cambian todos los indices
-            tagsList[jj].order=jj;        
-          }
-        })
-      }
-    asignTagPosition();
+        tagsList.splice(d.order,1);
+        if(i%2==0){
+          tagsList.unshift(d);
+        }else{
+          tagsList.push(d);
+        }
+        for(var jj=0; jj< tagsList.length; jj++){ //hay que hacer esto porque cambian todos los indices
+          tagsList[jj].order=jj;        
+        }
+    })
+  }
+  asignTagPosition();
 }
+
+
 
 /*
 * add a class to  the linktags going to a course

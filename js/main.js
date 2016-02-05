@@ -149,20 +149,20 @@ $( document ).ready(function() {
     })*/
 
 //click en HOME
-  svg.selectAll("g.node.cat-area").on("click", function(d) {
-    if( !(mode=="areacentric") || !(mode=="zoomout") ){
+  svg.selectAll("g.node.cat-home").on("click", function(d) {
+    if( !(mode=="areacentric") || !(mode=="zoomout") ){ 
+        //reseteamos los nodos y enlaces
         mode="zoomout";
-          cleanTagSelections();
-          nodes = cluster.nodes(newRoot)     
-          //updateCoursesWithRotation(-(d.x-90),1000);
-          updateCoursesWithRotation(undefined,1500);
-          //updateNodeCursos()
-          updateLinksAreasCursos();
-          updateLinksTags()
-      }
-      svg.transition().delay(500).duration(1000)
-      .ease("linear")
-       .attr("transform", "translate(" + radius + "," + 4*radius/5 + ")" );//zoomout
+        cleanTagSelections();
+        d3.select(this).style("opacity",0);
+        nodes = cluster.nodes(newRoot)     
+        updateCoursesWithRotation(undefined,1500);
+        updateLinksAreasCursos();
+        updateLinksTags()
+    }
+    svg.transition().delay(500).duration(1000)//zoomout
+        .ease("linear")
+        .attr("transform", "translate(" + radius + "," + 4*radius/5 + ")" )
      
     });
 
@@ -179,7 +179,7 @@ $( document ).ready(function() {
 
 //TAGCENTRIC
     svg.selectAll("g.tag").on("click", function(d) {
-        zoomed();
+        
         tagCentric(d,this);
     })
 
@@ -319,8 +319,8 @@ function zoomed(){
 
 function tagCentric(tagObject,tagNode){
   cleanTagSelections();
-  console.log(tagNode)
-  d3.selectAll([tagNode]).classed('relevant',true) //TBD
+  zoomed();
+  d3.selectAll([tagNode]).classed('selectedTagCentric',true) 
 
   mode="tagcentric"
   var d=tagObject;
@@ -338,7 +338,7 @@ function tagCentric(tagObject,tagNode){
 }
 
 function cursoCentric(_course,_coursedom){
-       cleanTagSelections()
+    cleanTagSelections()
     zoomed();
     mode="cursocentric"
     d3.select(_coursedom).classed("cursocentrico",true)

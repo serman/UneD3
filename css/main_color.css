@@ -41,6 +41,9 @@ g.cat-ciencia circle {
 g.cat-ciencia circle:hover {
   fill: #f20a0a;
 }
+g.cat-home {
+  opacity: 0;
+}
 .node.area {
   fill: #ee5555;
 }
@@ -126,6 +129,7 @@ g.node.tagSelected text {
 g.node.clicked text {
   font-weight: 400;
   fill: #ccc;
+  text-decoration: underline;
 }
 g.node.clicked circle {
   stroke: #fff;
@@ -135,6 +139,7 @@ g.node.cursocentrico text {
   font-size: 18px;
   font-weight: 400;
   fill: #fff;
+  text-decoration: none !important;
 }
 g.node.cursocentrico circle {
   stroke: #fff;
@@ -154,7 +159,9 @@ g.node.cursocentrico circle {
   font-size: 12px;
   font-weight: 300;
 }
-.tag.relevant text {
+.tag.relevant text,
+.tag.selectedTagCentric text,
+.tag.relevantCC text {
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 12px;
   font-weight: 300;

@@ -50,7 +50,8 @@ function cleanTagSelections(){
  function preprocessJson(root){
   jQuery.each(root.cursos, function(i, val) {
     val.name=val.titulo; 
-    val.searchable=removeDiacritics(val.titulo).toLowerCase()    
+    val.searchable=removeDiacritics(val.titulo).toLowerCase() 
+    var searchableTags="";   
     val.tags=val.tags.split(",");
     for(i=0; i<val.tags.length; i++){      
       if(val.tags[i].length <=2 ) val.tags.splice(i,1) //we don't like tags smaller than 2 char. Probably file parsing error
@@ -59,8 +60,10 @@ function cleanTagSelections(){
     for(i=0; i<val.tags.length; i++){      
       val.tags[i]=val.tags[i].replace(/\s+/g, '');
       val.tagsSlug[i]=val.tags[i].replace(/[^A-Z0-9]+/ig, "_");
+      searchableTags+=" " +val.tags[i];
 
     }
+    val.searchable=removeDiacritics(val.titulo + searchableTags ).toLowerCase() 
 
     if(val.very_short_title === undefined){}
     else{

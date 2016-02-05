@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
           <link rel="stylesheet" href="css/bootstrap.min.css">
-          <link rel="stylesheet" href="css/main_color.css">
+          <link rel="stylesheet" href="css/main.css">
           <!-- font awesome -->
           <link rel="stylesheet" href="css/font-awesome.min.css">
 
@@ -13,7 +13,7 @@
             body {
               padding-top: 0px;
               padding-bottom: 0px;
-              background: #000;
+              background: white;
               font-family:'Roboto Condensed',sans-serif;font-size:16px;font-weight:300;
             }
 
@@ -25,18 +25,17 @@
 }
 
 #toggle a i, #toggle i{
-	color: #666;
+	color: #ccc;
 	margin-right: 0.5em;
 }
 
 #toggle label{
 	font-weight: 300;
-  color: #999;
 }
 
 #cierre{
 	background-color: rgba(100,100,100,0.8);
-	background-color: #084f35;
+	
 	border-radius: 50%;
 	height: auto;
 	width: 34px;
@@ -51,7 +50,7 @@
 
 #cierre:hover{
 	background-color: #999;
-	background-color: rgba(200,0,0,1);
+	background-color: rgba(200,0,0,0.8);
 }
 
 #cierre a{
@@ -76,17 +75,18 @@
 
   <div class="container">
     
-    <div class="row" style="margin-top: 1.5em; padding-bottom:1em;">
+    <div class="row" style="margin-top: 1.5em;">
     <div class="col-md-3">
     <div class="input-group">
     <div class="input-group-addon">Area</div>
-    <select class="form-control">
-     	<option>Todas</option>
-      <option>Educación</option>
-      <option>Ciencia y Tecnología</option>
-      <option>Economia y Empresa</option>
-      <option>4</option>
-      <option>5</option>
+    <select id="area-select"class="form-control">
+     	<option class="all" value="all">Todas</option>
+      <option class="edu" value="edu">Educación</option>
+      <option class="ciencia" value="ciencia">Ciencia y Tecnología</option>
+      <option class="economia" value="economia">Economia y Empresa</option>
+      <option class="humanidades" value="humanidades">Humanidaes</option>
+      <option class="psico" value="psico">Psicología</option>
+      <option class="idiomas" value="idiomas">Idiomas</option>
     </select>
      
      <div class="input-group-addon"><i class="fa fa-dot-circle-o"></i></div>
@@ -136,7 +136,7 @@
        <div id="canvas-container"></div>
       
       <!-- message -->
-      <div id="messages" style="position:absolute; right:20px; top:30px; width:300px; height:auto; background:#084f35;z-index:1" >
+      <div id="messages" style="position:absolute; right:20px; top:30px; width:300px; height:auto; background:rgba(255,255,255,0.8);z-index:1" >
   
   <div id="cierre" style="position:absolute; right:-0.75em; top:-0.75em;z-index:2">
   <a href="#"><i class="fa fa-times"></i></a>
@@ -179,8 +179,8 @@
   
   
   <script language="javascript" type="text/javascript" src="libraries/jquery-1.11.3.min.js"></script> 
-<!--  <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>-->
-<script src="libraries/d3.js"></script>
+  
+  <script src="libraries/d3.js"></script>
   <script src="libraries/defiant.min.js"></script>
   <script src="libraries/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/cursosAreas.js"></script>

@@ -20,7 +20,7 @@ var tagsDict; //tags sorted by tagsDict[tagslug] for easy access to a certain ta
 var tagsList; //tags as an array
 var linksTags; //links betwen courses and tags
 
-var mode="zoomout" //cursocentric //tagcentric areacentric //zoomout
+var mode="zoomout" //cursocentric //tagcentric areacentric //zoomout //search
 var numAreas=0;
 var tagContainer,tagLinkContainer,courseContainer,courseLinkContainer,backgroundContainer;
 
@@ -102,12 +102,18 @@ $( document ).ready(function() {
     })// end g.node.area click
 
 //Click en un curso
-    courseContainer.selectAll("g.node:not(.area)").on("click", function(d) {
-        courseContainer.selectAll('.clicked').classed("clicked",false);
+    courseContainer.selectAll("g.node:not(.area):not(.clicked)").on("click", function(d) {
+        courseContainer.selectAll('.clicked').each(function(){ d3.select(this).on("click",null) } )
+        .classed("clicked",false)
+        
         //zoomed();
 
         d3.select(this)
-        .classed("clicked",true);
+        .classed("clicked",true).on("click", function(d) {
+            cursoCentric(d,this);
+            console.log(d)
+            console.log(this)
+        })
       $('#messages').show();
       //img de fondo
       if(d.img_src!=0){
@@ -131,9 +137,26 @@ $( document ).ready(function() {
       $('#messages #tag-list').empty().html(taglist)
     });
 
+    /*courseContainer.selectAll(".node.clicked").on("click", function(d) {
+        console.log("course double clicked")
+        cursoCentric(d,this);
+        console.log(d)
+        console.log(this)
+    })*/
+
 //click en HOME
   svg.selectAll("g.node.cat-area").on("click", function(d) {
-      svg.transition().duration(750)
+    if( !(mode=="areacentric") || !(mode=="zoomout") ){
+        mode="zoomout";
+          cleanTagSelections();
+          nodes = cluster.nodes(newRoot)     
+          //updateCoursesWithRotation(-(d.x-90),1000);
+          updateCoursesWithRotation(undefined,1500);
+          //updateNodeCursos()
+          updateLinksAreasCursos();
+          updateLinksTags()
+      }
+      svg.transition().delay(500).duration(1000)
       .ease("linear")
        .attr("transform", "translate(" + radius + "," + 4*radius/5 + ")" );//zoomout
      
@@ -198,39 +221,16 @@ $( document ).ready(function() {
 
   }); //fin parseo archivo listado cursos. No se pueden sacar los eventos fuera de aqui
 
-
+    
 
 /****** eventos JQUERY (fuera del canvas SVG) *****************/
 
   $('#course-center').on('click',function(e){
-    e.preventDefault();
-
-    cleanTagSelections()
-    zoomed();
-    mode="cursocentric"
+    e.preventDefault(); 
     //console.log($(this).data('courseNode'))
     var _course=$(this).data('courseObject');
-     var _coursedom=$(this).data('courseNode');       
-    
-    d3.select(_coursedom).classed("cursocentrico",true)
-    $('select#area-select').val(_course.parent.slug)
-    // 2º Construimos estructura con cursos relacionados:
-    
-    //////////cursos  ////////////////
-    var relatedcourses2=getRelatedCoursesCC(_course);
-    repositionNodesCC(relatedcourses2,_course)
-     updateNodeCursosCCMode(_course);
-     //updateCoursesWithRotation()
-     updateLinksAreasCursos();
-
-    ///////////////// TAGS //////////////////
-     reOrderTagsCC(_course); //     
-     updateNodesTags();
-
-     updateLinksTags();          
-     updateSelectedLinksTagsCC(_course)
-    
-    //rebuild
+    var _coursedom=$(this).data('courseNode');      
+    cursoCentric(_course,_coursedom); 
   })
 
   
@@ -258,8 +258,8 @@ $( document ).ready(function() {
  $('#search').keyup(function(event){
         var keyCode = event.which; // check which key was pressed
         var term = $(this).val();
-        if(term.length>2) nameFilter(term);
-        else nameFilter("")
+        if(term.length>2) search(term);
+        else search("")
 
         //$('#example').children().hide(); // hide all
         //$('#example').children(':Contains("' + term + '")').show(); // toggle based on term
@@ -331,6 +331,29 @@ function tagCentric(tagObject,tagNode){
   //links
   updateLinksAreasCursos();
   updateLinksTags();
+}
+
+function cursoCentric(_course,_coursedom){
+       cleanTagSelections()
+    zoomed();
+    mode="cursocentric"
+    d3.select(_coursedom).classed("cursocentrico",true)
+    $('select#area-select').val(_course.parent.slug)
+    // 2º Construimos estructura con cursos relacionados:
+    
+    //////////cursos  ////////////////
+    var relatedcourses2=getRelatedCoursesCC(_course);
+    repositionNodesCC(relatedcourses2,_course)
+     updateNodeCursosCCMode(_course);
+     //updateCoursesWithRotation()
+     updateLinksAreasCursos();
+
+    ///////////////// TAGS //////////////////
+     reOrderTagsCC(_course); //     
+     updateNodesTags();
+
+     updateLinksTags();          
+     updateSelectedLinksTagsCC(_course)
 }
 
 

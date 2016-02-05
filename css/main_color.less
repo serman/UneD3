@@ -59,7 +59,7 @@ g.cat-ciencia circle{
 }
 
 g.node text.hiddentext{
-  transition: opacity 0.4s ease;
+  transition: opacity 0.4s ;
   opacity:0;
   pointer-events: none;
 }
@@ -135,6 +135,22 @@ g.area text{
     }
   }
 }
+
+/* animaciones según enfasis */
+@keyframes myfirst
+{
+  0%   {fill:#6AB21B;}
+  50%  {fill:#FFB21B;}
+  100%   {fill:#6AB21B;}
+  
+}
+.emphasis circle{
+  animation:myfirst 2s infinite;
+}
+
+
+/***** fin animaciones ***/
+
 
 .node.area-edu {
   circle{
@@ -467,6 +483,8 @@ circle.areaCircle{
   fill: rgba(0, 0, 0, 1);  
 }
 
+
+
 // color path
 
 path.source-psico{
@@ -594,4 +612,7 @@ path.source-derecho{
     stroke: shade(@col-der, 50);
   }
 }
+
+
+
 

@@ -49,29 +49,35 @@ function updateCoursesWithRotation(nn,transitionLength){
   setAreasPosition()
   if (nn===undefined) nn=0
   if(transitionLength===undefined) transitionLength=300
-  var nodeSelection=courseContainer.selectAll("g.node")
+
+  var nodeSelection=courseContainer.selectAll("g.node").each(function(d){
+      d.x=d.x+nn; 
+      d.x=normAngle(d.x);
+      if( ( ( (d.x > 30 && d.x<150) ||  (d.x > 210 && d.x<330) ) || ("iscategory" in d) ) ==false ) d.hidden=false
+      else d.hidden=true;
+  })
     nodeSelection.transition().duration(transitionLength)
-    .attr("transform", function(d) {  
-        d.x=d.x+nn; 
-        d.x=normAngle(d.x)
-        //d.hidden=  ( ( (d.x > 30 && d.x<150)||  (d.x > 210 && d.x<330) ) || ("iscategory" in d) ) ? true : false
-        if( ( ( (d.x > 30 && d.x<150)||  (d.x > 210 && d.x<330) ) || ("iscategory" in d) ) ==false) d.hidden=false
-        else d.hidden=true;
+      .attr("transform", function(d) {        
         return "rotate(" + normAngle(d.x -90) + ") translate(" + d.y + ")"; 
       })
-    nodeSelection.select("text")     
-      .attr("transform", function(d) { 
-            return"iscategory" in d ? "translate(0,28)rotate(" + -(d.x -90)+ ")":"translate(18)rotate(" + -(d.x -90)+ ")" ; 
-      })
+
+      //si se tiene que ocultar el texto se oculta al momento y luego se hace el resto
+    nodeSelection.select("text")
       .classed("hiddentext",  function(d) { return d.hidden ? false : true; })
-      .transition().duration(300)
       .attr("text-anchor", function(d) { //posicion del texto
                 return textAnchor(d)
-            })   
+            }) 
+      .transition().duration(transitionLength)     
+      .attr("transform", function(d) { 
+            return"iscategory" in d ? "translate(0,28)rotate(" + -(d.x -90)+ ")":"translate(18)rotate(" + -(d.x -90)+ ")" ; 
+      })    
+        
 
 }
 
-function nameFilter(mstring){
+
+function search(mstring){
+  mode="search"
   mstring=removeDiacritics(mstring)
   var no=[];
 
@@ -79,19 +85,19 @@ function nameFilter(mstring){
       .filter(function(d) { return d.searchable.indexOf(mstring)==-1? false:true}).each(function(d){
         no.push(d)
       })
-
       
-       
+  //cadena vacía   
    if(mstring==""){
     courseContainer.selectAll("g.node:not(.area)").classed("hiddentext", false)
     .attr("text-anchor", function(d) { //posicion del texto
                 return textAnchor(d)
             }) 
     }
+
     repositionNodesCC(no)
-      updateNodeCursosCCMode();
-      updateLinksAreasCursos();
-      updateLinksTags();
+    updateNodeCursosCCMode();
+    updateLinksAreasCursos();
+    updateLinksTags();
 }
 
 
@@ -207,6 +213,7 @@ function repositionNodesCC(relatedCourses,focusCourse){ //TBD quitar categorias
   }
 }
 
+//ajusta el radio del centro a las áreas en función del nivel de zoom
 function setAreasPosition(){
   courseContainer.selectAll("g.node.area")
   .each(function(d){

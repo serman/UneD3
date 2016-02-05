@@ -78,7 +78,7 @@ $( document ).ready(function() {
 
 /*****tags *******/
     asignTagPosition();
-    updateNodesTags();
+    updateNodesTags(2000,1000);
 
     //generamos uniones entre nodos y links
     linksTags=linkNodeTag(tagsDict,nodes)

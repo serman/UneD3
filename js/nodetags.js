@@ -36,8 +36,9 @@ var linkNodeTag=function(mtagsDict,mnodes){
 /*
 map tags list to the visual representation (360 circle)
 */
-function updateNodesTags(transition_length){
+function updateNodesTags(transition_length,delay1){
   if(transition_length===undefined) transition_length=1500
+  if(delay1===undefined) delay1=0
    var tagsElements = tagContainer.selectAll("g.tag")
    .data(tagsList,function(d) { return d.slug; })
   //.data(d3.values(tagsList))
@@ -62,7 +63,7 @@ function updateNodesTags(transition_length){
                             .classed("tick",true);
 
   //enter+update
-      tagsElements.transition().duration(transition_length) //con los nuevos tags sólo se rota todo
+      tagsElements.transition().delay(delay1).duration(function(d,i){ return delay1>0? transition_length+i*10:transition_length}) //con los nuevos tags sólo se rota todo
       .attr("transform", function(d) {          
         return "rotate(" + (d.x ) + ")translate(" + d.y + ")"; 
       }) 

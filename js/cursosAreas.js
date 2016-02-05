@@ -6,7 +6,6 @@ function createNodeCursos(){
       //enter
       var g=node.enter().append("g")
         .attr("class", function(d){return ("iscategory" in d ) ? "node cat-"+d.slug : "node" })
-        .classed("area",function(d) { return ("iscategory" in d ) ? true : false; })
         .attr("class", function(d){           
           var clases=d3.select(this).attr("class") 
           if (! ("iscategory" in d) ){
@@ -15,16 +14,20 @@ function createNodeCursos(){
               }
               clases = clases + " area-" + d.parent.slug;
           }
-          return clases; 
-        }).each(function(d){
+          return clases;
+        })
+        .classed("area",function(d) { return ("iscategory" in d ) ? true : false; })
+        .classed("emphasis",function(d){return "emphasis" in d && d.emphasis==true ?true:false})
+        .each(function(d){
           if(d.y>0 && d.iscategory)
             d.y=areaPosition;
+          if(  (d.x > 30 && d.x<150) ||  (d.x > 210 && d.x<330)  || ("iscategory" in d)  ) d.visible=true
+          else d.visible=false;
         })
-        .classed("emphasis",function(d){return "emphasis" in d && d.emphasis==true ?true:false})
 
       //circulos de los cursos
       g.append("circle")
-        .attr("r", function(d) { return ("iscategory" in d ) ? 5 : 5; })
+        .attr("r",5 /*function(d) { return ("iscategory" in d ) ? 5 : 5; }*/)
 
       //texto de los cursos 
       g.append("text")
@@ -32,13 +35,19 @@ function createNodeCursos(){
         .attr("text-anchor", function(d) { //posicion del texto
             return textAnchor(d)
         })
-        .classed("hiddentext", function(d) {  return ( ( (d.x > 30 && d.x<150)||  (d.x > 210 && d.x<330) ) || ("iscategory" in d) ) ? false : true; })
+        //.classed("hiddentext", function(d) { return true; })
+        .style({"opacity":0, "display":"none"})
         .attr("transform", function(d) { return"iscategory" in d ? "translate(0,28)rotate(" + -(d.x -90)+ ")":"translate(18)rotate(" + -(d.x -90)+ ")" ; })
-        //.text(function(d) { return"\n dx: "+  d.x +" dy: "+  d.y });
         .text(function(d) { return  d.name }); 
 
       //update + enter
-      node.transition().delay(250).duration(2000).attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; }).ease("elastic")        
+      node.transition().delay(250).duration(2000)
+      .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; }).ease("elastic")
+     
+      node.select("text").transition().delay(450).duration(1500)
+      .style('opacity',function(d){ return d.visible==true?1:0})
+      .style('display',function(d){ return d.visible==true?"inherit":"none"})       
+
       node.selectAll("g.area text").call(wrap,160) //saltos de linea palabas
       
 }
@@ -53,24 +62,26 @@ function updateCoursesWithRotation(nn,transitionLength){
   var nodeSelection=courseContainer.selectAll("g.node").each(function(d){
       d.x=d.x+nn; 
       d.x=normAngle(d.x);
-      if( ( ( (d.x > 30 && d.x<150) ||  (d.x > 210 && d.x<330) ) || ("iscategory" in d) ) ==false ) d.hidden=false
-      else d.hidden=true;
+      //if( ( ( (d.x > 30 && d.x<150) ||  (d.x > 210 && d.x<330) ) || ("iscategory" in d) ) ==false ) d.visible=false
+      if(  (d.x > 30 && d.x<150) ||  (d.x > 210 && d.x<330)  || ("iscategory" in d)  ) d.visible=true
+      else d.visible=false;
   })
     nodeSelection.transition().duration(transitionLength)
       .attr("transform", function(d) {        
         return "rotate(" + normAngle(d.x -90) + ") translate(" + d.y + ")"; 
       })
 
-      //si se tiene que ocultar el texto se oculta al momento y luego se hace el resto
     nodeSelection.select("text")
-      .classed("hiddentext",  function(d) { return d.hidden ? false : true; })
+      //.classed("hiddentext",  function(d) { return d.visible ? false : true; })
       .attr("text-anchor", function(d) { //posicion del texto
                 return textAnchor(d)
             }) 
-      .transition().duration(transitionLength)     
+      .transition().duration(transitionLength)
+      .style('opacity',function(d){ return d.visible==true?1:0})     
       .attr("transform", function(d) { 
             return"iscategory" in d ? "translate(0,28)rotate(" + -(d.x -90)+ ")":"translate(18)rotate(" + -(d.x -90)+ ")" ; 
-      })    
+      })
+      .style('display',function(d){ return d.visible==true?"inherit":"none"})       
         
 
 }
@@ -81,21 +92,27 @@ function search(mstring){
   mstring=removeDiacritics(mstring)
   var no=[];
 
-  filtered=courseContainer.selectAll("g.node:not(.area)")        
-      .filter(function(d) { return d.searchable.indexOf(mstring)==-1? false:true}).each(function(d){
-        no.push(d)
-      })
+  
       
   //cadena vacía   
    if(mstring==""){
-    courseContainer.selectAll("g.node:not(.area)").classed("hiddentext", false)
-    .attr("text-anchor", function(d) { //posicion del texto
+    courseContainer.selectAll("g.node:not(.area)").transition() 
+    .each(function(d) { //posicion del texto
                 return textAnchor(d)
+                no.push(d)
             }) 
+      updateCoursesWithRotation()
+    }
+    else{//cadena con contenido
+      filtered=courseContainer.selectAll("g.node:not(.area)")        
+      .filter(function(d) { return d.searchable.indexOf(mstring)==-1? false:true}).each(function(d){
+        no.push(d)
+      })
+        repositionNodesCC(no)
+        updateNodeCursosCCMode();
     }
 
-    repositionNodesCC(no)
-    updateNodeCursosCCMode();
+    
     updateLinksAreasCursos();
     updateLinksTags();
 }
@@ -114,7 +131,7 @@ function updateLinksAreasCursos(){
 
     //enter + update         
     link.classed("areacentric",function(){return mode=="areacentric" ? true:false })
-    .transition().delay(250).duration(1000).attr("d", diagonal); 
+    .transition().delay(0).duration(1000).attr("d", diagonal); 
 
 }
 
@@ -128,12 +145,16 @@ function updateNodeCursosCCMode(focusCourse){
   var nodeSelection=courseContainer.selectAll("g.node:not(.area)")
 
  
-  nodeSelection.select("text")        
+  nodeSelection.select("text")
+        .transition().delay(400)        
           
-          .classed("hiddentext",  function(d) { return d.hidden ? true : false; }).transition().delay(400)
+          //.classed("hiddentext",  function(d) { return d.visible ? true : false; })
+          .style('opacity',function(d){ return d.visible==true?1:0})
+          .style('display',function(d){ return d.visible==true?"inherit":"none"})    
+          
           .attr("text-anchor", function(d) { //posicion del texto
                 return textAnchor(d)
-            })//.attr("display", function(d) { return  (  d.hidden) ? "none" : "inherit"; })
+            })//.attr("display", function(d) { return  (  d.visible) ? "none" : "inherit"; })
           .attr("transform", function(d) { 
             return"iscategory" in d ? "translate(0,28)rotate(" + -(d.x -90)+ ")":"translate(18)rotate(" + -(d.x -90)+ ")" ; 
           })
@@ -175,7 +196,7 @@ function repositionNodesCC(relatedCourses,focusCourse){ //TBD quitar categorias
 
 //Etiqueto curso actual para que se ignore ya que no está en el loop de relatedCourses
   if(! (focusCourse===undefined) ){
-    focusCourse.hidden=false;
+    focusCourse.visible=true;
     focusCourse.CCSelected=true;  
     focusCourse.x=90;
   }
@@ -184,7 +205,7 @@ function repositionNodesCC(relatedCourses,focusCourse){ //TBD quitar categorias
   var j=0;
   for(var j=0; j<relatedCourses.length; j++){ 
     relatedCourses[j].x=90+ (  distance* ( 1+ Math.floor(j/2) ) * ( (j%2)?1:-1 ) )
-    relatedCourses[j].hidden=false;
+    relatedCourses[j].visible=true;
     relatedCourses[j].CCSelected=true;
   }
 
@@ -203,7 +224,7 @@ function repositionNodesCC(relatedCourses,focusCourse){ //TBD quitar categorias
     if(currentCourse.CCSelected==false){
       //currentCourse.x=90+ (distance* (1+Math.floor( (i+offset)/2) ) * ((i%2)?1:-1 ) ) ; 
       currentCourse.x=90+ ( distance* Math.ceil(offset/2) )+(i-areaCounter)*distance;
-      currentCourse.hidden=true;
+      currentCourse.visible=false;
       ccselectedFalse+=1;
     }
     else{

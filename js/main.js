@@ -74,7 +74,7 @@ $( document ).ready(function() {
 
 //cursos
     createNodeCursos();
-    updateLinksAreasCursos();
+    updateLinksAreasCursos(4000,600,"elastic");
 
 /*****tags *******/
     asignTagPosition();
@@ -82,7 +82,7 @@ $( document ).ready(function() {
 
     //generamos uniones entre nodos y links
     linksTags=linkNodeTag(tagsDict,nodes)
-    updateLinksTags();
+    updateLinksTags(5000,2000);
 
     d3.select(self.frameElement).style("height", radius * 2 + "px");
 /**** fin tags **/

@@ -83,7 +83,9 @@ function updateTagsWithRotation(nn){
 /*
 map structure linkTags to paths 
 */
-function updateLinksTags(){
+function updateLinksTags(transition_length,delay1){
+  if(transition_length===undefined) transition_length=5000
+  if(delay1===undefined) delay1=250
   link = tagLinkContainer.selectAll("path.linktag")
       .data(linksTags) //update
 //Ennter
@@ -94,7 +96,7 @@ function updateLinksTags(){
         .attr("class", function(d){return d3.select(this).attr("class") + " tag-"+d.tag.slug})
 
 //update  + enter
-  link.transition().delay(250).duration(5000).ease("elastic")
+  link.transition().delay(delay1).duration(transition_length).ease("elastic")
     .attr("d", function(d){ 
           //console.log("rehaciendo" + d);
             var ang1=(d.course.x-90) * (Math.PI / 180)

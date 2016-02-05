@@ -41,10 +41,10 @@ function createNodeCursos(){
         .text(function(d) { return  d.name }); 
 
       //update + enter
-      node.transition().delay(250).duration(2000)
-      .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; }).ease("elastic")
+      node.transition().delay(50).duration(3000).ease("elastic")
+      .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
      
-      node.select("text").transition().delay(450).duration(1500)
+      node.select("text").transition().delay(400).duration(1500)
       .style('opacity',function(d){ return d.visible==true?1:0})
       .style('display',function(d){ return d.visible==true?"inherit":"none"})       
 
@@ -118,7 +118,10 @@ function search(mstring){
 }
 
 
-function updateLinksAreasCursos(){
+function updateLinksAreasCursos(transition_length,delay1,easing){
+    if(transition_length===undefined) transition_length=1000
+    if(delay1===undefined) delay1=0
+      if(easing===undefined) easing="cubic-in-out"
     //Links entre áreas y cursos    
     link = courseLinkContainer.selectAll("path.link")
       .data(cluster.links(nodes)) //update
@@ -127,11 +130,12 @@ function updateLinksAreasCursos(){
     link.enter().append("path")
       .attr("class", "link")
       .attr("class", function(d){return d3.select(this).attr("class") + " source-"+d.source.slug + " target-"+d.target.slug})
+      .attr("d", "M0,0");
         //.attr("class", function(d){return d3.select(this).attr("class") + " target-"+d.target.slug})
 
     //enter + update         
     link.classed("areacentric",function(){return mode=="areacentric" ? true:false })
-    .transition().delay(0).duration(1000).attr("d", diagonal); 
+    .transition().delay(delay1).ease(easing).duration(transition_length).attr("d", diagonal); 
 
 }
 
@@ -146,7 +150,7 @@ function updateNodeCursosCCMode(focusCourse){
 
  
   nodeSelection.select("text")
-        .transition().delay(400)        
+        .transition().duration(2000)        
           
           //.classed("hiddentext",  function(d) { return d.visible ? true : false; })
           .style('opacity',function(d){ return d.visible==true?1:0})
@@ -166,7 +170,7 @@ function updateNodeCursosCCMode(focusCourse){
   
   if(!(focusCourse===undefined)){
     var giro=-(focusCourse.parent.x-90) //-(d.x-90)
-    courseContainer.selectAll("g.node.area").transition().duration(1000)
+    courseContainer.selectAll("g.node.area").transition().duration(1500)
           .attr("transform", function(d) {    
                 d.x=d.x+giro;                                          
                 return "rotate(" + normAngle(d.x - 90) + ")translate(" + d.y + ")"; 

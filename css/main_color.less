@@ -13,6 +13,8 @@
 @col-cyt: #e51717; // H:0 S:90 B:90
 
 @verde-uned: #03473a;
+@gris-uned: #707277;
+@col-over: rgba(0,255,0,1); // verde
 
 
 g.cat-edu circle{
@@ -328,7 +330,6 @@ a.btn {
 
 }
 
-
 #messages #titulo span {
   // background-color: black;
 }
@@ -336,16 +337,18 @@ a.btn {
 #messages #tag-list {
   background-color: none;
   display: inline-block;
-
 }
 
 #messages .fecha{
-  background-color: #fff;
+  // background-color: #fff;
   padding: 4px 8px;
   font-size: 0.9em;
 
+  color: rgba(255, 255, 255, 0.75);
+
   i{
-    color: #757575;
+    color: rgba(255, 255, 255, 0.75);
+    //color: @gris-uned;
     padding-right: 8px;
     font-size: 1.1em;
   }
@@ -365,9 +368,8 @@ a.btn {
   padding: 4px;
 }
 
-
 #messages hr{
-  border-color: rgba(0,0,0,0.1);
+  border-color: rgba(255,255,255,0.2);
   margin-top: 12px;
   margin-bottom: 12px;
 }
@@ -376,46 +378,54 @@ a.btn {
   color: #7ED321;
   float: left;
   margin-top: 6px;
-  margin-left: 6px;
+  margin-left: 0.5em;
 }
 
 a#category-list{
- display: block;
- text-align: left;
- text-decoration: none;
+  display: block;
+  text-align: left;
+  text-decoration: none;
 
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 500;
 
-color: #333;
- border-radius: 4px;
-padding: 0;
-padding-left: 1.5em;
-padding-top: 2px;
+  //background-color: rgba(0,0,0,1);
+  //background-color: @gris-uned;
 
- border: 1px solid #ccc;
+  color: #fff;
 
- margin-bottom: 0.75em;
-background-color: rgba(255,255,255,1);
+  border-radius: 12px;
+  padding: 0;
+  padding-left: 2em;
+  padding-top: 2px;
+
+  border: 1px solid rgba(255,255,255,.25);
+
+  margin-top: 1em;
+  margin-bottom: 0.75em;
+
 
 }
 
 a:hover#category-list{
-  background-color: rgba(0, 0, 0, 0.75);
-    color: #fff;
+  background-color: @col-over;
+  color: #fff;
 }
 
 #tag-list a{
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 12px;
   font-weight: 300;
-  fill: #777;
+  //fill: #777;
+  background-color: #000;
+  color: #fff;
+
   text-transform: uppercase;
   cursor: pointer;
 
   display: inline-block;
-  background-color: #fff;
+  
   padding: 4px 8px;
   text-decoration: none;
   border: 1px solid #ccc;
@@ -424,8 +434,9 @@ a:hover#category-list{
   margin-bottom: 4px;
 
   &:hover{
-    background-color: rgba(0, 0, 0, 0.75);
-    color: #fff;
+    //background-color: rgba(255, 255, 255, 0.75);
+    background-color: @col-over;
+    //color: #000;
   }
 }
 

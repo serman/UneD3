@@ -103,39 +103,43 @@ $( document ).ready(function() {
 
 //Click en un curso
     courseContainer.selectAll("g.node:not(.area):not(.clicked)").on("click", function(d) {
-        courseContainer.selectAll('.clicked').each(function(){ d3.select(this).on("click",null) } )
-        .classed("clicked",false)
-        
-        //zoomed();
 
-        d3.select(this)
-        .classed("clicked",true).on("click", function(d) {
+        if(d3.select(this).classed("clicked")==true){
             cursoCentric(d,this);
+        }else{
+            courseContainer.selectAll('.clicked')//.each(function(){ d3.select(this).on("click",null) } )
+               .classed("clicked",false)               
+            d3.select(this).classed("clicked",true)
+                $('#messages').show();
+                //img de fondo
+                if(d.img_src!=0){
+                    $('#messages').css('background-image', 'url('+d.img_src+')')  
+                }
+                else{
+                    $('#messages').css('background-image', 'none');
+                }
+                //contenido
+                $('#messages #titulo span').empty().text(d.titulo)
+                $('#messages #course-link').attr('href',d.url)
+                $('#messages #course-center').data('courseObject',d)
+                $('#messages #course-center').data('courseNode',this)
+                $('#messages #category-list').empty().text(d.categoria)
+                $('#messages #category-list').data('category',d.parent)
+                var  taglist="";
+                // sin coma
+                for (var i=0; i<d.tags.length; i++){
+                taglist+= '<a href="#" data-tag="'+d.tags[i]+'">' +d.tags[i]+ '</a>'; 
+                }
+                $('#messages #tag-list').empty().html(taglist)
+          }
+    });
+
+    courseContainer.selectAll(".clicked text").on("click", function(d) {
+        console.log("clickeddd")
+            
             console.log(d)
             console.log(this)
         })
-      $('#messages').show();
-      //img de fondo
-      if(d.img_src!=0){
-        $('#messages').css('background-image', 'url('+d.img_src+')')  
-      }
-      else{
-        $('#messages').css('background-image', 'none');
-      }
-      //contenido
-      $('#messages #titulo span').empty().text(d.titulo)
-      $('#messages #course-link').attr('href',d.url)
-      $('#messages #course-center').data('courseObject',d)
-      $('#messages #course-center').data('courseNode',this)
-      $('#messages #category-list').empty().text(d.categoria)
-      $('#messages #category-list').data('category',d.parent)
-      var  taglist="";
-      // sin coma
-      for (var i=0; i<d.tags.length; i++){
-        taglist+= '<a href="#" data-tag="'+d.tags[i]+'">' +d.tags[i]+ '</a>'; 
-      }
-      $('#messages #tag-list').empty().html(taglist)
-    });
 
     /*courseContainer.selectAll(".node.clicked").on("click", function(d) {
         console.log("course double clicked")

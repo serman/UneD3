@@ -89,7 +89,7 @@ $( document ).ready(function() {
 
 /********************INTERACCIONES *****************************************/        
 //click en un area
-    svg.selectAll("g.node.area:not(.cat-area)").on("click", function(d) { 
+    svg.selectAll("g.node.area:not(.cat-home)").on("click", function(d) { 
         $('select').val(d.slug)
       mode="areacentric";
       cleanTagSelections();
@@ -99,6 +99,12 @@ $( document ).ready(function() {
       zoomed();
       updateLinksAreasCursos();
       updateLinksTags()
+
+        courseLinkContainer.selectAll("path.link.source-"+d.slug)
+       .classed("areacentricSelected",true);
+       courseContainer.selectAll("g.node.area-"+d.slug)
+       .classed("areacentricSelected",true)
+
     })// end g.node.area click
 
 //Click en un curso
@@ -131,7 +137,9 @@ $( document ).ready(function() {
                 taglist+= '<a href="#" data-tag="'+d.tags[i]+'">' +d.tags[i]+ '</a>'; 
                 }
                 $('#messages #tag-list').empty().html(taglist)
-          }
+        }
+
+
     });
 
     courseContainer.selectAll(".clicked text").on("click", function(d) {
@@ -141,12 +149,7 @@ $( document ).ready(function() {
             console.log(this)
         })
 
-    /*courseContainer.selectAll(".node.clicked").on("click", function(d) {
-        console.log("course double clicked")
-        cursoCentric(d,this);
-        console.log(d)
-        console.log(this)
-    })*/
+
 
 //click en HOME
   svg.selectAll("g.node.cat-home").on("click", function(d) {
@@ -187,15 +190,15 @@ $( document ).ready(function() {
     svg.selectAll("g.node.area").on("mouseover", function(d) {   
       //consigo todos los links salientes a ese path y les cambio el color
        courseLinkContainer.selectAll("path.link.source-"+d.slug)
-       .classed("mouseHover",true);
+       .classed("mouseHoverArea",true);
        courseContainer.selectAll("g.node.area-"+d.slug)
-       .classed("mouseHover",true)
+       .classed("mouseHoverArea",true)
        //each(updateNodeStyleTagSelected("nouso",true))      
     }).on("mouseout", function(d) {      
        courseLinkContainer.selectAll("path.link.source-"+d.slug)
-       .classed("mouseHover",false);
+       .classed("mouseHoverArea",false);
        courseContainer.selectAll("g.node.area-"+d.slug)
-       .classed("mouseHover",false)
+       .classed("mouseHoverArea",false)
        //.each(updateNodeStyleTagSelected("nouso",false))      
     });
 
@@ -203,7 +206,7 @@ $( document ).ready(function() {
     svg.selectAll("g.node:not(.area)").on("mouseover", function(d) {   
       //consigo todos los links salientes a ese path y les añado clase
        courseLinkContainer.selectAll("path.link.target-"+d.slug)
-       .classed("mouseHover",true);
+       .classed("mouseHoverArea",true);
        //all taglinks
        tagLinkContainer.selectAll("path.linktag.course-"+d.slug)
        .classed("selected",true)
@@ -214,7 +217,7 @@ $( document ).ready(function() {
        
     }).on("mouseout", function(d) {      
        courseLinkContainer.selectAll("path.link.target-"+d.slug)
-       .classed("mouseHover",false)
+       .classed("mouseHoverArea",false)
        tagLinkContainer.selectAll("path.linktag.course-"+d.slug)
        .classed("selected",false).each(function (d){ 
             tagContainer.select("g.tag-"+d.tag.slug)

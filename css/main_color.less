@@ -77,9 +77,7 @@ g.cat-home{
   }
     text{
       fill:#999;
-
     }
-
 }
 
 g.area text{
@@ -94,7 +92,6 @@ g.area text{
 //NODOS QUE REPRESENTAN CURSOS+ÁREAS
 //curso en general
 .node {
-
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 12px;
   font-weight: 300;
@@ -106,30 +103,20 @@ g.area text{
     stroke: #000;
     stroke-width: 2px;
   }
-
   &:hover{
-  	//fill: #1f77b4;
-  	//fill:#999;
-
-    circle{
-
-     //fill: #97FF26;
+   circle{
 	   stroke: #fff;
-     stroke-width: 2px;
-
-     
+     stroke-width: 2px;     
     }
-
 	}
 
-  &.mouseHover{
+  &.mouseHoverArea, &.areacentricSelected{
     transition: fill 0.2s ease;
     circle{
       stroke: #fff;
       stroke-width: 2px;
     }
   }
-
   &.relevant{
     text{
       font-weight: 400;
@@ -278,10 +265,10 @@ path.link {
   fill: none;
   stroke: rgba(255,255,255,0.2);
   stroke-width: 1px;
-  &.areacentric{
+  /*&.areacentric{
   	stroke: rgba(0,200,00,0.4);
-  }
-  &.mouseHover{
+  }*/
+  &.mouseHoverArea{
     transition: stroke 0.2s ease;
     stroke: rgba(255,255,255,0.8); 
   }
@@ -301,7 +288,7 @@ path.linktag {
   stroke: rgba(255, 255, 255, 0.5);
   stroke-width: 1px;
   }
-  &.mouseHover{
+  &.mouseHoverArea{
    transition: stroke 0.2s ease;
    stroke: rgba(255,255,255,0.3); 
   }
@@ -506,53 +493,40 @@ path.source-psico{
   stroke: shade(@col-psico, 50);
   stroke-width: 1px;
 
-  &.mouseHover{
+  &.mouseHoverArea{
    transition: stroke 0.2s ease;
-   stroke: @col-psico; 
-
-    &.areacentric{
+   stroke: @col-psico;     
+  }
+  &.areacentricSelected{
       stroke: @col-psico; 
     }
-  }
-
-  &.areacentric{
-    stroke: shade(@col-psico, 50);
-  }
 }
 
 path.source-ciencia{
   stroke: shade(@col-cyt, 50);
   stroke-width: 1px;
 
-  &.mouseHover{
+  &.mouseHoverArea{
    transition: stroke 0.2s ease;
-   stroke: @col-cyt; 
-
-    &.areacentric{
+   stroke: @col-cyt;    
+  }  
+  &.areacentricSelected{
       stroke: @col-cyt; 
-    }
   }
 
-  &.areacentric{
-    stroke: shade(@col-cyt, 50);
-  }
 }
 
 path.source-economia{
   stroke: shade(@col-eco, 50);
   stroke-width: 1px;
 
- &.mouseHover{
+ &.mouseHoverArea{
    transition: stroke 0.2s ease;
    stroke: @col-eco; 
-
-    &.areacentric{
-      stroke: @col-eco; 
-    }
   }
 
-  &.areacentric{
-    stroke: shade(@col-eco, 50);
+  &.areacentricSelected{
+    stroke:  @col-eco;
   }
 }
 
@@ -560,17 +534,15 @@ path.source-idiomas{
   stroke: shade(@col-idi, 50);
   stroke-width: 1px;
 
-  &.mouseHover{
+  &.mouseHoverArea{
    transition: stroke 0.2s ease;
    stroke: @col-idi; 
 
-    &.areacentric{
-      stroke: @col-idi; 
-    }
+
   }
 
-  &.areacentric{
-    stroke: shade(@col-idi, 50);
+  &.areacentricSelected{
+    stroke: @col-idi; 
   }
 }
 
@@ -578,53 +550,44 @@ path.source-humanidades{
   stroke: shade(@col-hum, 50);
   stroke-width: 1px;
 
-  &.mouseHover{
+  &.mouseHoverArea{
    transition: stroke 0.2s ease;
    stroke: @col-hum; 
 
-    &.areacentric{
-      stroke: @col-hum; 
-    }
+    
   }
 
-  &.areacentric{
-    stroke: shade(@col-hum, 50);
+  &.areacentricSelected{
+      stroke: @col-hum; 
   }
+  
 }
 
 path.source-edu{
   stroke: shade(@col-edu, 50);
   stroke-width: 1px;
 
-  &.mouseHover{
+  &.mouseHoverArea{
    transition: stroke 0.2s ease;
    stroke: @col-edu; 
-
-    &.areacentric{
+  }
+&.areacentricSelected{
       stroke: @col-edu; 
     }
-  }
-
-  &.areacentric{
-    stroke: shade(@col-edu, 50);
-  }
+  
 }
 
 path.source-derecho{
   stroke: shade(@col-der, 50);
   stroke-width: 1px;
 
-  &.mouseHover{
+  &.mouseHoverArea{
    transition: stroke 0.2s ease;
-   stroke: @col-der; 
-
-    &.areacentric{
-      stroke: @col-der; 
-    }
+   stroke: @col-der;     
   }
 
-  &.areacentric{
-    stroke: shade(@col-der, 50);
+  &.areacentricSelected{
+      stroke: @col-der; 
   }
 }
 

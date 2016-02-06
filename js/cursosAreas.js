@@ -134,7 +134,7 @@ function updateLinksAreasCursos(transition_length,delay1,easing){
         //.attr("class", function(d){return d3.select(this).attr("class") + " target-"+d.target.slug})
 
     //enter + update         
-    link.classed("areacentric",function(){return mode=="areacentric" ? true:false })
+    link.classed("areacentric",function(){return mode=="areacentric" ? false:false })
     .transition().delay(delay1).ease(easing).duration(transition_length).attr("d", diagonal); 
 
 }

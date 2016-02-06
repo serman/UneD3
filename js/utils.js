@@ -46,6 +46,9 @@ function cleanTagSelections(){
   svg.selectAll("path.linktag.selectedCC")
   .classed("selectedCC",false)  
 
+  svg.selectAll(".areacentricSelected")
+  .classed("areacentricSelected",false)  
+
   d3.select('.node.cursocentrico').classed("cursocentrico",false)
   d3.select('.node.area.relevant').classed("relevant",false)
 

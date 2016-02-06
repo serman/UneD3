@@ -1,0 +1,181 @@
+@verde-uned: #03473a;
+@gris-uned: #707277;
+
+#toggle a{
+	color: inherit;
+	
+	text-decoration: none;
+	margin-right: 1em;
+
+	i{
+		color: #666;
+		margin-right: 0.5em;
+	}
+}
+
+#toggle i{
+	color: #666;
+	margin-right: 0.5em;
+}
+
+#toggle label{
+	font-weight: 300;
+  	color: #999;
+}
+
+#cierre{
+	background-color: rgba(100,100,100,0.8);
+	background-color: #084f35;
+	border-radius: 50%;
+	height: auto;
+	width: 34px;
+	text-align: center;
+	padding: 2px;
+	border: 4px solid #fff;
+	
+	  -webkit-box-shadow: 0px 3px 8px -1px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0px 3px 8px -1px rgba(0,0,0,0.5);
+	box-shadow: 0px 3px 8px -1px rgba(0,0,0,0.5);
+
+	a i{
+		color: #fff;
+	
+	} 
+}
+
+#cierre:hover{
+	background-color: #999;
+	background-color: rgba(200,0,0,1);
+}
+
+#cierre a:hover i{
+	/*color: #cc0000;*/
+}
+
+#viz-nav{
+	 border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#mini-nav{
+	background-color: @verde-uned;
+	color: rgba(255, 255, 255, 0.5);
+	font-weight: 300;
+	font-size: 0.8em;
+	padding: 4px 0px;
+
+	strong{
+		color: rgba(255, 255, 255, 0.8);
+		font-weight: 500;
+	}
+
+	a{
+		color: inherit;
+		// color: rgba(255, 255, 255, 0.8);
+		text-transform: uppercase;
+		font-weight: 500;
+		display: block;
+
+		padding-right: 0.5em;
+
+		i{
+			padding-left: 0.5em;
+			color: rgba(255, 255, 255, 0.8);
+		}
+	}
+
+	a:hover{
+		text-decoration: none;
+		color: rgba(255, 255, 255, 0.8);
+
+		i{
+			color: #fff;
+		}
+
+	}
+
+}
+
+
+#cajon{
+	background-color: #707277;
+	padding-bottom: 1.5em;
+	padding-top: 3em;
+
+	p{
+		color: rgba(255, 255, 255, 0.8);
+		font-weight: 300;
+
+		strong{
+			color: rgba(255, 255, 255, 0.9);
+			font-weight: 500;
+		}
+	}
+
+	ul{
+		list-style-type: none;
+		text-align: right;
+		padding: 0;
+		margin:0;
+
+		border-top: 1px solid #929497;
+
+		li{
+			line-height: 1.5em;
+
+			a{
+				color: rgba(255, 255, 255, 0.8);
+				display: block;
+				border-bottom: 1px solid #929497;
+
+
+				//padding-right: 0.5em;
+
+				&.active{
+					font-weight: 500;
+					color: rgba(255, 255, 255, 1);
+					background-color: @verde-uned;
+				}
+
+				&:hover{
+					color: rgba(255, 255, 255, 1);
+					text-decoration: none;
+					background-color: #929497;
+
+					&.active{
+						background-color: @verde-uned;
+						color: rgba(255, 255, 255, 0.8);
+					}
+				}
+
+			}
+
+			a:after{
+				display:inline-block;
+				font:normal normal normal 14px/1 FontAwesome;
+				font-size:inherit;
+				text-rendering:auto;
+				-webkit-font-smoothing:antialiased;
+				-moz-osx-font-smoothing:grayscale;
+
+				
+				content: "\f10c";
+				font-size: 0.5em;
+				vertical-align: middle;
+				padding-left: 1em;
+				padding-right: 0.5em;
+
+				&.active{
+					
+				}
+			}
+
+			a.active:after{
+				content:"\f111";
+			}
+		}
+	}
+}
+
+footer{
+	background-color: @gris-uned;
+}

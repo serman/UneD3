@@ -31,7 +31,7 @@ var myTranslate=[0, 0]
 
 
 $( document ).ready(function() {
-	svg = d3.select("body").append("svg")
+	svg = d3.select("#canvas-container").append("svg")
         .attr("width", radius * 3)
         .attr("height", radius * 2)
         .append("g")
@@ -90,7 +90,11 @@ $( document ).ready(function() {
 /********************INTERACCIONES *****************************************/        
 //click en un area
     svg.selectAll("g.node.area:not(.cat-home)").on("click", function(d) { 
-        $('select').val(d.slug)
+        
+        $('select#area-select').val(d.slug)
+    //$('#messages > #cat').classed("area-"+_course.parent.slug,true)
+    $('#messages > #cat').removeClass()
+    $('#messages > #cat').addClass("area-"+d.slug)
       mode="areacentric";
       cleanTagSelections();
       nodes = cluster.nodes(newRoot)     
@@ -346,6 +350,9 @@ function cursoCentric(_course,_coursedom){
     mode="cursocentric"
     d3.select(_coursedom).classed("cursocentrico",true)
     $('select#area-select').val(_course.parent.slug)
+
+    $('#messages > #cat').removeClass()
+    $('#messages > #cat').addClass("area-"+_course.parent.slug)
     // 2º Construimos estructura con cursos relacionados:
     
     //////////cursos  ////////////////

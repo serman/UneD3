@@ -118,7 +118,9 @@ $( document ).ready(function() {
             cursoCentric(d,this);
         }else{
             courseContainer.selectAll('.clicked')//.each(function(){ d3.select(this).on("click",null) } )
-               .classed("clicked",false)               
+               .classed("clicked",false)  
+             $('#messages > #cat').removeClass()
+             $('#messages > #cat').addClass("area-"+d.parent.slug)                
             d3.select(this).classed("clicked",true)
                 $('#messages').show();
                 //img de fondo

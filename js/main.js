@@ -74,7 +74,9 @@ $( document ).ready(function() {
 
 //cursos
     createNodeCursos();
+
     updateLinksAreasCursos(4000,600,"elastic");
+
 
 /*****tags *******/
     asignTagPosition();
@@ -89,25 +91,10 @@ $( document ).ready(function() {
 
 /********************INTERACCIONES *****************************************/        
 //click en un area
-    svg.selectAll("g.node.area:not(.cat-home)").on("click", function(d) { 
+    svg.selectAll("g.node.area:not(.cat-home)").on("click", function(d) {        
         
-        $('select#area-select').val(d.slug)
-    //$('#messages > #cat').classed("area-"+_course.parent.slug,true)
-    $('#messages > #cat').removeClass()
-    $('#messages > #cat').addClass("area-"+d.slug)
-      mode="areacentric";
-      cleanTagSelections();
-      nodes = cluster.nodes(newRoot)     
-      //updateNodeCursos(d)  
-      updateCoursesWithRotation(-(d.x-90),1000);
-      zoomed();
-      updateLinksAreasCursos();
-      updateLinksTags()
+        areaCentric(d)
 
-        courseLinkContainer.selectAll("path.link.source-"+d.slug)
-       .classed("areacentricSelected",true);
-       courseContainer.selectAll("g.node.area-"+d.slug)
-       .classed("areacentricSelected",true)
 
     })// end g.node.area click
 
@@ -124,12 +111,12 @@ $( document ).ready(function() {
             d3.select(this).classed("clicked",true)
                 $('#messages').show();
                 //img de fondo
-                if(d.img_src!=0){
+                /*if(d.img_src!=0){
                     $('#messages').css('background-image', 'url('+d.img_src+')')  
                 }
                 else{
                     $('#messages').css('background-image', 'none');
-                }
+                } */
                 //contenido
                 $('#messages #titulo span').empty().text(d.titulo)
                 $('#messages #course-link').attr('href',d.url)
@@ -257,15 +244,7 @@ $( document ).ready(function() {
    $('a#category-list').on('click', function(e){
         e.preventDefault();
         var cat=$(this).data("category");
-        console.log(cat)
-        mode="areacentric";
-        cleanTagSelections();
-        nodes = cluster.nodes(newRoot)     
-        //updateNodeCursos(d)  
-        updateCoursesWithRotation(-(cat.x-90),1000);
-        zoomed();
-        updateLinksAreasCursos();
-        updateLinksTags()
+        areaCentric(cat);
    });
     
  $('#search').keyup(function(event){
@@ -282,16 +261,9 @@ $( document ).ready(function() {
     var optionSelected = $("option:selected", this);
     valueSelected = this.value;
 
-    mselection=courseContainer.selectAll('.area.cat-'+valueSelected)
+    courseContainer.select('.area.cat-'+valueSelected)
     .each(function(d){        
-            mode="areacentric";
-          cleanTagSelections();
-          nodes = cluster.nodes(newRoot)     
-          //updateNodeCursos(d)  
-          updateCoursesWithRotation(-(d.x-90),1000);
-          zoomed();
-          updateLinksAreasCursos();
-          updateLinksTags()
+       areaCentric(d)
     })
     
 
@@ -336,6 +308,9 @@ function tagCentric(tagObject,tagNode){
   var relatedC=getRelatedCoursesTC(d);
   //tags
   centerTagRepositionCourses(d);
+  //pinto links entre el tag
+  tagLinkContainer.selectAll("path.linktag.tag-"+d.slug)
+    .classed("selectedCC",true)
   updateNodesTags();
 
   repositionNodesCC(relatedC)
@@ -371,5 +346,33 @@ function cursoCentric(_course,_coursedom){
      updateLinksTags();          
      updateSelectedLinksTagsCC(_course)
 }
+
+function areaCentric(_d){
+    if(! (mode==="areacentric") ){ 
+        mode="areacentric";
+        autoRotateTags();
+    }
+    else mode="areacentric";
+    
+
+    cleanTagSelections();
+    nodes = cluster.nodes(newRoot)     
+    updateCoursesWithRotation(-(_d.x-90),1000);
+    zoomed();
+    updateLinksAreasCursos();
+    updateLinksTags()
+
+    courseLinkContainer.selectAll("path.link.source-"+_d.slug)
+    .classed("areacentricSelected",true);
+    courseContainer.selectAll("g.node.area-"+_d.slug)
+    .classed("areacentricSelected",true)
+
+    // update page clases in forms
+    $('select#area-select').val(_d.slug)
+    $('#messages > #cat').removeClass()
+    $('#messages > #cat').addClass("area-"+_d.slug)
+
+}
+
 
 

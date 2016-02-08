@@ -49,6 +49,10 @@ function dragended(d) {
    num_items*=-1;
    if(num_items<0) num_items=lngth+num_items;
    centerTagRepositionCourses(tagsList[num_items]);
+   //pinto links entre el tag
+   
+  tagLinkContainer.selectAll("path.linktag.tag-"+tagsList[num_items].slug)
+    .classed("selectedCC",true)
   
   updateNodesTags(0)
    svg.select('.tagContainer')

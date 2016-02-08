@@ -4,7 +4,7 @@ function createNodeCursos(){
         .data(nodes) //update
 
       //enter
-      var g=node.enter().append("g")
+       g=node.enter().append("g")
         .attr("class", function(d){return ("iscategory" in d ) ? "node cat-"+d.slug : "node" })
         .attr("class", function(d){           
           var clases=d3.select(this).attr("class") 
@@ -13,21 +13,42 @@ function createNodeCursos(){
                 clases = clases + " tag-" + d.tagsSlug[i];
               }
               clases = clases + " area-" + d.parent.slug;
+              if (! ("emphasis" in d ) ){
+                  clases = clases+ " emphasis-0";
+              }
+              else{
+                clases = clases+ " emphasis-"+d.emphasis;
+              }
           }
+
+          
+
           return clases;
         })
         .classed("area",function(d) { return ("iscategory" in d ) ? true : false; })
-        .classed("emphasis",function(d){return "emphasis" in d && d.emphasis==true ?true:false})
+        //.classed("emphasis",function(d){return "emphasis" in d && d.emphasis==true ?true:false})
         .each(function(d){
           if(d.y>0 && d.iscategory)
             d.y=areaPosition;
           if(  (d.x > 30 && d.x<150) ||  (d.x > 210 && d.x<330)  || ("iscategory" in d)  ) d.visible=true
-          else d.visible=false;
+          else d.visible=false;         
         })
 
-      //circulos de los cursos
-      g.append("circle")
-        .attr("r",5 /*function(d) { return ("iscategory" in d ) ? 5 : 5; }*/)
+
+      //figuras de los cursos
+      d3.selectAll("g.emphasis-0, g.emphasis-1").append("circle")
+       .attr("r",5 /*function(d) { return ("iscategory" in d ) ? 5 : 5; }*/)
+
+      d3.selectAll("g.emphasis-2, g.emphasis-3").append("rect")
+        .attr("x",-5)
+        .attr("y",-5)
+        .attr("width",10)
+        .attr("height",10) 
+      
+      d3.selectAll("g.emphasis-4, g.emphasis-5").append("path")
+       .attr("transform", function(d) { return "translate(" + 0 + "," + 0 + ")"; })
+        .attr("d", d3.svg.symbol().type("diamond"));
+      /*** fin figuras **/
 
       //texto de los cursos 
       g.append("text")
@@ -38,18 +59,22 @@ function createNodeCursos(){
         //.classed("hiddentext", function(d) { return true; })
         .style({"opacity":0, "display":"none"})
         .attr("transform", function(d) { return"iscategory" in d ? "translate(0,28)rotate(" + -(d.x -90)+ ")":"translate(18)rotate(" + -(d.x -90)+ ")" ; })
-        .text(function(d) { return  d.name }); 
+        .text(function(d) { return  d.name })
 
       //update + enter
       node.transition().delay(50).duration(3000).ease("elastic")
       .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+      .each("end",function(d){
+              d3.select(this).select(".area text").call(wrap,130) //saltos de linea palabas
+
+      })
      
       node.select("text").transition().delay(400).duration(1500)
       .style('opacity',function(d){ return d.visible==true?1:0})
       .style('display',function(d){ return d.visible==true?"inherit":"none"})       
 
-      node.selectAll("g.area text").call(wrap,160) //saltos de linea palabas
-      
+      courseContainer.selectAll("g.emphasis-1, g.emphasis-3, g.emphasis-5").each(blink1)
+
 }
 
 

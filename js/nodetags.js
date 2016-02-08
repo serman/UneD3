@@ -51,7 +51,7 @@ function updateNodesTags(transition_length,delay1){
         .attr("dy", ".31em") 
         .text(function(d) { return  d.name.substring(0,17) });
 
-      g.append("line").attr("x1", -25)
+      /*g.append("line").attr("x1", -25)
                             .attr("y1",7)
                             .attr("x2", -15)
                             .attr("y2",7)
@@ -60,7 +60,7 @@ function updateNodesTags(transition_length,delay1){
                             .attr("y1", 0)
                             .attr("x2", -15)
                             .attr("y2", 0)
-                            .classed("tick",true);
+                            .classed("tick",true);*/
 
   //enter+update
       tagsElements.transition().delay(delay1).duration(function(d,i){ return delay1>0? transition_length+i*10:transition_length}) //con los nuevos tags sólo se rota todo
@@ -95,7 +95,7 @@ function updateLinksTags(transition_length,delay1){
         .attr("class", function(d){return d3.select(this).attr("class") + " course-"+d.course.slug})
         .attr("class", function(d){return d3.select(this).attr("class") + " tag-"+d.tag.slug})
 
-//update  + enter
+//update  
   link.transition().delay(delay1).duration(transition_length).ease("elastic")
     .attr("d", function(d){ 
           //console.log("rehaciendo" + d);
@@ -157,7 +157,7 @@ function updateSelectedLinksTagsCC(course){
 
 /*
 1º Reorder the tagList puting the @focusTag in the focus Position ( 0º )and gives each tag a new position
-3º add class to  the linktags
+
 */
 function centerTagRepositionCourses(focusTag){ 
   //muevo tag al centro
@@ -165,8 +165,6 @@ function centerTagRepositionCourses(focusTag){
   tagsList=tagsList.concat(newList)
   asignTagPosition();  
 
-  //pinto links entre el tag
-  tagLinkContainer.selectAll("path.linktag.tag-"+focusTag.slug)
-    .classed("selectedCC",true)
+  
 }
 

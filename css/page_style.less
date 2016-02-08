@@ -1,6 +1,211 @@
 @verde-uned: #03473a;
 @gris-uned: #707277;
 
+
+// colors
+@col-edu: #e517a1; // H:320 S:90 B:90
+@col-psico: #a117e5; // H:280 S:90 B:90
+@col-idi: #1717e5; // H:240 S:90 B:90
+@col-hum: #17a1e5; // H:200 S:90 B:90
+@col-der: #17e517; // H:160 S:90 B:90 // #17e5a1
+@col-eco: #e5e517; // H:120 S:90 B:90 // #17e517
+@col-cyt: #e51717; // H:0 S:90 B:90
+
+@col-over: rgba(0,255,0,1); // verde
+/********** end message box ****/
+
+
+#messages #titulo span {
+  // background-color: black;
+}
+
+#messages #tag-list {
+  background-color: none;
+  display: inline-block;
+}
+
+#messages .fecha{
+  // background-color: #fff;
+  padding: 4px 8px;
+  font-size: 0.9em;
+
+  color: rgba(255, 255, 255, 0.75);
+
+  i{
+    color: rgba(255, 255, 255, 0.75);
+    //color: @gris-uned;
+    padding-right: 8px;
+    font-size: 1.1em;
+  }
+}
+
+#messages span,
+#messages #category-list {
+// background-color: white;
+// background-color: rgba(255,255,255,0.9);
+}
+
+#messages h2{
+  line-height: 1.1em;
+  font-weight: 300;
+  background-color: @verde-uned;
+  color: #fff;
+  padding: 4px;
+}
+#messages h5{
+	color:white;
+}
+
+#messages hr{
+  border-color: rgba(255,255,255,0.2);
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+
+#cat{
+  i{
+    float: left;
+    margin-top: 6px;
+    margin-left: 0.5em;
+
+    color: #7ED321;
+  }
+
+  &.area-psico{
+    i{
+      color: @col-psico;
+    }
+  }
+
+  &.area-edu{
+    i{
+      color: @col-edu;
+    }
+  }
+
+  &.area-humanidades{
+    i{
+      color: @col-hum;
+    }
+  }
+
+  &.area-economia{
+    i{
+      color: @col-eco;
+    }
+  }
+
+  &.area-derecho{
+    i{
+      color: @col-der;
+    }
+  }
+
+  &.area-ciencia{
+    i{
+      color: @col-cyt;
+    }
+  }
+
+  &.area-idiomas{
+    i{
+      color: @col-idi;
+    }
+  }
+
+}
+
+a#category-list{
+  display: block;
+  text-align: left;
+  text-decoration: none;
+
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+
+  color: #fff;
+
+  border-radius: 12px;
+  padding: 0;
+  padding-left: 2em;
+  padding-top: 2px;
+
+  border: 1px solid rgba(255,255,255,.25);
+
+  margin-top: 1em;
+  margin-bottom: 0.75em;
+
+
+}
+
+a:hover#category-list{
+  background-color: @col-over;
+  color: #fff;
+}
+
+#tag-list a{
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  //fill: #777;
+  background-color: #000;
+  color: #fff;
+
+  text-transform: uppercase;
+  cursor: pointer;
+
+  display: inline-block;
+  
+  padding: 4px 8px;
+  text-decoration: none;
+  border: 1px solid #ccc;
+
+  margin-right: 4px;
+  margin-bottom: 4px;
+
+  &:hover{
+    //background-color: rgba(255, 255, 255, 0.75);
+    background-color: @col-over;
+    //color: #000;
+  }
+}
+
+
+
+#actions{
+  
+}
+
+#actions a{
+  
+}
+
+#actions i{
+  margin-right: 0.5em;
+}
+
+#course-center{
+   background-color: rgba(100,100,100,0.8);
+  /* width: 45%; */
+}
+
+#course-link{
+   background-color: rgba(0,180,0,0.8);
+   /*width: 53%; */
+}
+
+a:hover#course-link{
+background-color: rgba(0,255,0,1);
+}
+
+a:hover#course-center{
+background-color: rgba(0,0,0,1);
+}
+/******************** end message box ****/
+
+
 #toggle a{
 	color: inherit;
 	

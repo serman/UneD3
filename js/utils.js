@@ -11,6 +11,7 @@ var diagonal = d3.svg.diagonal.radial()
 
 //wrap text
 function wrap(text, width) {
+  //console.log(text)  
   text.each(function() {
     var text = d3.select(this),
         words = text.text().split(/\s+/).reverse(),

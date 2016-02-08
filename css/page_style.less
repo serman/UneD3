@@ -131,17 +131,18 @@ a#category-list{
   padding: 0;
   padding-left: 2em;
   padding-top: 2px;
+  padding-bottom: 2px;
 
   border: 1px solid rgba(255,255,255,.25);
 
   margin-top: 1em;
   margin-bottom: 0.75em;
 
-
 }
 
 a:hover#category-list{
   background-color: @col-over;
+  background-color: #000;
   color: #fff;
 }
 
@@ -150,7 +151,7 @@ a:hover#category-list{
   font-size: 12px;
   font-weight: 300;
   //fill: #777;
-  background-color: #000;
+  background-color: #1a1a1a;
   color: #fff;
 
   text-transform: uppercase;
@@ -167,41 +168,54 @@ a:hover#category-list{
 
   &:hover{
     //background-color: rgba(255, 255, 255, 0.75);
-    background-color: @col-over;
+    //background-color: @col-over;
+    background-color: #efefef;
+    color: #000;
     //color: #000;
   }
 }
 
 
 
-#actions{
-  
-}
-
-#actions a{
-  
-}
-
 #actions i{
   margin-right: 0.5em;
 }
 
-#course-center{
-   background-color: rgba(100,100,100,0.8);
-  /* width: 45%; */
+a#course-center{
+   background-color: rgba(64,64,64,1);
+   padding: 4px 8px;
+  text-decoration: none;
+  border: 1px solid #ccc;
+  display: inline-block;
+
+  font-size: 12px;
+  font-weight: 400;
+
+  margin-right: 4px;
+  margin-bottom: 4px;
+
+  color: #fff;
+  text-transform: uppercase;
+  cursor: pointer;
+
+
+   i{
+
+   	padding-right: 4px;
+   }
 }
 
 #course-link{
    background-color: rgba(0,180,0,0.8);
-   /*width: 53%; */
+   width: 100%;
 }
 
 a:hover#course-link{
-background-color: rgba(0,255,0,1);
+	background-color: rgba(0,255,0,1);
 }
 
 a:hover#course-center{
-background-color: rgba(0,0,0,1);
+	background-color: rgba(0,0,0,1);
 }
 /******************** end message box ****/
 

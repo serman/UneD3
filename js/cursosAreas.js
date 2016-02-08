@@ -74,7 +74,7 @@ function createNodeCursos(){
       .style('display',function(d){ return d.visible==true?"inherit":"none"})       
 
       courseContainer.selectAll("g.emphasis-1, g.emphasis-4, g.emphasis-7").each(blink1)
-      courseContainer.selectAll("g.emphasis-2, g.emphasis-5, g.emphasis-8").each(jump1)
+      courseContainer.selectAll("g.emphasis-2, g.emphasis-5, g.emphasis-8").each(scale1)
 
 }
 

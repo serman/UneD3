@@ -40,6 +40,21 @@ function jump1(){
 	})();
 }
 
+function scale1(){
+	var circle1 = d3.select(this).select("circle, path, rect");
+	//circle1 = d3.select(this).select("path");
+	//circle1 = d3.select(this).select("rect");
+	var obj1 = d3.select(this);
+	(function repeat(){
+		var posY=circle1.y
+		//if(circle1[0][0]==null) color1="black"  //TBD
+		//else color1=circle1.style('fill');
+		circle1.transition().delay(randomIntFromInterval(500,1000)).duration(randomIntFromInterval(200,400)).ease("bounce")
+		.attr("transform", 'scale(2)')
+		.transition().duration(200).ease("bounce").attr("transform", 'scale(1)')
+		.each("end",repeat)
+	})();
+}
 
 
 // 

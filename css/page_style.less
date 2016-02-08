@@ -24,7 +24,7 @@
   display: inline-block;
 }
 
-#messages .fecha{
+#messages .fecha, #messages .tags, #messages .area{
   // background-color: #fff;
   padding: 4px 8px;
   font-size: 0.9em;
@@ -32,12 +32,16 @@
   color: rgba(255, 255, 255, 0.75);
 
   i{
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.5);
     //color: @gris-uned;
     padding-right: 8px;
     font-size: 1.1em;
   }
 }
+
+#messages .tags{
+	margin-bottom: 6px;
+	}
 
 #messages span,
 #messages #category-list {
@@ -123,27 +127,29 @@ a#category-list{
 
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 300;
 
   color: #fff;
 
-  border-radius: 12px;
+  // border-radius: 12px;
   padding: 0;
   padding-left: 2em;
   padding-top: 2px;
   padding-bottom: 2px;
 
-  border: 1px solid rgba(255,255,255,.25);
+  border: 1px solid rgba(255,255,255,.5);
 
-  margin-top: 1em;
+  margin-top: 0.25em;
   margin-bottom: 0.75em;
+
+  background-color: rgba(0, 0, 0, 0.5);
 
 }
 
 a:hover#category-list{
-  background-color: @col-over;
-  background-color: #000;
+  background-color: rgba(255, 255, 255, 0.75);
   color: #fff;
+  color:#000;
 }
 
 #tag-list a{
@@ -152,6 +158,7 @@ a:hover#category-list{
   font-weight: 300;
   //fill: #777;
   background-color: #1a1a1a;
+  background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
 
   text-transform: uppercase;
@@ -161,17 +168,14 @@ a:hover#category-list{
   
   padding: 4px 8px;
   text-decoration: none;
-  border: 1px solid #ccc;
+  border: 1px solid rgba(255, 255, 255, 0.5);
 
   margin-right: 4px;
   margin-bottom: 4px;
 
   &:hover{
-    //background-color: rgba(255, 255, 255, 0.75);
-    //background-color: @col-over;
-    background-color: #efefef;
+    background-color: rgba(255, 255, 255, 0.75);
     color: #000;
-    //color: #000;
   }
 }
 
@@ -185,7 +189,7 @@ a#course-center{
    background-color: rgba(64,64,64,1);
    padding: 4px 8px;
   text-decoration: none;
-  border: 1px solid #ccc;
+  border: 1px solid rgba(255, 255, 255, 0.5);
   display: inline-block;
 
   font-size: 12px;

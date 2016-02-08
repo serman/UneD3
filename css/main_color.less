@@ -18,49 +18,67 @@
 @gris-bajo:#808080;
 
 //Caracteristicas especiales de los nodos que respresentan areas
-
 g.cat-edu circle, g.cat-edu rect, g.cat-edu path{
+  /*
   fill:@col-edu;
   &:hover{
     fill: saturate(@col-edu, 10%);
   }
+  */
+  fill:#000;
+  stroke: shade(@col-edu, 50);
+  &:hover{
+    stroke: saturate(@col-edu, 10%);
+    fill:#000;
+  }
 }
 
 g.cat-psico circle, g.cat-edu rect, g.cat-edu path{
-  fill:@col-psico;
-
+  fill:#000;
+  stroke: shade(@col-psico, 50);
   &:hover{
-   fill: saturate(@col-psico, 10%);
+    stroke: saturate(@col-psico, 10%);
+    fill:#000;
   }
 }
 g.cat-idiomas circle, g.cat-idiomas rect, g.cat-idiomas path{
-  fill:@col-idi;
+ fill:#000;
+  stroke: shade(@col-idi, 50);
   &:hover{
-   fill: saturate(@col-idi, 10%);
+    stroke: saturate(@col-idi, 10%);
+    fill:#000;
   }
 }
 g.cat-humanidades circle, g.cat-humanidades rect, g.cat-humanidades path{
-  fill:@col-hum;
+  fill:#000;
+  stroke: shade(@col-hum, 50);
   &:hover{
-   fill: saturate(@col-hum, 10%);
+    stroke: saturate(@col-hum, 10%);
+    fill:#000;
   }
 }
 g.cat-derecho circle, g.cat-derecho rect, g.cat-derecho path{
-  fill:@col-der;
+  fill:#000;
+  stroke: shade(@col-der, 50);
   &:hover{
-   fill: saturate(@col-der, 10%);
+    stroke: saturate(@col-der, 10%);
+    fill:#000;
   }
 }
 g.cat-economia circle, g.cat-economia rect, g.cat-economia path{
-  fill:@col-eco;
+ fill:#000;
+  stroke: shade(@col-eco, 50);
   &:hover{
-   fill: saturate(@col-eco, 10%);
+    stroke: saturate(@col-eco, 10%);
+    fill:#000;
   }
 }
 g.cat-ciencia circle, g.cat-ciencia rect, g.cat-ciencia path{
-	 fill:@col-cyt;
+	fill:#000;
+  stroke: shade(@col-cyt, 50);
   &:hover{
-   fill: saturate(@col-cyt, 10%);
+    stroke: saturate(@col-cyt, 10%);
+    fill:#000;
   }
 }
 

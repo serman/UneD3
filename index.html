@@ -67,7 +67,7 @@ Los Cursos del OCW de la UNED <strong>no requieren ninguna matrícula</strong>, 
     
     <div class="col-md-3">
     <div class="input-group">
-    <div class="input-group-addon">Area</div>
+    <div class="input-group-addon">Área</div>
      <select id="area-select"class="form-control">
       <option class="all" value="all">Todas</option>
       <option class="edu" value="edu">Educación</option>
@@ -79,7 +79,7 @@ Los Cursos del OCW de la UNED <strong>no requieren ninguna matrícula</strong>, 
       <option class="derecho" value="derecho">Derecho</option>
     </select>
      
-     <div class="input-group-addon"><i class="fa fa-dot-circle-o"></i></div>
+     <div class="input-group-addon"><i class="fa fa-circle-o"></i></div>
     </div>
     </div>
     
@@ -88,29 +88,28 @@ Los Cursos del OCW de la UNED <strong>no requieren ninguna matrícula</strong>, 
      <div class="col-md-3">
      
      <div class="input-group" id="topbar">
-           <div class="input-group-addon">
-           <!--<i class="fa fa-filter"></i>-->
-           <i class="fa fa-search"></i>
-           
-           </div>
+           <div class="input-group-addon"><i class="fa fa-search"></i></div>
            <input type="text" class="form-control" id="search" name="search" placeholder="Curso">
-           
+           <div class="input-group-addon"><i class="fa fa-circle"></i>
+           </div>
          </div>
 
       </div>
             
        <div class="col-md-6" id="toggle">
-       <i class="fa fa-calendar-o fa-2x"></i>
+       <i class="fa fa-calendar-o"></i>
        
+       <label class="radio-inline">
+         <input type="radio" id="inlineCheckbox3" name="tiempo" value="option3" checked> Todos
+       </label>
+       &nbsp; | 
        <label class="radio-inline">
          <input type="radio" id="inlineCheckbox1" name="tiempo" value="option1"> En Curso
        </label>
        <label class="radio-inline">
          <input type="radio" id="inlineCheckbox2" name="tiempo" value="option2"> Próximamente
        </label>
-       <label class="radio-inline">
-         <input type="radio" id="inlineCheckbox3" name="tiempo" value="option3" checked> Todos
-       </label>
+       
        </div>
        
      </div>

@@ -270,7 +270,7 @@
     "tags": "derechos, reclusos, derecho,ccpp",
     "very_short_title": "Derechos reclusos",
     "status": "inicio",
-    "emphasis": 1
+    "emphasis": 0
   },
   {
     "titulo": "Educación Vial: su necesidad a lo largo de la vida",
@@ -335,7 +335,7 @@
     "tags": "idiomas, inglés, inicial, básico",
     "very_short_title": "Aprende inglés",
     "status": "inicio",
-    "emphasis": 1
+    "emphasis": 0
   },
   {
     "titulo": "Emprendimiento e Innovación Social",
@@ -439,7 +439,7 @@
     "tags": "geografía",
     "very_short_title": "Geografía General",
     "status": "comunidad",
-    "emphasis": 0
+    "emphasis": 1
   },
   {
     "titulo": "Glosario de Derecho Constitucional",
@@ -452,7 +452,7 @@
     "tags": "glosario, derecho, constitucional",
     "very_short_title": "Glosario Derecho",
     "status": "inicio",
-    "emphasis": 1
+    "emphasis": 0
   },
   {
     "titulo": "Grandes obras del arte español del Renacimiento y el Barroco en su contexto internacional",
@@ -517,7 +517,7 @@
     "tags": "informes, periciales, peritos, ciencia, científicos, método, interpretación",
     "very_short_title": 0,
     "status": "demanda",
-    "emphasis": 1
+    "emphasis": 0
   },
   {
     "titulo": "Inglés",
@@ -543,7 +543,7 @@
     "tags": "idiomas, inglés, inicial, básico,",
     "very_short_title": "Professional English",
     "status": "demanda",
-    "emphasis": 1
+    "emphasis": 0
   },
   {
     "titulo": "Instituciones de Derecho Comunitario",
@@ -582,7 +582,7 @@
     "tags": "economía, empresa,",
     "very_short_title": "Felicidad economía",
     "status": "comunidad",
-    "emphasis": 1
+    "emphasis": 0
   },
   {
     "titulo": "La función recursos humanos en las Entidades No Lucrativas. La gestión por competencias",
@@ -751,7 +751,7 @@
     "tags": "educación, multimedia, vídeos",
     "very_short_title": "Mini-vídeos",
     "status": "inicio",
-    "emphasis": 1
+    "emphasis": 0
   },
   {
     "titulo": "Multimedia para explicar multimedia",
@@ -868,7 +868,7 @@
     "tags": "redes, comunicaciones, lan, wlan, industrial",
     "very_short_title": "Redes Comunicaciones",
     "status": "comunidad",
-    "emphasis": 1
+    "emphasis": 0
   },
   {
     "titulo": "Redes de Comunicaciones Industriales",
@@ -920,7 +920,7 @@
     "tags": "english, languages, inglés, idiomas, escribir, B1",
     "very_short_title": "Write English",
     "status": "inicio",
-    "emphasis": 1
+    "emphasis": 0
   },
   {
     "titulo": "Técnicas de estudio",
@@ -933,7 +933,7 @@
     "tags": "técnicas, estudio, métodos",
     "very_short_title": "Técnicas estudio",
     "status": "comunidad",
-    "emphasis": 1
+    "emphasis": 0
   },
   {
     "titulo": "Teoría del Derecho",
@@ -959,7 +959,7 @@
     "tags": "teoría, derecho",
     "very_short_title": "Teoría Derecho",
     "status": "inicio",
-    "emphasis": 1
+    "emphasis": 0
   }
 ]
 }

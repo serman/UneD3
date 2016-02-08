@@ -1,4 +1,4 @@
-var initX=0, initY=0;
+/*var initX=0, initY=0;
 var ddy=0;
 var olddY=0;
 
@@ -94,10 +94,11 @@ function dragendedCourse(d) {
   initXCourse=0
   initYCourse=0  
 }
-
+*/
 
 var zoomCursos = d3.behavior.zoom()            
-            .on("zoom", zoomScrollCursos);
+            .on("zoom",     zoomScrollCursos)
+             .on("zoomend", zoomScrollCursosEnd)
 
 function zoomScrollCursos() {
   evento1=d3.event.sourceEvent;
@@ -117,29 +118,42 @@ function zoomScrollCursos() {
       }
       var num_items=-Math.round(scale1(d3.event.scale))
       //if(num_items<0) num_items=lngth+num_items;
-       updateCoursesWithRotation(num_items)
-       updateLinksTags();
-      updateLinksAreasCursos();
+      updateCoursesWithRotation(num_items)
+  
 
-    zoomCursos.scale(1)
+      zoomCursos.scale(1)
   } else if( d3.event.type=="zoom" && ( d3.event.sourceEvent instanceof MouseEvent || d3.event.sourceEvent instanceof TouchEvent) ){
-      var incremento= (zoomCursos.translate()[1]/30);
-      var num_items=(incremento)
-      console.log(incremento)  
+      var incremento= (zoomCursos.translate()[1]);
+      //var num_items=(incremento)
 
+      var scale1 = d3.scale.linear()
+                    .domain([1, 300])
+                    .range([1, 10]);
+
+      num_items=scale1(incremento)
+      if(incremento<0) num_items=-num_items
+      num_items*= (incremento>0?1:-1);
+      //console.log(num_items + " incremento "+ incremento);
       num_items=num_items>0?Math.ceil(num_items):Math.floor(num_items)
       
       updateCoursesWithRotation(num_items)
-       updateLinksTags();
-      updateLinksAreasCursos();
+      
       zoomCursos.translate([0,0]);
   }
 }
 
-var zoom = d3.behavior.zoom()            
-            .on("zoom", zoomScroll);
 
-function zoomScroll() {
+function zoomScrollCursosEnd() {
+  //console.log("end")
+ updateLinksTags(2000);
+      updateLinksAreasCursos();
+  }
+// tags
+var zoom = d3.behavior.zoom()            
+            .on("zoom", zoomScrollTags)
+            .on("zoomend", zoomScrollEndTags)
+
+function zoomScrollTags() {
   evento1=d3.event.sourceEvent;
   if( d3.event.type=="zoom" && d3.event.sourceEvent instanceof WheelEvent ){      
       var lngth=tagsList.length;
@@ -159,13 +173,11 @@ function zoomScroll() {
 
       //una vez calculado el numero de elementos que voy a girar, giro todo el circulo de tags.
       centerTagRepositionCourses(tagsList[num_items]);      
-      updateNodesTags(0)     
-      updateLinksTags();
-
+      
+updateNodesTags(0)     
       zoom.scale(1)//reinicio la escala para los siguiente eventos solo la uso para medir la cantidad de movimiento
   }
   else if( d3.event.type=="zoom" && ( d3.event.sourceEvent instanceof MouseEvent || d3.event.sourceEvent instanceof TouchEvent) ){
-      console.log(zoom.translate())
       var lngth=tagsList.length;
       var step=960/ (lngth) 
       var incremento=- (zoom.translate()[1]/30);
@@ -174,11 +186,14 @@ function zoomScroll() {
       if(num_items<0) num_items=lngth+num_items;
       
       centerTagRepositionCourses(tagsList[num_items]);      
-      updateNodesTags(0)     
-      updateLinksTags();
+      //updateNodesTags(0)    
+      updateNodesTags(0)      
+     // updateLinksTags();
 
       zoom.translate([0,0]);
+  }  
+}    
 
-  }
-  
-}            
+function zoomScrollEndTags() {   
+      updateLinksTags(2000);
+}  

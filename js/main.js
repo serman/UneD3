@@ -40,16 +40,24 @@ $( document ).ready(function() {
     backgroundContainer=svg.append("g").classed("backgroundContainer",true)    
     tagLinkContainer=svg.append("g").classed("tagLinkContainer",true)    
     courseLinkContainer=svg.append("g").classed("courseLinkContainer",true)
-    tagContainer=svg.append("g").classed("tagContainer",true).call(drag)
-    courseContainer=svg.append("g").classed("courseContainer",true).call(dragCourse)
+    tagContainer=svg.append("g").classed("tagContainer",true)
+    //.call(drag).on("wheel.zoom",mouseWheelDrag)
+    .call(zoom)
+    courseContainer=svg.append("g").classed("courseContainer",true).call(zoomCursos)//.call(dragCourse)
 
     backgroundContainer.append("rect")
     .attr('x','-50%').attr('y','-50%').
     attr('width',"100%").attr('height',"100%").classed("backgroundRect",true)
+
     backgroundContainer.append("circle")
     .attr('cx',0)
     .attr('cx',0)
-    .attr('r',360).classed('tagCircle',true).call(drag);
+    .attr('r',960).classed('courseCircle',true).call(zoomCursos)//.call(drag);
+
+    backgroundContainer.append("circle")
+    .attr('cx',0)
+    .attr('cx',0)
+    .attr('r',360).classed('tagCircle',true).call(zoom)//.call(drag);
 
     backgroundContainer.append("circle")
     .attr('cx',0)

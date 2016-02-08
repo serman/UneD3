@@ -28,6 +28,8 @@ function dragged(d) {
 
 
 
+
+
 var drag = d3.behavior.drag()
     .on("drag", dragged)
     .on("dragend", dragended);
@@ -40,7 +42,7 @@ function dragended(d) {
   olddY+=ddy/50
 
   //el nuevo tag que esté en el centro será el qeu estaba antes a ddy/50 
-  var lngth=tagsList.length;
+   var lngth=tagsList.length;
    var step=360/lngth;
    var desplazamiento=ddy/50;
    //var resto=desplazamiento%step;
@@ -50,7 +52,7 @@ function dragended(d) {
    if(num_items<0) num_items=lngth+num_items;
    centerTagRepositionCourses(tagsList[num_items]);
    //pinto links entre el tag
-   
+
   tagLinkContainer.selectAll("path.linktag.tag-"+tagsList[num_items].slug)
     .classed("selectedCC",true)
   
@@ -92,3 +94,91 @@ function dragendedCourse(d) {
   initXCourse=0
   initYCourse=0  
 }
+
+
+var zoomCursos = d3.behavior.zoom()            
+            .on("zoom", zoomScrollCursos);
+
+function zoomScrollCursos() {
+  evento1=d3.event.sourceEvent;
+  
+  if( d3.event.type=="zoom" && d3.event.sourceEvent instanceof WheelEvent ){     
+     var lngth=tagsList.length;
+      var incremento=d3.event.scale; // valor de la escala tras el "zoom de la rueda de ratón"
+      var num_items=0; //cantidad de elementos que voy a girar
+      if(incremento<1){
+          var scale1 = d3.scale.linear()
+                    .domain([1, 0])
+                    .range([1, 20]);
+      }else{
+          var scale1 = d3.scale.linear()
+                    .domain([2, 1])
+                    .range([-20, -1]);
+      }
+      var num_items=-Math.round(scale1(d3.event.scale))
+      //if(num_items<0) num_items=lngth+num_items;
+       updateCoursesWithRotation(num_items)
+       updateLinksTags();
+      updateLinksAreasCursos();
+
+    zoomCursos.scale(1)
+  } else if( d3.event.type=="zoom" && ( d3.event.sourceEvent instanceof MouseEvent || d3.event.sourceEvent instanceof TouchEvent) ){
+      var incremento= (zoomCursos.translate()[1]/30);
+      var num_items=(incremento)
+      console.log(incremento)  
+
+      num_items=num_items>0?Math.ceil(num_items):Math.floor(num_items)
+      
+      updateCoursesWithRotation(num_items)
+       updateLinksTags();
+      updateLinksAreasCursos();
+      zoomCursos.translate([0,0]);
+  }
+}
+
+var zoom = d3.behavior.zoom()            
+            .on("zoom", zoomScroll);
+
+function zoomScroll() {
+  evento1=d3.event.sourceEvent;
+  if( d3.event.type=="zoom" && d3.event.sourceEvent instanceof WheelEvent ){      
+      var lngth=tagsList.length;
+      var incremento=d3.event.scale; // valor de la escala tras el "zoom de la rueda de ratón"
+      var num_items=0; //cantidad de elementos que voy a girar
+      if(incremento<1){
+          var scale1 = d3.scale.linear()
+                    .domain([1, 0])
+                    .range([1, 5]);
+      }else{
+          var scale1 = d3.scale.linear()
+                    .domain([2, 1])
+                    .range([-5, -1]);
+      }
+      var num_items=Math.round(scale1(d3.event.scale))
+      if(num_items<0) num_items=lngth+num_items; //con esto elijo si muevo hacia arriba o hacia abajo
+
+      //una vez calculado el numero de elementos que voy a girar, giro todo el circulo de tags.
+      centerTagRepositionCourses(tagsList[num_items]);      
+      updateNodesTags(0)     
+      updateLinksTags();
+
+      zoom.scale(1)//reinicio la escala para los siguiente eventos solo la uso para medir la cantidad de movimiento
+  }
+  else if( d3.event.type=="zoom" && ( d3.event.sourceEvent instanceof MouseEvent || d3.event.sourceEvent instanceof TouchEvent) ){
+      console.log(zoom.translate())
+      var lngth=tagsList.length;
+      var step=960/ (lngth) 
+      var incremento=- (zoom.translate()[1]/30);
+      var num_items=(incremento)/step
+      num_items=num_items>0?Math.ceil(num_items):Math.floor(num_items)
+      if(num_items<0) num_items=lngth+num_items;
+      
+      centerTagRepositionCourses(tagsList[num_items]);      
+      updateNodesTags(0)     
+      updateLinksTags();
+
+      zoom.translate([0,0]);
+
+  }
+  
+}            

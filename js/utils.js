@@ -88,9 +88,6 @@ function cleanTagSelections(){
     }
     //val.slug="asdf"
   });
-
-  
-
   var newRoot={"name":"Home","iscategory":true,"slug":"home",children:[
       { "name":'Idiomas',"iscategory":true, "slug":"idiomas", "children":JSON.search(root.cursos,'//*[categoria="Idiomas"]')},
       { "name":'Psicología y Servicios Sociales',"iscategory":true, "slug":"psico", "children":JSON.search(root.cursos,'//*[categoria="Psicología y Servicios Sociales"]') },
@@ -100,7 +97,15 @@ function cleanTagSelections(){
       { "name":'Derecho', "iscategory":true,"slug":"derecho", "children":JSON.search(root.cursos,'//*[categoria="Derecho"]') }, 
       { "name":'Humanidades', "iscategory":true,"slug":"humanidades", "children":JSON.search(root.cursos,'//*[categoria="Humanidades"]') }  
     ]
-  }
+  }/*
+  newRoot.children[0].children= newRoot.children[0].children.concat( newRoot.children[0].children) 
+  newRoot.children[1].children= newRoot.children[1].children.concat( newRoot.children[1].children) 
+  newRoot.children[2].children= newRoot.children[2].children.concat( newRoot.children[2].children) 
+  newRoot.children[3].children= newRoot.children[3].children.concat( newRoot.children[3].children) 
+  newRoot.children[4].children= newRoot.children[4].children.concat( newRoot.children[4].children) 
+  newRoot.children[5].children= newRoot.children[5].children.concat( newRoot.children[5].children) 
+  newRoot.children[6].children= newRoot.children[6].children.concat( newRoot.children[6].children) */
+
   numAreas=7+1;
 
   return newRoot

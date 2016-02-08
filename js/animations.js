@@ -3,7 +3,7 @@ function autoRotateTags(){
 		var d1=tagsList[1]
 		centerTagRepositionCourses(d1);
 	  	updateNodesTags();
-	  	updateLinksTags();
+	  	updateLinksTags(1000);
 	  	if (mode==="areacentric") setTimeout(autoRotateTags,6000) //repito cada 6 segs
 	  	return;  	 
 }

@@ -23,7 +23,7 @@
     "tags": "análisis, datos, psicología, inicial, básico, introducción",
     "very_short_title": "Análisis Datos",
     "status": "demanda",
-    "emphasis": 0
+    "emphasis": 1
   },
   {
     "titulo": "Apoyo multimedia a la enseñanza de la asignatura de Matemáticas Especiales",
@@ -75,7 +75,7 @@
     "tags": "cartografía, ciencia, 3D",
     "very_short_title": "Cartografía geológica",
     "status": "demanda",
-    "emphasis": 0
+    "emphasis": 2
   },
   {
     "titulo": "Climate Change: From Science to Lived Experience",
@@ -114,7 +114,7 @@
     "tags": "competencias, información",
     "very_short_title": "compatencias genericas",
     "status": "comunidad",
-    "emphasis": 0
+    "emphasis": 4
   },
   {
     "titulo": "Competencias para trabajar en equipo",
@@ -127,7 +127,7 @@
     "tags": "competencias, trabajo en equipo",
     "very_short_title": "Trabajar en equipo",
     "status": "comunidad",
-    "emphasis": 0
+    "emphasis": 7
   },
   {
     "titulo": "Curso 0 de Biología",
@@ -140,7 +140,7 @@
     "tags": "Curso 0, inicial, básico, introducción, biología, ciencia",
     "very_short_title": 0,
     "status": "comunidad",
-    "emphasis": 0
+    "emphasis": 4
   },
   {
     "titulo": "Curso 0 de Economía",
@@ -218,7 +218,7 @@
     "tags": "Curso 0, inicial, básico, introducción, química, ciencia",
     "very_short_title": 0,
     "status": "comunidad",
-    "emphasis": 0
+    "emphasis": 1
   },
   {
     "titulo": "Curso básico de teledetección",
@@ -231,7 +231,7 @@
     "tags": "Curso 0, inicial, básico, introducción, teledetección, ciencia",
     "very_short_title": 0,
     "status": "demanda",
-    "emphasis": 0
+    "emphasis": 1
   },
   {
     "titulo": "Curso de Alemán Básico para Principiantes: Prim@1",
@@ -244,7 +244,7 @@
     "tags": "idiomas, alemán, básico, introducción",
     "very_short_title": "Alemán básico",
     "status": "comunidad",
-    "emphasis": 0
+    "emphasis": 8
   },
   {
     "titulo": "Derechos de los reclusos",
@@ -257,7 +257,7 @@
     "tags": "derechos, reclusos, derecho,ccpp",
     "very_short_title": "Derechos reclusos",
     "status": "comunidad",
-    "emphasis": 0
+    "emphasis": 6
   },
   {
     "titulo": "Derechos de los reclusos",
@@ -283,7 +283,7 @@
     "tags": "educación vial",
     "very_short_title": "Educación vial I",
     "status": "comunidad",
-    "emphasis": 0
+    "emphasis": 5
   },
   {
     "titulo": "Educación vial: sustancias nocivas en la conducción",
@@ -296,7 +296,7 @@
     "tags": "educación vial",
     "very_short_title": "Educación vial II",
     "status": "comunidad",
-    "emphasis": 0
+    "emphasis": 5
   },
   {
     "titulo": "El Estado del Bienestar",
@@ -322,7 +322,7 @@
     "tags": "estado, bienestar",
     "very_short_title": "bienestar",
     "status": "comunidad",
-    "emphasis": 0
+    "emphasis": 2
   },
   {
     "titulo": "Empieza con el inglés: Aprende las mil palabras más usadas y sus posibilidades comunicativas",
@@ -348,7 +348,7 @@
     "tags": "economía, emprendimiento, innovación, social",
     "very_short_title": "Emprendimiento",
     "status": "comunidad",
-    "emphasis": 0
+    "emphasis": 3
   },
   {
     "titulo": "Entrenamiento en competencias para el estudio autorregulado a distancia",
@@ -387,7 +387,7 @@
     "tags": "filosofía, ciencias sociales",
     "very_short_title": "Filosofía CCSS",
     "status": "comunidad",
-    "emphasis": 0
+    "emphasis": 7
   },
   {
     "titulo": "Formación en promoción y educación para la salud",
@@ -530,7 +530,7 @@
     "tags": "idiomas, inglés, inicial, básico,",
     "very_short_title": "Inglés",
     "status": "demanda",
-    "emphasis": 0
+    "emphasis": 3
   },
   {
     "titulo": "Ingles profesional / Professional English",
@@ -569,7 +569,7 @@
     "tags": "economía, empresa, contabilidad, negocios",
     "very_short_title": "Contabilidad",
     "status": "demanda",
-    "emphasis": 0
+    "emphasis": 5
   },
   {
     "titulo": "La felicidad, la economía y la práctica empresarial",
@@ -595,7 +595,7 @@
     "tags": "economía, empresa,",
     "very_short_title": "RRHH ONL",
     "status": "comunidad",
-    "emphasis": 1
+    "emphasis": 5
   },
   {
     "titulo": "La gran divergencia: la no-Europa antes de 1800",
@@ -621,7 +621,7 @@
     "tags": "economía, empresa,",
     "very_short_title": "RSC",
     "status": "comunidad",
-    "emphasis": 1
+    "emphasis": 5
   },
   {
     "titulo": "La tutoría en la escuela",
@@ -647,7 +647,7 @@
     "tags": "ciencia, matemáticas, lógica, discreta",
     "very_short_title": "lógica discreta",
     "status": "comunidad",
-    "emphasis": 0
+    "emphasis": 8
   },
   {
     "titulo": "Los principios de la cultura impresa moderna: ilustración gráfica, cultura visual y vida urbana",

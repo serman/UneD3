@@ -36,16 +36,16 @@ function createNodeCursos(){
 
 
       //figuras de los cursos
-      d3.selectAll("g.emphasis-0, g.emphasis-1").append("circle")
+      d3.selectAll("g.emphasis-0, g.emphasis-1, g.emphasis-2").append("circle")
        .attr("r",5 /*function(d) { return ("iscategory" in d ) ? 5 : 5; }*/)
 
-      d3.selectAll("g.emphasis-2, g.emphasis-3").append("rect")
+      d3.selectAll("g.emphasis-3, g.emphasis-4, g.emphasis-5").append("rect")
         .attr("x",-5)
         .attr("y",-5)
         .attr("width",10)
         .attr("height",10) 
       
-      d3.selectAll("g.emphasis-4, g.emphasis-5").append("path")
+      d3.selectAll("g.emphasis-6, g.emphasis-7, g.emphasis-8").append("path")
        .attr("transform", function(d) { return "translate(" + 0 + "," + 0 + ")"; })
         .attr("d", d3.svg.symbol().type("diamond"));
       /*** fin figuras **/
@@ -73,7 +73,8 @@ function createNodeCursos(){
       .style('opacity',function(d){ return d.visible==true?1:0})
       .style('display',function(d){ return d.visible==true?"inherit":"none"})       
 
-      courseContainer.selectAll("g.emphasis-1, g.emphasis-3, g.emphasis-5").each(blink1)
+      courseContainer.selectAll("g.emphasis-1, g.emphasis-4, g.emphasis-7").each(blink1)
+      courseContainer.selectAll("g.emphasis-2, g.emphasis-5, g.emphasis-8").each(jump1)
 
 }
 

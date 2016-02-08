@@ -16,9 +16,9 @@ function blink1(){
 		var color1;
 		if(circle1[0][0]==null) color1="black"  //TBD
 		 else color1=circle1.style('fill')
-		circle1.transition().delay(1000).duration(randomIntFromInterval(150,300))
+		circle1.transition().delay(2000).duration(randomIntFromInterval(300,500))
 		.style("fill","white")
-		.transition().duration(randomIntFromInterval(150,300)).style("fill",color1).
+		.transition().duration(randomIntFromInterval(300,500)).style("fill",color1).
 		each("end",repeat)
 	})();
 }
@@ -49,9 +49,9 @@ function scale1(){
 		var posY=circle1.y
 		//if(circle1[0][0]==null) color1="black"  //TBD
 		//else color1=circle1.style('fill');
-		circle1.transition().delay(randomIntFromInterval(500,1000)).duration(randomIntFromInterval(200,400)).ease("bounce")
+		circle1.transition().delay(randomIntFromInterval(2500,3500)).duration(randomIntFromInterval(600,1000)).ease("bounce")
 		.attr("transform", 'scale(2)')
-		.transition().duration(200).ease("bounce").attr("transform", 'scale(1)')
+		.transition().duration(800).ease("bounce").attr("transform", 'scale(1)')
 		.each("end",repeat)
 	})();
 }

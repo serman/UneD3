@@ -36,7 +36,7 @@ function createNodeCursos(){
 
 
       //figuras de los cursos
-      d3.selectAll("g.emphasis-0, g.emphasis-1, g.emphasis-2").append("circle")
+      d3.selectAll("g.emphasis-0, g.emphasis-1, g.emphasis-2, g.area").append("circle")
        .attr("r",5 /*function(d) { return ("iscategory" in d ) ? 5 : 5; }*/)
 
       d3.selectAll("g.emphasis-3, g.emphasis-4, g.emphasis-5").append("rect")

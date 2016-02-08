@@ -10,7 +10,7 @@
     "tags": "alemán, idiomas, inicial",
     "very_short_title": "Alemán hispanohablantes",
     "status": "inicio",
-    "emphasis": 1
+    "emphasis": 0
   },
   {
     "titulo": "Análisis de Datos en Psicología I",
@@ -23,7 +23,7 @@
     "tags": "análisis, datos, psicología, inicial, básico, introducción",
     "very_short_title": "Análisis Datos",
     "status": "demanda",
-    "emphasis": 1
+    "emphasis": 0
   },
   {
     "titulo": "Apoyo multimedia a la enseñanza de la asignatura de Matemáticas Especiales",
@@ -231,7 +231,7 @@
     "tags": "Curso 0, inicial, básico, introducción, teledetección, ciencia",
     "very_short_title": 0,
     "status": "demanda",
-    "emphasis": 1
+    "emphasis": 0
   },
   {
     "titulo": "Curso de Alemán Básico para Principiantes: Prim@1",
@@ -283,7 +283,7 @@
     "tags": "educación vial",
     "very_short_title": "Educación vial I",
     "status": "comunidad",
-    "emphasis": 5
+    "emphasis": 0
   },
   {
     "titulo": "Educación vial: sustancias nocivas en la conducción",
@@ -400,7 +400,7 @@
     "tags": "educación, salud,",
     "very_short_title": "Educación salud",
     "status": "demanda",
-    "emphasis": 1
+    "emphasis": 0
   },
   {
     "titulo": "Fundamentos de fotografía digital",
@@ -569,7 +569,7 @@
     "tags": "economía, empresa, contabilidad, negocios",
     "very_short_title": "Contabilidad",
     "status": "demanda",
-    "emphasis": 5
+    "emphasis": 0
   },
   {
     "titulo": "La felicidad, la economía y la práctica empresarial",
@@ -595,7 +595,7 @@
     "tags": "economía, empresa,",
     "very_short_title": "RRHH ONL",
     "status": "comunidad",
-    "emphasis": 5
+    "emphasis": 0
   },
   {
     "titulo": "La gran divergencia: la no-Europa antes de 1800",

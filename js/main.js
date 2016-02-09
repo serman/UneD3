@@ -26,6 +26,7 @@ var tagContainer,tagLinkContainer,courseContainer,courseLinkContainer,background
 
 var myZoom=1;
 var myTranslate=[0, 0]
+var filtroTiempo="todos"
 
 
 
@@ -273,10 +274,21 @@ $( document ).ready(function() {
     .each(function(d){        
        areaCentric(d)
     })
-    
+ })
 
- } )
-
+ $('input:radio[name=tiempo]').change(function() {
+    //console.log(this.value)
+        if (this.value == 'todos') {
+            filtroTiempo='todos'
+        }
+        else if (this.value == 'ahora') {
+            filtroTiempo='ahora'
+        }
+        else if (this.value == 'futuro') {
+            filtroTiempo='futuro'
+        }
+        updateCoursesWithRotation(undefined,1500);
+});
 
 
 }); //document ready
@@ -368,7 +380,7 @@ function areaCentric(_d){
     updateCoursesWithRotation(-(_d.x-90),1000);
     zoomed();
     updateLinksAreasCursos();
-    updateLinksTags()
+    updateLinksTags(2000)
 
     courseLinkContainer.selectAll("path.link.source-"+_d.slug)
     .classed("areacentricSelected",true);

@@ -75,6 +75,12 @@ function cleanTagSelections(){
     }
     val.searchable=removeDiacritics(val.titulo + searchableTags ).toLowerCase() 
 
+    var fecha=val.fecha_inicio
+    if(fecha==0 || fecha===undefined) val.proximo=false
+    else{
+      val.proximo=cursoProximoOActual(fecha)
+    }
+
     if(val.very_short_title === undefined){}
     else{
       //console.log(val.very_short_title)
@@ -282,4 +288,19 @@ var defaultDiacriticsRemovalap = [
 function randomIntFromInterval(min,max)
 {
     return Math.floor(Math.random()*(max-min+1)+min);
+}
+
+/*
+returns true when d1 is past or before the next 30 days 
+returns false otherwise */
+function cursoProximoOActual(d1){
+  var dat2=d1.split("/")
+  var myDate=new Date(parseInt(dat2[2])+2000,dat2[1]-1,dat2[0])
+  var today= new Date()
+
+  //cuantos milisegundos son 30 dias
+  //milisMes=30*24*3600*1000
+  today.setDate( today.getDate() + 30 )
+  if(myDate< today) return true
+  else return false
 }

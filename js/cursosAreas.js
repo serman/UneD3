@@ -85,13 +85,23 @@ function updateCoursesWithRotation(nn,transitionLength){
   if (nn===undefined) nn=0
   if(transitionLength===undefined) transitionLength=300
 
-  var nodeSelection=courseContainer.selectAll("g.node").each(function(d){
+   nodeSelection=courseContainer.selectAll("g.node").each(function(d){
       d.x=d.x+nn; 
       d.x=normAngle(d.x);
       //if( ( ( (d.x > 30 && d.x<150) ||  (d.x > 210 && d.x<330) ) || ("iscategory" in d) ) ==false ) d.visible=false
       if(  (d.x > 30 && d.x<150) ||  (d.x > 210 && d.x<330)  || ("iscategory" in d)  ) d.visible=true
       else d.visible=false;
-  })
+  }).style('display',"none")
+
+/* filtro de tiempo */
+  nodeSelection.filter(function(d,i){
+    if(d.iscategory==true) return true;
+    if(filtroTiempo=="todos") return true
+    else if (filtroTiempo=="ahora") return d.proximo
+    else if (filtroTiempo=="futuro")
+      return !(d.proximo);
+  }).style('display',"inherit")       
+
     nodeSelection.transition().duration(transitionLength)
       .attr("transform", function(d) {        
         return "rotate(" + normAngle(d.x -90) + ") translate(" + d.y + ")"; 

@@ -1,16 +1,32 @@
 
 
 //size variables
-var radius = 960 / 2; 
 
-var tagRadius = 250; //TAG CIRCLE position. 
+
+
+var viewportWidth = $(window).width();
+var viewportHeight = $(window).height();
+var availableHeight=viewportHeight-18-100
+var canvasWidth= viewportWidth-20;
+var diameter=Math.max(availableHeight,720) //720 is min size
+diameter=Math.min(diameter,850) //850 is max size
+ //diameter=900
+ var canvasHeight=diameter+20
+var radius = diameter / 2; 
+var clusterSize =radius //el radio de los puntitos
+
+var leftOffset=Math.max(100, (canvasWidth-diameter -500) );  leftOffset=Math.min(leftOffset,300);
+var translatePositionX= clusterSize+leftOffset; //quedan n pixeles a la izquierda
+var translatePositionY= canvasHeight>availableHeight?  availableHeight/2:  clusterSize+5; //4*radius/5
+
+var tagRadiusWeight=110 //ancho de la tira d etags
+var tagRadius = clusterSize -tagRadiusWeight; //TAG CIRCLE position.  //inicio de la tira de tags (radio interno)
+
 var areaPosition=130
 
 
+var cluster;
 
-var cluster
-
- 
 var svg;
 var link; //links between courses and areas
 
@@ -33,10 +49,10 @@ var filtroTiempo="todos"
 
 $( document ).ready(function() {
 	svg = d3.select("#canvas-container").append("svg")
-        .attr("width", radius * 3)
-        .attr("height", radius * 2)
+        .attr("width", canvasWidth)
+        .attr("height", canvasHeight)
         .append("g")
-        .attr("transform", "translate(" + radius + "," + 4*radius/5 + ")")
+        .attr("transform", "translate(" + translatePositionX + "," + translatePositionY + ")")
     
     backgroundContainer=svg.append("g").classed("backgroundContainer",true)    
     tagLinkContainer=svg.append("g").classed("tagLinkContainer",true)    
@@ -53,12 +69,12 @@ $( document ).ready(function() {
     backgroundContainer.append("circle")
     .attr('cx',0)
     .attr('cx',0)
-    .attr('r',960).classed('courseCircle',true).call(zoomCursos)//.call(drag);
+    .attr('r',diameter).classed('courseCircle',true).call(zoomCursos)//.call(drag);
 
     backgroundContainer.append("circle")
     .attr('cx',0)
     .attr('cx',0)
-    .attr('r',360).classed('tagCircle',true).call(zoom)//.call(drag);
+    .attr('r',tagRadius+tagRadiusWeight).classed('tagCircle',true).call(zoom)//.call(drag);
 
     backgroundContainer.append("circle")
     .attr('cx',0)
@@ -74,7 +90,7 @@ $( document ).ready(function() {
     tagsDict=t.diccio;
     tagsList=t.arr;
     
-    cluster=d3.layout.cluster().size([radius - 120, radius - 120]);
+    cluster=d3.layout.cluster().size([360, clusterSize]); //X is going to be rotation degrees (0,360) and clusterSize is the radius
 
     nodes = cluster.nodes(newRoot)
     for (i=0; i<nodes.length; i++){
@@ -95,21 +111,17 @@ $( document ).ready(function() {
     linksTags=linkNodeTag(tagsDict,nodes)
     updateLinksTags(5000,2000);
 
-    d3.select(self.frameElement).style("height", radius * 2 + "px");
+    //d3.select(self.frameElement).style("height", radius * 2 + "px");
 /**** fin tags **/
 
 /********************INTERACCIONES *****************************************/        
 //click en un area
-    svg.selectAll("g.node.area:not(.cat-home)").on("click", function(d) {        
-        
+    svg.selectAll("g.node.area:not(.cat-home)").on("click", function(d) {
         areaCentric(d)
-
-
     })// end g.node.area click
 
 //Click en un curso
     courseContainer.selectAll("g.node:not(.area):not(.clicked)").on("click", function(d) {
-
         if(d3.select(this).classed("clicked")==true){
             cursoCentric(d,this);
         }else{
@@ -144,12 +156,11 @@ $( document ).ready(function() {
 
     });
 
-    courseContainer.selectAll(".clicked text").on("click", function(d) {
-        console.log("clickeddd")
-            
+    /*courseContainer.selectAll(".clicked text").on("click", function(d) {
+        console.log("clickeddd")            
             console.log(d)
             console.log(this)
-        })
+        })*/
 
 
 
@@ -166,8 +177,8 @@ $( document ).ready(function() {
         updateLinksTags()
     }
     svg.transition().delay(500).duration(1000)//zoomout
-        .ease("linear")
-        .attr("transform", "translate(" + radius + "," + 4*radius/5 + ")" )
+        //.ease("linear")
+        .attr("transform", "translate(" + translatePositionX + "," + translatePositionY + ")" )
      
     });
 
@@ -309,8 +320,8 @@ function updateNodeStyleTagSelected(name, value) {
 
 function zoomed(){
   myZoom=1.3
-  myTranslate[0]=50;
-  myTranslate[1]=300*myZoom;
+  myTranslate[0]=20;//casi a la mitad
+  myTranslate[1]=translatePositionY;
   svg.transition().delay(400).duration(1000).attr("transform",
         "translate(" + myTranslate + ")" +
         "scale(" + myZoom + ")"

@@ -54,16 +54,16 @@ Los Cursos del OCW de la UNED <strong>no requieren ninguna matrícula</strong>, 
 <div id="mini-nav">
 <div class="container">
 <div class="row">
-<div class="col-md-5 col-xs-6"><strong>UNED</strong> · Cursos en Abierto · Open Course Ware</div>
-<div class="col-md-7 text-right col-xs-6"><a href="#" id="nav_toggle">menu <i class="fa fa-bars"></i></a></div>
+<div class="col-md-5 col-xs-9"><strong>UNED</strong> · Cursos en Abierto · Open Course Ware</div>
+<div class="col-md-7 text-right col-xs-3"><a href="#" id="nav_toggle">menu <i class="fa fa-bars"></i></a></div>
 </div>
 </div>
 </div> <!-- fine mini nav -->
 
   <div class="container" id="viz-nav">
-    <div class="row" style="margin-top: 1em; padding-bottom:0.5em;">
+    <div class="row">
     
-    <div class="col-md-3">
+    <div class="col-md-3 col-xs-6">
     <div class="input-group">
     <div class="input-group-addon">Área</div>
      <select id="area-select"class="form-control">
@@ -83,7 +83,7 @@ Los Cursos del OCW de la UNED <strong>no requieren ninguna matrícula</strong>, 
     
     
     
-     <div class="col-md-3">
+     <div class="col-md-3 col-xs-6">
      
      <div class="input-group" id="topbar">
            <div class="input-group-addon"><i class="fa fa-search"></i></div>
@@ -114,8 +114,8 @@ Los Cursos del OCW de la UNED <strong>no requieren ninguna matrícula</strong>, 
        
        
        <div class="col-xs-12 visible-xs-block">
-       <a href="#" id="course-list" class="btn" target="_blank"><i class="fa fa-arrow-circle-right"></i>
-       Lista de Cursos  </a>
+       <a href="#" id="course-list" class="btn btn-xs" target="_blank"><i class="fa fa-arrow-circle-right"></i>
+       Lista de Cursos vista tradicional </a>
        </div>
        
      </div>
@@ -174,7 +174,17 @@ Los Cursos del OCW de la UNED <strong>no requieren ninguna matrícula</strong>, 
       
       <!-- </div> -->
       
-      
+      <div style="position:absolute; left:2px; top:50%;" id="move-left"> <a href="#">
+        <i class="fa fa-arrow-circle-left fa-2x"></i> </a>
+      </div>
+
+      <div style="position:absolute; right:20px; top:20%;" id="move-up" class="move-updown"> <a href="#">
+        <i class="fa fa-arrow-circle-up fa-2x"></i> </a>
+      </div>
+
+      <div style="position:absolute; right:20px; top:92%;" id="move-down" class="move-updown"> <a href="#">
+        <i class="fa fa-arrow-circle-down fa-2x"></i> </a>
+      </div>
 
   
   <footer>

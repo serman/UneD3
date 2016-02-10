@@ -117,8 +117,9 @@ function updateCoursesWithRotation(nn,transitionLength){
       .attr("transform", function(d) { 
             return"iscategory" in d ? "translate(0,28)rotate(" + -(d.x -90)+ ")":"translate(18)rotate(" + -(d.x -90)+ ")" ; 
       })
-      .style('display',function(d){ return d.visible==true?"inherit":"none"})       
+      .style('display',function(d){ return d.visible==true?"inherit":"none"})  
         
+
 
 }
 

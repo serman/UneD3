@@ -84,6 +84,7 @@ function updateTagsWithRotation(nn){
 map structure linkTags to paths 
 */
 function updateLinksTags(transition_length,delay1){
+  if(viewmode=="mobile") return;
   if(transition_length===undefined) transition_length=5000
   if(delay1===undefined) delay1=250
   link = tagLinkContainer.selectAll("path.linktag")

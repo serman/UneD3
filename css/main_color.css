@@ -2,72 +2,92 @@
 g.cat-edu circle,
 g.cat-edu rect,
 g.cat-edu path {
-  fill: #e517a1;
+  /*
+  fill:@col-edu;
+  &:hover{
+    fill: saturate(@col-edu, 10%);
+  }
+  */
+  fill: #000;
+  stroke: #730c51;
 }
 g.cat-edu circle:hover,
 g.cat-edu rect:hover,
 g.cat-edu path:hover {
-  fill: #f20aa5;
+  stroke: #f20aa5;
+  fill: #000;
 }
 g.cat-psico circle,
 g.cat-edu rect,
 g.cat-edu path {
-  fill: #a117e5;
+  fill: #000;
+  stroke: #510c73;
 }
 g.cat-psico circle:hover,
 g.cat-edu rect:hover,
 g.cat-edu path:hover {
-  fill: #a50af2;
+  stroke: #a50af2;
+  fill: #000;
 }
 g.cat-idiomas circle,
 g.cat-idiomas rect,
 g.cat-idiomas path {
-  fill: #1717e5;
+  fill: #000;
+  stroke: #0c0c73;
 }
 g.cat-idiomas circle:hover,
 g.cat-idiomas rect:hover,
 g.cat-idiomas path:hover {
-  fill: #0a0af2;
+  stroke: #0a0af2;
+  fill: #000;
 }
 g.cat-humanidades circle,
 g.cat-humanidades rect,
 g.cat-humanidades path {
-  fill: #17a1e5;
+  fill: #000;
+  stroke: #0c5173;
 }
 g.cat-humanidades circle:hover,
 g.cat-humanidades rect:hover,
 g.cat-humanidades path:hover {
-  fill: #0aa5f2;
+  stroke: #0aa5f2;
+  fill: #000;
 }
 g.cat-derecho circle,
 g.cat-derecho rect,
 g.cat-derecho path {
-  fill: #17e517;
+  fill: #000;
+  stroke: #0c730c;
 }
 g.cat-derecho circle:hover,
 g.cat-derecho rect:hover,
 g.cat-derecho path:hover {
-  fill: #0af20a;
+  stroke: #0af20a;
+  fill: #000;
 }
 g.cat-economia circle,
 g.cat-economia rect,
 g.cat-economia path {
-  fill: #e5e517;
+  fill: #000;
+  stroke: #73730c;
 }
 g.cat-economia circle:hover,
 g.cat-economia rect:hover,
 g.cat-economia path:hover {
-  fill: #f2f20a;
+  stroke: #f2f20a;
+  fill: #000;
 }
 g.cat-ciencia circle,
 g.cat-ciencia rect,
 g.cat-ciencia path {
-  fill: #e51717;
+  fill: #000;
+  stroke: #730c0c;
 }
 g.cat-ciencia circle:hover,
 g.cat-ciencia rect:hover,
 g.cat-ciencia path:hover {
-  fill: #f20a0a;
+  stroke: #f20a0a;
+  fill: #000;
 }
 /* home button */
 g.cat-home {
@@ -273,26 +293,6 @@ path.linktag.mouseHoverArea {
   transition: stroke 0.2s ease;
   stroke: rgba(255, 255, 255, 0.3);
 }
-#messages {
-  font-family: 'Roboto Condensed', sans-serif;
-  background-attachment: fixed;
-  background-size: cover;
-  padding: 1em;
-  display: none;
-  transition: background 0.5s;
-  /*box-shadow:2px 2px rgba(0,0,0,0.2);*/
-  -webkit-box-shadow: 0px 3px 8px -1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 3px 8px -1px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 3px 8px -1px rgba(0, 0, 0, 0.5);
-}
-#messages a {
-  color: #222;
-  text-decoration: underline;
-}
-#messages a.btn {
-  color: white;
-  text-decoration: none;
-}
 line.tick {
   stroke: #1a1a1a;
   stroke-width: 2px;
@@ -303,6 +303,13 @@ rect.backgroundRect {
 circle.tagCircle {
   fill: #666;
   fill: #1a1a1a;
+  cursor: ns-resize;
+  cursor: -webkit-zoom-grab;
+}
+circle.courseCircle {
+  cursor: ns-resize;
+  cursor: -webkit-zoom-grab;
+  fill: #000000;
 }
 circle.areaCircle {
   fill: #000000;

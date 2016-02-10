@@ -324,6 +324,10 @@ a:hover#course-center{
 
 #viz-nav{
 	 border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	 .row:first-child {
+	 	margin-top: 1em; 
+	 	padding-bottom:0.5em;
+	 }
 }
 
 #mini-nav{
@@ -513,7 +517,16 @@ footer{
 
 }
 
+#move-left, .move-updown{
+	display: none
+}
+
 @media screen and (max-width: 768px) {
+
+	#viz-nav .row:first-child {
+	 	margin-top: 0px; 
+	 	padding-bottom:5px;			 
+	}
 
 	.input-group{
    	margin-top: 8px;
@@ -528,5 +541,15 @@ footer{
    #cajon ul{
    	margin-top: 1.5em;
    }
+    body{
+    	overflow: hidden
+    }
+	#move-left, .move-updown{
+		display: block;
+
+	}
+	g.node.cat-home{
+		display: none!important;
+	}
 
 }

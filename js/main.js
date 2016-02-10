@@ -25,19 +25,32 @@ var tagRadiusWeight=110 //ancho de la tira d etags
 var tagRadius = clusterSize -tagRadiusWeight; //TAG CIRCLE position.  //inicio de la tira de tags (radio interno)
 
 var areaPosition=130
+
 /**** mobile *****/
 
 if(viewportWidth<768)
     {
         viewmode="mobile"
-        translatePositionX=-tagRadius
+        
 
     }
 
 if(viewmode=="mobile"){
-
+availableHeight=viewportHeight-60
+diameter=availableHeight*1.5;
+canvasHeight=availableHeight;
+radius = diameter / 2;
+clusterSize =radius
+tagRadiusWeight=110
+tagRadius = clusterSize -tagRadiusWeight;
+areaPosition=130
+translatePositionX=-tagRadius+20
 }
 
+
+/*** timers ***/
+var timerRotateCourses=null;
+/**/
 
 var cluster;
 
@@ -267,6 +280,32 @@ $( document ).ready(function() {
     cursoCentric(_course,_coursedom); 
   })
 
+  $('#move-left a').on('click',function(e){
+    e.preventDefault(); 
+     myTranslate[0]=50;//casi a la mitad
+  myTranslate[1]=translatePositionY;
+  svg.transition().duration(1000).attr("transform",
+        "translate(" + myTranslate + ")" )    
+  $('#move-left').hide();
+  })
+
+  $('#move-up a').on('touchstart', function(e) {
+       e.preventDefault(); 
+       if(timerRotateCourses!=null) clearTimeout(timerRotateCourses)
+        autoRotateCoursesUP()                    
+    });
+  $('#move-down a').on('touchstart', function(e) {
+       e.preventDefault(); 
+       if(timerRotateCourses!=null) clearTimeout(timerRotateCourses)
+        autoRotateCoursesDOWN()                    
+    });
+  
+  $('#move-up a, #move-down a').on('touchend', function(e){        
+e.preventDefault(); 
+    clearTimeout(timerRotateCourses)
+    timerRotateCourses=null
+  });
+
   
     $('#tag-list').on('click','a', function(e){
         e.preventDefault();
@@ -333,7 +372,7 @@ function updateNodeStyleTagSelected(name, value) {
 }
 
 function zoomed(){
-    if(viewmode=="mobile") return;
+    if(viewmode=="mobile") {centerMobilePosition(); return;}
   myZoom=1.3
   myTranslate[0]=20;//casi a la mitad
   myTranslate[1]=translatePositionY;
@@ -418,6 +457,26 @@ function areaCentric(_d){
     $('#messages > #cat').removeClass()
     $('#messages > #cat').addClass("area-"+_d.slug)
 
+}
+
+function centerMobilePosition(){
+    if(viewmode=="mobile"){
+        svg.transition().delay(400).duration(1000)
+            .attr("transform", "translate(" + translatePositionX + "," + translatePositionY + ")")
+              $('#move-left').show();
+    }
+}
+
+function autoRotateCoursesUP(){
+    updateCoursesWithRotation(-1)
+    updateLinksAreasCursos();
+    timerRotateCourses=setTimeout(autoRotateCoursesUP,50) 
+}
+function autoRotateCoursesDOWN(){
+
+    updateCoursesWithRotation(1)
+    updateLinksAreasCursos();
+    timerRotateCourses=setTimeout(autoRotateCoursesDOWN,50) 
 }
 
 

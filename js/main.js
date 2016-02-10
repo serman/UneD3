@@ -30,7 +30,7 @@ var areaPosition=130
 if(viewportWidth<768)
     {
         viewmode="mobile"
-        translatePositionX=-tagRadius+50
+        translatePositionX=-tagRadius
 
     }
 

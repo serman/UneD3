@@ -21,6 +21,8 @@
 <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 <!-- more page styles -->
 <link rel="stylesheet" href="css/page_style.css">
+<!-- mobile test -->
+<link rel="stylesheet" href="css/mobile.css">
 
 </head>
 
@@ -95,9 +97,9 @@ Los Cursos del OCW de la UNED <strong>no requieren ninguna matrícula</strong>, 
       </div>
           
       
-      <!-- no smartphones -->  
-       <div class="col-md-6 hidden-xs" id="toggle">
-       <i class="fa fa-calendar-o"></i>
+  
+       <div class="col-md-6" id="toggle">
+       <i class="fa fa-calendar-o hidden-xs"></i>
        
        <label class="radio-inline">
          <input type="radio" id="inlineCheckbox3" name="tiempo" value="todos" checked> Todos
@@ -112,11 +114,12 @@ Los Cursos del OCW de la UNED <strong>no requieren ninguna matrícula</strong>, 
        
        </div>
        
-       
+       <!--
        <div class="col-xs-12 visible-xs-block">
        <a href="#" id="course-list" class="btn" target="_blank"><i class="fa fa-arrow-circle-right"></i>
        Lista de Cursos  </a>
        </div>
+       -->
        
      </div>
      </div>
@@ -128,6 +131,28 @@ Los Cursos del OCW de la UNED <strong>no requieren ninguna matrícula</strong>, 
       
       <!-- Canvas -->
        <div id="canvas-container"></div>
+       
+       <img src="fake_animation.jpg" alt="fake" class="img-responsive"/>
+       
+       <!-- Alternative content -->
+       <div id="list-container">
+       
+       
+       
+       <ul>
+       <li><a href="#">Análisis de Datos en Psicología I</a></li>
+       <li><a href="#">Apoyo multimedia a la enseñanza de la asignatura de Matemáticas Especiales</a></li>
+        <li><a href="#">Aprendizaje autorregulado a distancia</a></li>
+         <li><a href="#">Bases de circuitos y electrónica práctica (3ª edición)</a></li>
+       <li><a href="#">Cartografía geológica: Guía tridimensional interactiva de prácticas</a></li>
+       <li><a href="#">Análisis de Datos en Psicología I</a></li>
+       <li><a href="#">Climate Change: From Science to Lived Experience</a></li>
+        <li><a href="#">Competencias del trabajo en equipo</a></li>
+         <li><a href="#">Competencias genéricas en información</a></li>
+       <li><a href="#">Cartografía geológica: Guía tridimensional interactiva de prácticas</a></li>
+       </ul>
+       </div>
+       
        
        <!-- message -->
        <div id="messages">

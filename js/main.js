@@ -3,9 +3,11 @@
 //size variables
 
 
-
+viewmode="desktop"
 var viewportWidth = $(window).width();
 var viewportHeight = $(window).height();
+
+/****desktop ****/
 var availableHeight=viewportHeight-18-100
 var canvasWidth= viewportWidth-20;
 var diameter=Math.max(availableHeight,720) //720 is min size
@@ -23,6 +25,18 @@ var tagRadiusWeight=110 //ancho de la tira d etags
 var tagRadius = clusterSize -tagRadiusWeight; //TAG CIRCLE position.  //inicio de la tira de tags (radio interno)
 
 var areaPosition=130
+/**** mobile *****/
+
+if(viewportWidth<768)
+    {
+        viewmode="mobile"
+        translatePositionX=-tagRadius+50
+
+    }
+
+if(viewmode=="mobile"){
+
+}
 
 
 var cluster;
@@ -130,7 +144,7 @@ $( document ).ready(function() {
              $('#messages > #cat').removeClass()
              $('#messages > #cat').addClass("area-"+d.parent.slug)                
             d3.select(this).classed("clicked",true)
-                $('#messages').show();
+                $('#messages').show().css('z-index','10');
                 //img de fondo
                 /*if(d.img_src!=0){
                     $('#messages').css('background-image', 'url('+d.img_src+')')  
@@ -319,6 +333,7 @@ function updateNodeStyleTagSelected(name, value) {
 }
 
 function zoomed(){
+    if(viewmode=="mobile") return;
   myZoom=1.3
   myTranslate[0]=20;//casi a la mitad
   myTranslate[1]=translatePositionY;

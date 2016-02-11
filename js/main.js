@@ -10,7 +10,7 @@ var leftOffset, translatePositionX, translatePositionY, tagRadiusWeight, tagRadi
 
 function setSizes(){
     viewportWidth = $(window).width();
-viewportHeight = $(window).height();
+    viewportHeight = $(window).height();
     /****desktop ****/
     viewmode="desktop"
     viewmode_sub=""
@@ -276,7 +276,7 @@ function doeverything(){ //la funcion que hace todo
 $( document ).ready(function() {
      doeverything();// fin doeverything
 
-     $( window ).resize(function() {
+     $(window).on("orientationchange",function(){
      reload();
     });
 
@@ -333,7 +333,10 @@ e.preventDefault();
  $('#search').keyup(function(event){
         var keyCode = event.which; // check which key was pressed
         var term = $(this).val();
-        if(term.length>2) search(term);
+        $('input:radio[name=tiempo]').prop( "checked", false );
+         $('input#inlineCheckbox3').prop( "checked", true );
+         filtroTiempo='todos'; updateCoursesWithRotation(undefined,1500);
+        if(term.length>1) search(term);
         else search("")
 
         //$('#example').children().hide(); // hide all

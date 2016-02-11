@@ -126,11 +126,9 @@ function updateCoursesWithRotation(nn,transitionLength){
 
 function search(mstring){
   mode="search"
+  mstring=mstring.toLowerCase();
   mstring=removeDiacritics(mstring)
-  var no=[];
-
-  
-      
+  var no=[];      
   //cadena vacía   
    if(mstring==""){
     courseContainer.selectAll("g.node:not(.area)").transition() 
@@ -144,6 +142,7 @@ function search(mstring){
       filtered=courseContainer.selectAll("g.node:not(.area)")        
       .filter(function(d) { return d.searchable.indexOf(mstring)==-1? false:true}).each(function(d){
         no.push(d)
+        d.visible=true;
       })
         repositionNodesCC(no)
         updateNodeCursosCCMode();

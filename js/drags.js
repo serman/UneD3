@@ -57,8 +57,7 @@ function zoomScrollCursos() {
       //num_items=num_items>0?Math.ceil(num_items):Math.floor(num_items)
       num_items=Math.round(num_items)
       updateCoursesWithRotation(num_items)
-      console.log(incremento)
-     console.log("items " + num_items) 
+     
       zoomCursos.translate([0,0]);
       if( d3.event.sourceEvent instanceof TouchEvent) previousPageY=d3.event.sourceEvent.touches[0].pageY
   }

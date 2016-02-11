@@ -358,6 +358,10 @@ footer strong {
 .move-updown {
   display: none;
 }
+#move-left a,
+.move-updown a {
+  color: rgba(3, 71, 58, 0.8);
+}
 @media screen and (max-width: 768px) {
   #viz-nav .row:first-child {
     margin-top: 0px;
@@ -382,5 +386,13 @@ footer strong {
   }
   g.node.cat-home {
     display: none!important;
+  }
+}
+@media screen and (max-width: 321px) {
+  #nav_toggle span {
+    display: none;
+  }
+  #mini-nav {
+    font-size: 0.7em;
   }
 }

@@ -2,49 +2,58 @@
 
 //size variables
 
+var viewmode, viewmode_sub, viewportWidth, viewportHeight, availableHeight, canvasWidth, diameter, canvasHeight, radius, clusterSize;
+var leftOffset, translatePositionX, translatePositionY, tagRadiusWeight, tagRadius, areaPosition; 
 
-viewmode="desktop"
-var viewportWidth = $(window).width();
-var viewportHeight = $(window).height();
 
-/****desktop ****/
-var availableHeight=viewportHeight-18-100
-var canvasWidth= viewportWidth-20;
-var diameter=Math.max(availableHeight,720) //720 is min size
-diameter=Math.min(diameter,850) //850 is max size
- //diameter=900
- var canvasHeight=diameter+20
-var radius = diameter / 2; 
-var clusterSize =radius //el radio de los puntitos
 
-var leftOffset=Math.max(100, (canvasWidth-diameter -500) );  leftOffset=Math.min(leftOffset,300);
-var translatePositionX= clusterSize+leftOffset; //quedan n pixeles a la izquierda
-var translatePositionY= canvasHeight>availableHeight?  availableHeight/2:  clusterSize+5; //4*radius/5
 
-var tagRadiusWeight=110 //ancho de la tira d etags
-var tagRadius = clusterSize -tagRadiusWeight; //TAG CIRCLE position.  //inicio de la tira de tags (radio interno)
+function setSizes(){
+    viewportWidth = $(window).width();
+viewportHeight = $(window).height();
+    /****desktop ****/
+    viewmode="desktop"
+    viewmode_sub=""
+    availableHeight=viewportHeight-18-100
+    canvasWidth= viewportWidth-20;
+    diameter=Math.max(availableHeight,720) //720 is min size
+    diameter=Math.min(diameter,850) //850 is max size
+     //diameter=900
+     canvasHeight=diameter+20
+    radius = diameter / 2; 
+    clusterSize =radius //el radio de los puntitos
 
-var areaPosition=130
+    leftOffset=Math.max(100, (canvasWidth-diameter -500) );  leftOffset=Math.min(leftOffset,300);
+    translatePositionX= clusterSize+leftOffset; //quedan n pixeles a la izquierda
+    translatePositionY= canvasHeight>availableHeight?  availableHeight/2:  clusterSize+5; //4*radius/5
 
-/**** mobile *****/
+    tagRadiusWeight=110 //ancho de la tira d etags
+    tagRadius = clusterSize -tagRadiusWeight; //TAG CIRCLE position.  //inicio de la tira de tags (radio interno)
 
-if(viewportWidth<768)
-    {
-        viewmode="mobile"
-        availableHeight=viewportHeight-60
-        diameter=Math.max(availableHeight*1.5,640);
-        canvasHeight=availableHeight;
-        radius = diameter / 2;
-        clusterSize =radius
-        tagRadiusWeight=110
-        tagRadius = clusterSize -tagRadiusWeight;
-        areaPosition=130
-        translatePositionX=-tagRadius+20
+    areaPosition=130
 
+    /**** mobile *****/
+    if(viewportWidth<769)
+        {
+            viewmode="mobile"
+            availableHeight=viewportHeight-60
+            diameter=Math.max(availableHeight,640); //minimo de 640
+            diameter=Math.min(diameter,800); //maximo de 800
+            //diameter=availableHeight;
+            canvasHeight=availableHeight;
+            radius = diameter / 2;
+            clusterSize =radius
+            tagRadiusWeight=110
+            tagRadius = clusterSize -tagRadiusWeight;
+            areaPosition=130
+            translatePositionX=-tagRadius+20
+        }
+        if(viewportWidth>768&&viewportWidth<1280){ //caso especial ipad modo portrait
+            viewmode_sub="middleSize"
     }
+}
 
-
-
+setSizes();
 
 /*** timers ***/
 var timerRotateCourses=null;
@@ -70,10 +79,14 @@ var myTranslate=[0, 0]
 var filtroTiempo="todos"
 
 
+function reload(){
+    $('#canvas-container').empty();
+    setSizes();
+    doeverything();
+}
 
-
-$( document ).ready(function() {
-	svg = d3.select("#canvas-container").append("svg")
+function doeverything(){ //la funcion que hace todo
+    svg = d3.select("#canvas-container").append("svg")
         .attr("width", canvasWidth)
         .attr("height", canvasHeight)
         .append("g")
@@ -122,11 +135,12 @@ $( document ).ready(function() {
       nodes[i].order=i;
     }
 
+    if(viewportWidth>700&&viewportWidth<769){ //caso especial ipad modo portrait
+     
+    }
 //cursos
     createNodeCursos();
-
     updateLinksAreasCursos(4000,600,"elastic");
-
 
 /*****tags *******/
     asignTagPosition();
@@ -149,7 +163,8 @@ $( document ).ready(function() {
     courseContainer.selectAll("g.node:not(.area):not(.clicked)").on("click", function(d) {
         if(d3.select(this).classed("clicked")==true){
             cursoCentric(d,this);
-        }else{
+        }else{ //
+            moveLeftIfNeeded();
             courseContainer.selectAll('.clicked')//.each(function(){ d3.select(this).on("click",null) } )
                .classed("clicked",false)  
              $('#messages > #cat').removeClass()
@@ -180,14 +195,6 @@ $( document ).ready(function() {
 
 
     });
-
-    /*courseContainer.selectAll(".clicked text").on("click", function(d) {
-        console.log("clickeddd")            
-            console.log(d)
-            console.log(this)
-        })*/
-
-
 
 //click en HOME
   svg.selectAll("g.node.cat-home").on("click", function(d) {
@@ -220,7 +227,7 @@ $( document ).ready(function() {
 
 //TAGCENTRIC
     svg.selectAll("g.tag").on("click", function(d) {
-        
+        console.log("tagcentric")
         tagCentric(d,this);
     })
 
@@ -262,11 +269,16 @@ $( document ).ready(function() {
             .classed("relevant",false)
        })
     });
-
-
   }); //fin parseo archivo listado cursos. No se pueden sacar los eventos fuera de aqui
 
-    
+};
+
+$( document ).ready(function() {
+     doeverything();// fin doeverything
+
+     $( window ).resize(function() {
+     reload();
+    });
 
 /****** eventos JQUERY (fuera del canvas SVG) *****************/
 
@@ -458,11 +470,30 @@ function areaCentric(_d){
 }
 
 function centerMobilePosition(){
-    if(viewmode=="mobile"){
-        svg.transition().delay(400).duration(1000)
+    if(viewmode=="mobile"){ 
+        if(viewportWidth==768&& (viewportHeight>=900 && viewportHeight<1024) ){ //caso especial ipad. niapa
+
+        svg.transition().delay(100).duration(1000)
+            .attr("transform", "translate(" + translatePositionX + "," + translatePositionY + "),"+"scale(" + 1.3 + ")"
+    );
+              $('#move-left').show();
+        }else{
+
+        svg.transition().delay(100).duration(1000)
             .attr("transform", "translate(" + translatePositionX + "," + translatePositionY + ")")
               $('#move-left').show();
+          }
     }
+}
+
+function moveLeftIfNeeded(){
+    if(viewmode_sub=="middleSize"){
+     svg.transition().delay(100).duration(1000)
+            .attr("transform", "translate(-100," + translatePositionY + "),"
+            +
+        "scale(" + myZoom + ")");
+            $('#move-left').show();
+        }
 }
 
 function autoRotateCoursesUP(){

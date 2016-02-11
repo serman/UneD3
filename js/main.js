@@ -343,6 +343,9 @@ e.preventDefault();
         }
         else search("")
 
+        if(event.keyCode == 13)
+            $(this).blur();
+
         //$('#example').children().hide(); // hide all
         //$('#example').children(':Contains("' + term + '")').show(); // toggle based on term
     })

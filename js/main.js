@@ -31,21 +31,19 @@ var areaPosition=130
 if(viewportWidth<768)
     {
         viewmode="mobile"
-        
+        availableHeight=viewportHeight-60
+        diameter=Math.max(availableHeight*1.5,640);
+        canvasHeight=availableHeight;
+        radius = diameter / 2;
+        clusterSize =radius
+        tagRadiusWeight=110
+        tagRadius = clusterSize -tagRadiusWeight;
+        areaPosition=130
+        translatePositionX=-tagRadius+20
 
     }
 
-if(viewmode=="mobile"){
-availableHeight=viewportHeight-60
-diameter=availableHeight*1.5;
-canvasHeight=availableHeight;
-radius = diameter / 2;
-clusterSize =radius
-tagRadiusWeight=110
-tagRadius = clusterSize -tagRadiusWeight;
-areaPosition=130
-translatePositionX=-tagRadius+20
-}
+
 
 
 /*** timers ***/
@@ -468,13 +466,13 @@ function centerMobilePosition(){
 }
 
 function autoRotateCoursesUP(){
-    updateCoursesWithRotation(-1)
+    updateCoursesWithRotation(-5)
     updateLinksAreasCursos();
     timerRotateCourses=setTimeout(autoRotateCoursesUP,50) 
 }
 function autoRotateCoursesDOWN(){
 
-    updateCoursesWithRotation(1)
+    updateCoursesWithRotation(5)
     updateLinksAreasCursos();
     timerRotateCourses=setTimeout(autoRotateCoursesDOWN,50) 
 }

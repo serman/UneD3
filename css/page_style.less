@@ -498,10 +498,6 @@ footer{
 // responsive classes
 
 @media screen and (max-width: 480px) {
-   
-   
-
-
    #cierre{
 	right:0.75em;
 	top:-0.75em;
@@ -514,11 +510,13 @@ footer{
 	width:100%;
    }
 
-
 }
 
 #move-left, .move-updown{
-	display: none
+	display: none;
+	a{
+		color: fade(@verde-uned,80%)
+	}
 }
 
 @media screen and (max-width: 768px) {
@@ -551,5 +549,14 @@ footer{
 	g.node.cat-home{
 		display: none!important;
 	}
+}
 
+@media screen and (max-width: 321px) {
+#nav_toggle span{
+	display: none;
+}
+#mini-nav{
+
+	font-size: 0.7em;
+	}
 }

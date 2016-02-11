@@ -255,6 +255,7 @@ a:hover#course-center {
   background-color: #707277;
   padding-bottom: 1.5em;
   padding-top: 3em;
+  display: none;
 }
 #cajon p {
   color: rgba(255, 255, 255, 0.8);

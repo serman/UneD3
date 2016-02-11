@@ -83,6 +83,7 @@ function reload(){
     $('#canvas-container').empty();
     setSizes();
     doeverything();
+    $('#search').val('')
 }
 
 function doeverything(){ //la funcion que hace todo
@@ -277,7 +278,7 @@ $( document ).ready(function() {
      doeverything();// fin doeverything
 
      $(window).on("orientationchange",function(){
-     reload();
+        setTimeout(reload,100);
     });
 
 /****** eventos JQUERY (fuera del canvas SVG) *****************/
@@ -286,7 +287,8 @@ $( document ).ready(function() {
     e.preventDefault(); 
     //console.log($(this).data('courseNode'))
     var _course=$(this).data('courseObject');
-    var _coursedom=$(this).data('courseNode');      
+    var _coursedom=$(this).data('courseNode'); 
+    if(viewmode=="mobile") $('#messages').fadeOut();     
     cursoCentric(_course,_coursedom); 
   })
 
@@ -321,6 +323,8 @@ e.preventDefault();
         e.preventDefault();
         var myTag=$(this).data("tag");
         tagCentric(tagsDict[myTag],$('g.tag.tag-'+tagsDict[myTag].slug)[0])
+        if(viewmode=="mobile") $('#messages').fadeOut();
+        
 
     })
   
@@ -328,6 +332,8 @@ e.preventDefault();
         e.preventDefault();
         var cat=$(this).data("category");
         areaCentric(cat);
+        if(viewmode=="mobile") $('#messages').fadeOut();
+
    });
     
  $('#search').keyup(function(event){
@@ -335,8 +341,11 @@ e.preventDefault();
         var term = $(this).val();
         $('input:radio[name=tiempo]').prop( "checked", false );
          $('input#inlineCheckbox3').prop( "checked", true );
-         filtroTiempo='todos'; updateCoursesWithRotation(undefined,1500);
-        if(term.length>1) search(term);
+         filtroTiempo='todos' 
+        if(term.length>1){ 
+            search(term);
+            if(viewmode=="mobile") $('#messages').fadeOut();
+        }
         else search("")
 
         //$('#example').children().hide(); // hide all
@@ -346,6 +355,7 @@ e.preventDefault();
  $('select').on( "change", function(){
     var optionSelected = $("option:selected", this);
     valueSelected = this.value;
+    $('#search').val('')
 
     courseContainer.select('.area.cat-'+valueSelected)
     .each(function(d){        
@@ -354,6 +364,7 @@ e.preventDefault();
  })
 
  $('input:radio[name=tiempo]').change(function() {
+    $('#search').val('')
     //console.log(this.value)
         if (this.value == 'todos') {
             filtroTiempo='todos'

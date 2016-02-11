@@ -114,7 +114,9 @@ g.area text {
   fill: #808080;
   cursor: pointer;
 }
-.node circle {
+.node circle,
+.node path,
+.node rect {
   fill: #084f35;
   stroke: #000;
   stroke-width: 2px;

@@ -57,6 +57,7 @@ setSizes();
 
 /*** timers ***/
 var timerRotateCourses=null;
+var timerAutoRotate=null;
 /**/
 
 var cluster;
@@ -157,6 +158,7 @@ function doeverything(){ //la funcion que hace todo
 /********************INTERACCIONES *****************************************/        
 //click en un area
     svg.selectAll("g.node.area:not(.cat-home)").on("click", function(d) {
+        clearTimeout(timerAutoRotate)
         areaCentric(d)
     })// end g.node.area click
 
@@ -164,6 +166,7 @@ function doeverything(){ //la funcion que hace todo
     courseContainer.selectAll("g.node:not(.area):not(.clicked)").on("click", function(d) {
         if(d3.select(this).classed("clicked")==true){
             cursoCentric(d,this);
+            clearTimeout(timerAutoRotate)
         }else{ //
             moveLeftIfNeeded();
             courseContainer.selectAll('.clicked')//.each(function(){ d3.select(this).on("click",null) } )
@@ -172,13 +175,6 @@ function doeverything(){ //la funcion que hace todo
              $('#messages > #cat').addClass("area-"+d.parent.slug)                
             d3.select(this).classed("clicked",true)
                 $('#messages').show().css('z-index','10');
-                //img de fondo
-                /*if(d.img_src!=0){
-                    $('#messages').css('background-image', 'url('+d.img_src+')')  
-                }
-                else{
-                    $('#messages').css('background-image', 'none');
-                } */
                 //contenido
                 $('#messages #titulo span').empty().text(d.titulo)
                 $('#messages #course-link').attr('href',d.url)
@@ -193,8 +189,6 @@ function doeverything(){ //la funcion que hace todo
                 }
                 $('#messages #tag-list').empty().html(taglist)
         }
-
-
     });
 
 //click en HOME
@@ -228,8 +222,9 @@ function doeverything(){ //la funcion que hace todo
 
 //TAGCENTRIC
     svg.selectAll("g.tag").on("click", function(d) {
-        console.log("tagcentric")
+        clearTimeout(timerAutoRotate)
         tagCentric(d,this);
+        
     })
 
 //mouse over/out over Area: highlights links
@@ -516,7 +511,6 @@ function autoRotateCoursesUP(){
     timerRotateCourses=setTimeout(autoRotateCoursesUP,50) 
 }
 function autoRotateCoursesDOWN(){
-
     updateCoursesWithRotation(5)
     updateLinksAreasCursos();
     timerRotateCourses=setTimeout(autoRotateCoursesDOWN,50) 

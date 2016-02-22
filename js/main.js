@@ -5,7 +5,7 @@
 var viewmode, viewmode_sub, viewportWidth, viewportHeight, availableHeight, canvasWidth, diameter, canvasHeight, radius, clusterSize;
 var leftOffset, translatePositionX, translatePositionY, tagRadiusWeight, tagRadius, areaPosition; 
 
-
+var filename="listadocursostags.json"
 
 
 function setSizes(){
@@ -121,7 +121,7 @@ function doeverything(){ //la funcion que hace todo
     .attr('cx',0)
     .attr('r',tagRadius-20).classed('areaCircle',true);
 
-    d3.json("listadocursostags.json", function(error, root) {
+    d3.json(filename, function(error, root) {
     if (error) throw error;
  /* preprocesado de los datos */   
     newRoot=preprocessJson(root)
@@ -376,6 +376,15 @@ e.preventDefault();
         updateCoursesWithRotation(undefined,1500);
 });
 
+$(document).keypress(function( event ) {    
+  if ( event.which == 45 ) {
+     event.preventDefault();
+     filename="listadocursostags_doble.json"
+     reload();
+
+  }
+  
+});
 
 }); //document ready
 

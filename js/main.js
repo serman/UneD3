@@ -5,8 +5,8 @@
 var viewmode, viewmode_sub, viewportWidth, viewportHeight, availableHeight, canvasWidth, diameter, canvasHeight, radius, clusterSize;
 var leftOffset, translatePositionX, translatePositionY, tagRadiusWeight, tagRadius, areaPosition; 
 
-var filename="listadocursostags.json"
-
+var filename="UA-ListadoIEDRA2015-16.json";
+if (typeof DEBUG === 'undefined') DEBUG = true;
 
 function setSizes(){
     viewportWidth = $(window).width();
@@ -377,13 +377,19 @@ e.preventDefault();
 });
 
 $(document).keypress(function( event ) {    
-  if ( event.which == 45 ) {
-     event.preventDefault();
-     filename="listadocursostags_doble.json"
-     reload();
-
-  }
-  
+    console.log(event.which)
+    if(DEBUG){
+      if ( event.which == 45 ) { // tecla -
+         event.preventDefault();
+         filename="listadocursostags_doble.json"
+         reload();
+      }
+      if ( event.which == 95 ) { // tecla _
+         event.preventDefault();
+         filename="listadocursostags.json"
+         reload();
+      }
+    } //end if DEBUG 
 });
 
 }); //document ready

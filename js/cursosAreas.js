@@ -20,9 +20,6 @@ function createNodeCursos(){
                 clases = clases+ " emphasis-"+d.emphasis;
               }
           }
-
-          
-
           return clases;
         })
         .classed("area",function(d) { return ("iscategory" in d ) ? true : false; })
@@ -62,19 +59,20 @@ function createNodeCursos(){
         .text(function(d) { return  d.name })
 
       //update + enter
-      node.transition().delay(50).duration(3000).ease("elastic")
+      node.transition().delay(start_course_text_animation).duration(3000).ease("elastic").style('opacity',1)
       .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
       .each("end",function(d){
               d3.select(this).select(".area text").call(wrap,130) //saltos de linea palabas
-
       })
      
-      node.select("text").transition().delay(400).duration(1500)
+      node.select("text").transition().delay(start_course_text_animation-100).duration(1500)
       .style('opacity',function(d){ return d.visible==true?1:0})
       .style('display',function(d){ return d.visible==true?"inherit":"none"})       
 
       courseContainer.selectAll("g.emphasis-1, g.emphasis-4, g.emphasis-7").each(blink1)
       courseContainer.selectAll("g.emphasis-2, g.emphasis-5, g.emphasis-8").each(scale1)
+
+       //courseContainer.selectAll("g.cat-home").style('opacity',0)
 
 }
 

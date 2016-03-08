@@ -66,7 +66,7 @@ function updateNodesTags(transition_length,delay1){
       tagsElements.transition().delay(delay1).duration(function(d,i){ return delay1>0? transition_length+i*10:transition_length}) //con los nuevos tags sólo se rota todo
       .attr("transform", function(d) {          
         return "rotate(" + (d.x ) + ")translate(" + d.y + ")"; 
-      }) 
+      }).style("opacity",1)
    
    //esto en realidad creo que no hace falta en este caso. sección exit 
       tagsElements.exit().remove();

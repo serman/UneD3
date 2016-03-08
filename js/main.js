@@ -1,3 +1,12 @@
+//animation init variables
+
+var start_course_animation=2000;
+var change_text_help2=4000;
+var start_course_text_animation=4500;
+
+var change_text_help3=7000;
+var start_tags_animation=6700;
+
 
 
 //size variables
@@ -25,7 +34,7 @@ function setSizes(){
 
     leftOffset=Math.max(100, (canvasWidth-diameter -500) );  leftOffset=Math.min(leftOffset,300);
     translatePositionX= clusterSize+leftOffset; //quedan n pixeles a la izquierda
-    translatePositionY= canvasHeight>availableHeight?  availableHeight/2:  clusterSize+5; //4*radius/5
+    translatePositionY= canvasHeight>availableHeight?  availableHeight/2+5:  clusterSize+5; //4*radius/5
 
     tagRadiusWeight=110 //ancho de la tira d etags
     tagRadius = clusterSize -tagRadiusWeight; //TAG CIRCLE position.  //inicio de la tira de tags (radio interno)
@@ -93,7 +102,8 @@ function doeverything(){ //la funcion que hace todo
         .attr("height", canvasHeight)
         .append("g")
         .attr("transform", "translate(" + translatePositionX + "," + translatePositionY + ")")
-    
+     helphoverContainer=svg.append("g").classed("helphoverContainer",true)
+
     backgroundContainer=svg.append("g").classed("backgroundContainer",true)    
     tagLinkContainer=svg.append("g").classed("tagLinkContainer",true)    
     courseLinkContainer=svg.append("g").classed("courseLinkContainer",true)
@@ -101,6 +111,7 @@ function doeverything(){ //la funcion que hace todo
     //.call(drag).on("wheel.zoom",mouseWheelDrag)
     .call(zoom)
     courseContainer=svg.append("g").classed("courseContainer",true).call(zoomCursos)//.call(dragCourse)
+   
 
     backgroundContainer.append("rect")
     .attr('x','-50%').attr('y','-50%').
@@ -110,16 +121,67 @@ function doeverything(){ //la funcion que hace todo
     .attr('cx',0)
     .attr('cx',0)
     .attr('r',diameter).classed('courseCircle',true).call(zoomCursos)//.call(drag);
+    .transition().delay(start_course_text_animation+1000).duration(1000).style('opacity',1);
 
     backgroundContainer.append("circle")
     .attr('cx',0)
     .attr('cx',0)
-    .attr('r',tagRadius+tagRadiusWeight).classed('tagCircle',true).call(zoom)//.call(drag);
+    .attr('r',tagRadius+tagRadiusWeight).classed('tagCircle',true).call(zoom)
+    .transition().delay(change_text_help3).duration(1000).style('opacity',1);
+    //.call(drag);
 
     backgroundContainer.append("circle")
     .attr('cx',0)
     .attr('cx',0)
-    .attr('r',tagRadius-20).classed('areaCircle',true);
+    .attr('r',tagRadius-20).classed('areaCircle',true)
+    .transition().delay(start_course_text_animation+1000).duration(1000).style('opacity',1);
+
+    
+
+/******* circulos de ayuda ****/
+  var h1=helphoverContainer.append("g").classed("helpCoursesCircle",true)
+  h1.transition().delay(change_text_help2).duration(1000).style("opacity",1)
+  h1.append("circle")
+    .attr('cx',0)
+    .attr('cx',0)
+    .attr('r',canvasWidth/2)  
+  h1.append("text").attr("text-anchor","start")
+    .attr('dx',tagRadius+tagRadiusWeight+20).text(" Cursos")
+
+
+     h1=svg.append("g").classed("helpTagsCircle",true);
+      h1.transition().delay(change_text_help3).duration(1000).style("opacity",1)
+       h1.transition().delay(change_text_help3+2000).duration(1000).style("opacity",0)
+       h1.transition().delay(change_text_help3+3000).style("display","none")
+   /* h1.append("circle")
+    .attr('cx',0)
+    .attr('cx',0)
+    .attr('r',tagRadius+tagRadiusWeight)*/
+    h1.append("text").attr("text-anchor","start").attr('dx',tagRadius).text("Tags");
+
+   h1=helphoverContainer.append("g").classed("helpAreaCircle",true);
+    h1.append("circle")
+    .attr('cx',0)
+    .attr('cx',0)
+    .attr('r',tagRadius-20)
+
+    h1.append("text").attr("text-anchor","middle").text("Áreas de conocimiento")
+    .transition().delay(1000).duration(1000).style("opacity",1);
+
+    h1.append("text").attr("text-anchor","middle")
+      .classed("minitexto",true)
+      .attr('dy',-60).text("Explora el catálogo de cursos seleccionando:");
+    h1.append("text").attr("text-anchor","middle")
+      .classed("minitexto2",true)
+      .attr('dy',60).text("Elige un curso, área o tag, para ver todos los cursos relacionados con él")
+
+     h1.append("text").attr("text-anchor","middle")
+      .classed("minitexto2",true)
+      .attr('dy',90).text("Cada curso pertenece a un área pero puede tener muchos tags")
+      h1.append("text").attr("text-anchor","middle")
+      .classed("minitexto2",true)
+      .attr('dy',130).text("Visita la página de un curso para inscribirte.")
+/*** fin circulos ayuda **/
 
     d3.json(filename, function(error, root) {
     if (error) throw error;
@@ -142,15 +204,15 @@ function doeverything(){ //la funcion que hace todo
     }
 //cursos
     createNodeCursos();
-    updateLinksAreasCursos(4000,600,"elastic");
+    updateLinksAreasCursos(4000,start_course_animation,"elastic"); //transition_length,delay1
 
 /*****tags *******/
     asignTagPosition();
-    updateNodesTags(2000,1000);
+    updateNodesTags(2000,start_tags_animation); //transition_length,delay1
 
     //generamos uniones entre nodos y links
     linksTags=linkNodeTag(tagsDict,nodes)
-    updateLinksTags(5000,2000);
+    updateLinksTags(5000,start_tags_animation+1000);
 
     //d3.select(self.frameElement).style("height", radius * 2 + "px");
 /**** fin tags **/
@@ -267,6 +329,9 @@ function doeverything(){ //la funcion que hace todo
     });
   }); //fin parseo archivo listado cursos. No se pueden sacar los eventos fuera de aqui
 
+
+
+
 };
 
 $( document ).ready(function() {
@@ -322,7 +387,32 @@ e.preventDefault();
         
 
     })
-  
+  $('#help-btn').on('click', function(e){
+        e.preventDefault();    
+        console.log("btn clicked")
+        $(this).toggleClass('checked')
+        if($(this).hasClass('checked')){
+          var p=$('.helphoverContainer').detach()
+          p.insertAfter('.courseContainer');
+           p=$('.helpTagsCircle').detach()
+          p.insertAfter('.helpCoursesCircle');
+          $('.helphoverContainer').fadeIn();
+          $('.helpCoursesCircle').fadeIn();
+          $('.helpAreaCircle').fadeIn();
+          $('.helpTagsCircle').css('opacity',1)
+          $('.helpTagsCircle').fadeIn();
+          $('.helpTagsCircle text, .helpAreaCircle text:not(.minitexto, .minitexto2), .helpCoursesCircle text').css('fill','#F0AD4E')
+          $('.minitexto2').fadeIn();
+        }else{
+           $('.helphoverContainer').fadeOut();
+        }
+    })
+  $('.helphoverContainer').on('click', function(e){
+        e.preventDefault();   
+        $('#help-btn').toggleClass('checked')
+        $('.helphoverContainer').fadeOut();
+  });
+
    $('a#category-list').on('click', function(e){
         e.preventDefault();
         var cat=$(this).data("category");
@@ -375,6 +465,8 @@ e.preventDefault();
         }
         updateCoursesWithRotation(undefined,1500);
 });
+
+
 
 $(document).keypress(function( event ) {    
     console.log(event.which)

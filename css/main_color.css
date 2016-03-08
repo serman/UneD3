@@ -108,6 +108,7 @@ g.area text {
   font-weight: 300;
 }
 .node {
+  opacity: 0;
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 12px;
   font-weight: 300;
@@ -240,6 +241,9 @@ g.node.cursocentrico rect,
 g.node.cursocentrico path {
   stroke: #fff;
   stroke-width: 2px;
+}
+.tag {
+  opacity: 0;
 }
 .tag text {
   text-transform: uppercase;
@@ -392,4 +396,47 @@ path.source-derecho.mouseHoverArea {
 }
 path.source-derecho.areacentricSelected {
   stroke: #17e517;
+}
+.backgroundContainer .areaCircle,
+.backgroundContainer .tagCircle,
+.backgroundContainer .courseCircle,
+.backgroundContainer .backgroundRect {
+  opacity: 0;
+}
+.helphoverContainer .helpAreaCircle circle {
+  fill: rgba(0, 0, 0, 0.8);
+}
+.helphoverContainer .helpAreaCircle text {
+  font-size: 3em;
+  fill: white;
+  opacity: 0;
+}
+.helphoverContainer .helpAreaCircle text.minitexto,
+.helphoverContainer .helpAreaCircle text.minitexto2 {
+  font-size: 1.1em;
+  opacity: 1;
+  fill: white;
+}
+.helphoverContainer .helpAreaCircle text.minitexto2 {
+  display: none;
+}
+.helphoverContainer .helpCoursesCircle {
+  opacity: 0;
+}
+.helphoverContainer .helpCoursesCircle circle {
+  fill: rgba(0, 0, 0, 0.4);
+}
+.helphoverContainer .helpCoursesCircle text {
+  font-size: 3em;
+  fill: white;
+}
+.helpTagsCircle {
+  opacity: 0;
+}
+.helpTagsCircle circle {
+  fill: rgba(0, 0, 0, 0.1);
+}
+.helpTagsCircle text {
+  font-size: 3em;
+  fill: white;
 }

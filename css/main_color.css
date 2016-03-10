@@ -403,6 +403,9 @@ path.source-derecho.areacentricSelected {
 .backgroundContainer .backgroundRect {
   opacity: 0;
 }
+.helphoverContainer {
+  display: none;
+}
 .helphoverContainer .helpAreaCircle circle {
   fill: rgba(0, 0, 0, 0.8);
 }
@@ -434,7 +437,9 @@ path.source-derecho.areacentricSelected {
   opacity: 0;
 }
 .helpTagsCircle circle {
-  fill: rgba(0, 0, 0, 0.1);
+  fill: rgba(255, 255, 255, 0.1);
+  display: none;
+  stroke: "white";
 }
 .helpTagsCircle text {
   font-size: 3em;

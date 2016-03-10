@@ -13,7 +13,7 @@ var start_tags_animation=6700;
 
 var viewmode, viewmode_sub, viewportWidth, viewportHeight, availableHeight, canvasWidth, diameter, canvasHeight, radius, clusterSize;
 var leftOffset, translatePositionX, translatePositionY, tagRadiusWeight, tagRadius, areaPosition; 
-
+var initHelpTransition;
 var filename="UA-ListadoIEDRA2015-16.json";
 if (typeof DEBUG === 'undefined') DEBUG = true;
 
@@ -97,6 +97,15 @@ function reload(){
 }
 
 function doeverything(){ //la funcion que hace todo
+
+  if(initHelpTransition==false){
+     start_course_animation/=4;
+     change_text_help2/=4;
+     start_course_text_animation/=4;
+    change_text_help3/=4;
+    start_tags_animation/=4;
+  }
+
     svg = d3.select("#canvas-container").append("svg")
         .attr("width", canvasWidth)
         .attr("height", canvasHeight)
@@ -137,51 +146,10 @@ function doeverything(){ //la funcion que hace todo
     .transition().delay(start_course_text_animation+1000).duration(1000).style('opacity',1);
 
     
+  /******* circulos de ayuda ****/
+    showHelpCircles();
+  /*** fin circulos ayuda **/
 
-/******* circulos de ayuda ****/
-  var h1=helphoverContainer.append("g").classed("helpCoursesCircle",true)
-  h1.transition().delay(change_text_help2).duration(1000).style("opacity",1)
-  h1.append("circle")
-    .attr('cx',0)
-    .attr('cx',0)
-    .attr('r',canvasWidth/2)  
-  h1.append("text").attr("text-anchor","start")
-    .attr('dx',tagRadius+tagRadiusWeight+20).text(" Cursos")
-
-
-     h1=svg.append("g").classed("helpTagsCircle",true);
-      h1.transition().delay(change_text_help3).duration(1000).style("opacity",1)
-       h1.transition().delay(change_text_help3+2000).duration(1000).style("opacity",0)
-       h1.transition().delay(change_text_help3+3000).style("display","none")
-   /* h1.append("circle")
-    .attr('cx',0)
-    .attr('cx',0)
-    .attr('r',tagRadius+tagRadiusWeight)*/
-    h1.append("text").attr("text-anchor","start").attr('dx',tagRadius).text("Tags");
-
-   h1=helphoverContainer.append("g").classed("helpAreaCircle",true);
-    h1.append("circle")
-    .attr('cx',0)
-    .attr('cx',0)
-    .attr('r',tagRadius-20)
-
-    h1.append("text").attr("text-anchor","middle").text("Áreas de conocimiento")
-    .transition().delay(1000).duration(1000).style("opacity",1);
-
-    h1.append("text").attr("text-anchor","middle")
-      .classed("minitexto",true)
-      .attr('dy',-60).text("Explora el catálogo de cursos seleccionando:");
-    h1.append("text").attr("text-anchor","middle")
-      .classed("minitexto2",true)
-      .attr('dy',60).text("Elige un curso, área o tag, para ver todos los cursos relacionados con él")
-
-     h1.append("text").attr("text-anchor","middle")
-      .classed("minitexto2",true)
-      .attr('dy',90).text("Cada curso pertenece a un área pero puede tener muchos tags")
-      h1.append("text").attr("text-anchor","middle")
-      .classed("minitexto2",true)
-      .attr('dy',130).text("Visita la página de un curso para inscribirte.")
-/*** fin circulos ayuda **/
 
     d3.json(filename, function(error, root) {
     if (error) throw error;
@@ -335,11 +303,13 @@ function doeverything(){ //la funcion que hace todo
 };
 
 $( document ).ready(function() {
+    initHelpTransition=cookieCheckTransition();
      doeverything();// fin doeverything
 
      $(window).on("orientationchange",function(){
         setTimeout(reload,100);
     });
+
 
 /****** eventos JQUERY (fuera del canvas SVG) *****************/
 
@@ -387,7 +357,7 @@ e.preventDefault();
         
 
     })
-  $('#help-btn').on('click', function(e){
+  $('.help-btn').on('click', function(e){
         e.preventDefault();    
         console.log("btn clicked")
         $(this).toggleClass('checked')
@@ -398,9 +368,11 @@ e.preventDefault();
           p.insertAfter('.helpCoursesCircle');
           $('.helphoverContainer').fadeIn();
           $('.helpCoursesCircle').fadeIn();
+          $('.helpCoursesCircle').css('opacity',1)
           $('.helpAreaCircle').fadeIn();
           $('.helpTagsCircle').css('opacity',1)
           $('.helpTagsCircle').fadeIn();
+          $('.helpTagsCircle circle').fadeIn();
           $('.helpTagsCircle text, .helpAreaCircle text:not(.minitexto, .minitexto2), .helpCoursesCircle text').css('fill','#F0AD4E')
           $('.minitexto2').fadeIn();
         }else{

@@ -162,7 +162,7 @@ a:hover#course-list {
 }
 #course-list {
   background-color: #03473a;
-  width: 100%;
+  width: 90%;
 }
 a#course-list {
   color: #fff;
@@ -221,6 +221,9 @@ a:hover#course-center {
 #viz-nav .row:first-child {
   margin-top: 1em;
   padding-bottom: 0.5em;
+}
+.help-btn {
+  float: right;
 }
 #mini-nav {
   background-color: #03473a;
@@ -362,6 +365,9 @@ footer strong {
 #move-left a,
 .move-updown a {
   color: rgba(3, 71, 58, 0.8);
+}
+div#move-left a {
+  color: #03473a;
 }
 @media screen and (max-width: 768px) {
   #viz-nav .row:first-child {

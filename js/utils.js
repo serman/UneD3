@@ -35,7 +35,74 @@ function wrap(text, width) {
   });
 }
 
+function showHelpCircles(){
 
+  var h1=helphoverContainer.append("g").classed("helpCoursesCircle",true)
+  if(initHelpTransition){
+    helphoverContainer.style("display","inherit")
+    h1.transition().delay(change_text_help2).duration(1000).style("opacity",1)
+  }
+
+  h1.append("circle")
+    .attr('cx',0)
+    .attr('cx',0)
+    .attr('r',canvasWidth/2)  
+  h1.append("text").attr("text-anchor","start")
+    .attr('dx',tagRadius+tagRadiusWeight+20).text(" Cursos")
+
+
+    h1=svg.append("g").classed("helpTagsCircle",true);
+    if(initHelpTransition){
+       h1.transition().delay(change_text_help3).duration(1000).style("opacity",1)
+       h1.transition().delay(change_text_help3+2000).duration(1000).style("opacity",0)
+       h1.transition().delay(change_text_help3+3000).style("display","none")
+    }
+    h1.append("circle")
+    .attr('cx',0)
+    .attr('cx',0)
+    .attr('r',tagRadius+tagRadiusWeight)
+    h1.append("text").attr("text-anchor","start").attr('dx',tagRadius).text("Tags");
+
+   h1=helphoverContainer.append("g").classed("helpAreaCircle",true);
+    h1.append("circle")
+    .attr('cx',0)
+    .attr('cx',0)
+    .attr('r',tagRadius-20)
+
+    h1.append("text").attr("text-anchor","middle").text("Áreas de conocimiento")
+    .transition().delay(1000).duration(1000).style("opacity",1);
+
+    h1.append("text").attr("text-anchor","middle")
+      .classed("minitexto",true)
+      .attr('dy',-60).text("Explora el catálogo de cursos seleccionando:");
+    h1.append("text").attr("text-anchor","middle")
+      .classed("minitexto2",true)
+      .attr('dy',60).text("Elige un curso, área o tag, para ver todos los cursos relacionados con él")
+
+     h1.append("text").attr("text-anchor","middle")
+      .classed("minitexto2",true)
+      .attr('dy',90).text("Cada curso pertenece a un área pero puede tener muchos tags asociados")
+      h1.append("text").attr("text-anchor","middle")
+      .classed("minitexto2",true)
+      .attr('dy',130).text("Visita la página de un curso para inscribirte.")
+}
+
+/**Returns true if you have to do transition*/
+function cookieCheckTransition(){
+  var HOWMANYTIMESBEFORENOTSHOWINGTRANSITION = 3;
+  var ntimes=Cookies.get('counter')
+  if(ntimes===undefined){
+    ntimes=0;
+  }else{
+    ntimes=Number(ntimes)
+  }
+  Cookies.set('counter', ntimes+1, { expires: 365 });
+
+
+  if(ntimes>HOWMANYTIMESBEFORENOTSHOWINGTRANSITION) return false;
+  else return true;
+
+}
 
 function cleanTagSelections(){
   svg.selectAll("g.tag.selectedTagCentric")

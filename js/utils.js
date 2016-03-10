@@ -74,7 +74,10 @@ function showHelpCircles(){
 
     h1.append("text").attr("text-anchor","middle")
       .classed("minitexto",true)
-      .attr('dy',-60).text("Explora el catálogo de cursos seleccionando:");
+      .attr('dy',-90).text("Este es el catálogo de cursos online de la UNED");
+    h1.append("text").attr("text-anchor","middle")
+      .classed("minitexto",true)
+      .attr('dy',-60).text("Explora y encuentra los que te interesen seleccionando:");
     h1.append("text").attr("text-anchor","middle")
       .classed("minitexto2",true)
       .attr('dy',60).text("Elige un curso, área o tag, para ver todos los cursos relacionados con él")

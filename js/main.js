@@ -204,20 +204,33 @@ function doeverything(){ //la funcion que hace todo
              $('#messages > #cat').removeClass()
              $('#messages > #cat').addClass("area-"+d.parent.slug)                
             d3.select(this).classed("clicked",true)
-                $('#messages').show().css('z-index','10');
-                //contenido
-                $('#messages #titulo span').empty().text(d.titulo)
-                $('#messages #course-link').attr('href',d.url)
-                $('#messages #course-center').data('courseObject',d)
-                $('#messages #course-center').data('courseNode',this)
-                $('#messages #category-list').empty().text(d.categoria)
-                $('#messages #category-list').data('category',d.parent)
-                var  taglist="";
-                // sin coma
-                for (var i=0; i<d.tags.length; i++){
-                taglist+= '<a href="#" data-tag="'+d.tags[i]+'">' +d.tags[i]+ '</a>'; 
-                }
-                $('#messages #tag-list').empty().html(taglist)
+            $('#messages').show().css('z-index','10');
+            //contenido
+            $('#messages #titulo span').empty().text(d.titulo)
+            $('#messages #course-link').attr('href',d.url)
+            $('#messages #course-center').data('courseObject',d)
+            $('#messages #course-center').data('courseNode',this)
+            $('#messages #category-list').empty().text(d.categoria)
+            $('#messages #category-list').data('category',d.parent)
+            var  taglist="";
+            // sin coma
+            for (var i=0; i<d.tags.length; i++){
+              taglist+= '<a href="#" data-tag="'+d.tags[i]+'">' +d.tags[i]+ '</a>'; 
+            }
+            $('#messages #tag-list').empty().html(taglist)
+
+            /****FECHA****/
+            if(d.fecha_inicio!=0){
+              $('#messages #fecha-inicio').text(d.fecha_inicio)
+              if(d.fecha_fin!=0){
+                $('#messages #fecha-fin').text(" - " + d.fecha_fin)
+              }else $('#messages #fecha-fin').text(" - permanente")
+            }
+            else{
+               $('#messages #fecha-inicio').text("próximamente")
+               $('#messages #fecha-fin').text("")
+            }
+            /***FECHA***/
         }
     });
 

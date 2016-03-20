@@ -16,7 +16,9 @@
 
 
 //caja de texto con info
-
+#canvas-container{
+	min-height: 0.9vh;
+}
 #messages {
   font-family: 'Roboto Condensed', sans-serif;
   background-attachment: fixed;
@@ -251,7 +253,7 @@ a#course-center{
 
 
 a:hover#course-link, a:hover#course-list{
-	background-color: rgba(0,255,0,1);
+	background-color: rgba(0,160,0,1);
 }
 
 #course-list{
@@ -279,6 +281,12 @@ a:hover#course-center{
 		margin-right: 0.5em;
 	}
 }
+#toggle a.help-btn{
+	margin-right: 0em;
+	i{
+		color: #ddd;
+	}
+}
 
 #toggle i{
 	color: #666;
@@ -288,6 +296,7 @@ a:hover#course-center{
 #toggle label{
 	font-weight: 300;
   	color: #999;
+  	font-size: 0.9em;
 }
 
 
@@ -334,8 +343,13 @@ a:hover#course-center{
 	 }
 }
 
-.help-btn{
-float: right;
+a.help-btn{
+	float: right;
+	i{
+		color: #ddd;
+	}
+
+
 }
 #mini-nav{
 	background-color: @verde-uned;
@@ -500,7 +514,12 @@ footer{
 	height: auto;
 	border: 1px solid #666;
 	border-radius: 0;
+	option{
+		background-color: #444;
+
+	}
 }
+
 
 // responsive classes
 
@@ -526,7 +545,7 @@ footer{
 	}
 }
 div#move-left a{
-	color: fade(@verde-uned,100%)
+	color: rgba(0,160,0,0.7);
 }
 @media screen and (max-width: 768px) {
 
@@ -570,4 +589,33 @@ div#move-left a{
 	}
 }
 
+#help-messages{
+	display: none;
+	
+	position: absolute;
+	top:200px;
+	z-index: 1000;	
+	width:100%;
+	
+	background-color: rgba(0,0,0,0.7);
+	
+	.inner{
+		padding:2em;
+	}
 
+	h2{
+		font-size: 1.5em;
+		color:white;
+		text-align: center;
+		text-transform: uppercase;
+		font-family: 'Roboto Condensed', sans-serif;
+	}
+
+	h3{
+		font-family: 'Roboto Condensed', sans-serif;
+		font-size: 1.1em;
+		color:#ccc;
+		text-align: center;
+		font-weight: lighter;
+	}	
+}

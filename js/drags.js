@@ -80,6 +80,7 @@ function zoomScrollCursosEnd() {
 
 function zoomScrollTags() {
   evento1=d3.event.sourceEvent;
+  /****** con la rueda del raton *****/
   if( d3.event.type=="zoom" && d3.event.sourceEvent instanceof WheelEvent ){      
       var lngth=tagsList.length;
       var incremento=d3.event.scale; // valor de la escala tras el "zoom de la rueda de ratón"
@@ -88,11 +89,11 @@ function zoomScrollTags() {
       if(incremento<1){
            scaleFunc = d3.scale.linear()
                     .domain([1, 0])
-                    .range([1, 5]);
+                    .range([1, 2]);
       }else{
            scaleFunc = d3.scale.linear()
                     .domain([2, 1])
-                    .range([-5, -1]);
+                    .range([-2, -1]);
       }
       var num_items=Math.round(scaleFunc(d3.event.scale))
       if(num_items<0) num_items=lngth+num_items; //con esto elijo si muevo hacia arriba o hacia abajo
@@ -111,7 +112,7 @@ function zoomScrollTags() {
        var incremento=0;
        if(d3.event.sourceEvent instanceof MouseEvent)  incremento=-d3.event.sourceEvent.movementY //mouse
        else incremento=previousPageY-d3.event.sourceEvent.touches[0].pageY //touch
-        incremento=incremento/30
+        incremento=incremento/40
 
       var num_items=(incremento)/step
       num_items=num_items>0?Math.ceil(num_items):Math.floor(num_items)

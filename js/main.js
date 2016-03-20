@@ -42,7 +42,7 @@ function setSizes(){
     areaPosition=130
 
     /**** mobile *****/
-    if(viewportWidth<769)
+    if(viewportWidth<=768)
         {
             viewmode="mobile"
             availableHeight=viewportHeight-60
@@ -57,7 +57,7 @@ function setSizes(){
             areaPosition=130
             translatePositionX=-tagRadius+20
         }
-        if(viewportWidth>768&&viewportWidth<1280){ //caso especial ipad modo portrait
+   if(viewportWidth>768&&viewportWidth<1200){ //dispositivos tamaño medio. Similar al tamalo grande
             viewmode_sub="middleSize"
     }
 }
@@ -197,7 +197,10 @@ function doeverything(){ //la funcion que hace todo
         if(d3.select(this).classed("clicked")==true){
             cursoCentric(d,this);
             clearTimeout(timerAutoRotate)
-        }else{ //
+        }else{ //            
+            if(mode=="zoomout" ){
+              areaCentric(d.parent)
+            }
             moveLeftIfNeeded();
             courseContainer.selectAll('.clicked')//.each(function(){ d3.select(this).on("click",null) } )
                .classed("clicked",false)  
@@ -336,12 +339,20 @@ $( document ).ready(function() {
   })
 
   $('#move-left a').on('click',function(e){
-    e.preventDefault(); 
-     myTranslate[0]=50;//casi a la mitad
-  myTranslate[1]=translatePositionY;
-  svg.transition().duration(1000).attr("transform",
-        "translate(" + myTranslate + ")" )    
-  $('#move-left').hide();
+     e.preventDefault(); 
+      
+    if(viewmode=="mobile"){     
+      myTranslate[0]=50;//casi a la mitad
+      myTranslate[1]=translatePositionY;
+      svg.transition().duration(1000).attr("transform",
+      "translate(" + myTranslate + ")" )    
+      $('#move-left').hide();
+    }
+    else if(viewmode_sub=="middleSize"){
+      zoomed()
+      $('#move-left').hide();
+    }
+  
   })
 
   $('#move-up a').on('touchstart', function(e) {
@@ -367,13 +378,13 @@ e.preventDefault();
         var myTag=$(this).data("tag");
         tagCentric(tagsDict[myTag],$('g.tag.tag-'+tagsDict[myTag].slug)[0])
         if(viewmode=="mobile") $('#messages').fadeOut();
-        
-
     })
+
   $('.help-btn').on('click', function(e){
         e.preventDefault();    
         console.log("btn clicked")
         $(this).toggleClass('checked')
+        //mostrar ayuda
         if($(this).hasClass('checked')){
           var p=$('.helphoverContainer').detach()
           p.insertAfter('.courseContainer');
@@ -388,8 +399,14 @@ e.preventDefault();
           $('.helpTagsCircle circle').fadeIn();
           $('.helpTagsCircle text, .helpAreaCircle text:not(.minitexto, .minitexto2), .helpCoursesCircle text').css('fill','#F0AD4E')
           $('.minitexto2').fadeIn();
-        }else{
+          if(viewmode=="mobile") {
+            $('#help-messages').show();
+            $('#help-messages').css('opacity',1)
+            $('.helpAreaCircle').hide();
+         }
+        }else{//ocultar ayuda
            $('.helphoverContainer').fadeOut();
+            if(viewmode=="mobile")  $('#help-messages').hide();
         }
     })
   $('.helphoverContainer').on('click', function(e){
@@ -485,16 +502,6 @@ function updateNodeStyleTagSelected(name, value) {
   };
 }
 
-function zoomed(){
-    if(viewmode=="mobile") {centerMobilePosition(); return;}
-  myZoom=1.3
-  myTranslate[0]=20;//casi a la mitad
-  myTranslate[1]=translatePositionY;
-  svg.transition().delay(400).duration(1000).attr("transform",
-        "translate(" + myTranslate + ")" +
-        "scale(" + myZoom + ")"
-    );
-}
 
 
 function tagCentric(tagObject,tagNode){
@@ -522,7 +529,9 @@ function tagCentric(tagObject,tagNode){
 
 function cursoCentric(_course,_coursedom){
     cleanTagSelections()
-    zoomed();
+    if(!(viewmode_sub=="middleSize"))
+      zoomed();
+
     mode="cursocentric"
     d3.select(_coursedom).classed("cursocentrico",true)
     $('select#area-select').val(_course.parent.slug)
@@ -553,7 +562,8 @@ function areaCentric(_d){
     }
     else mode="areacentric";
     
-
+    if(viewmode_sub=="middleSize")
+      $('#move-left').hide();
     cleanTagSelections();
     nodes = cluster.nodes(newRoot)     
     updateCoursesWithRotation(-(_d.x-90),1000);
@@ -573,9 +583,23 @@ function areaCentric(_d){
 
 }
 
+function zoomed(){
+    if(viewmode=="mobile") {centerMobilePosition(); return;}
+  myZoom=1.3
+
+  myTranslate[0]=40;//casi a la mitad
+  //if(viewmode_sub=="middleSize") myTranslate[0]=-100;
+  myTranslate[1]=translatePositionY;
+  svg.transition().delay(400).duration(1000).attr("transform",
+        "translate(" + myTranslate + ")" +
+        "scale(" + myZoom + ")"
+    );
+}
+
+
 function centerMobilePosition(){
     if(viewmode=="mobile"){ 
-        if(viewportWidth==768&& (viewportHeight>=900 && viewportHeight<1024) ){ //caso especial ipad. niapa
+        if(viewportWidth==768&& (viewportHeight>=900 && viewportHeight<1024) ){ //caso especial ipad vertical. niapa
 
         svg.transition().delay(100).duration(1000)
             .attr("transform", "translate(" + translatePositionX + "," + translatePositionY + "),"+"scale(" + 1.3 + ")"

@@ -28,8 +28,10 @@ function createNodeCursos(){
           if(d.y>0 && d.iscategory)
             d.y=areaPosition;
           if(  (d.x > 30 && d.x<150) ||  (d.x > 210 && d.x<330)  || ("iscategory" in d)  ) d.visible=true
-          else d.visible=false;         
+          else d.visible=false;       
+
         })
+        d3.selectAll("g.cat-home").each(function(d){d.visible=false}).style('display','none')
 
 
       //figuras de los cursos

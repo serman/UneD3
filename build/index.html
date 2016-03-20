@@ -22,7 +22,17 @@
 <!-- more page styles -->
 
 <link rel="stylesheet" href="unedd3.min.css"/>
-<!--- production 
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-52409851-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 
 
 </head>
@@ -35,20 +45,25 @@
 <div class="col-sm-2 col-xs-6"><img src="img/UNED_245_doble.png" alt="UNED" class="img-responsive"></div>
 <div class="col-md-1 col-xs-6 hidden-sm">&nbsp;</div>
 <div class="col-sm-3 hidden-xs">
-<p>La Universidad Nacional de Educación a Distancia y  Universia les dan la bienvenida a este nuevo sitio que pretende poner a disposición de toda la sociedad, los conocimientos que la Universidad genera e imparte en sus aulas para que puedan ser compartidos por otros interesados como Docentes, Académicos, Alumnos… etc.
+<p> Los nuevos cursos de UNED Abierta no siguen el viejo patrón según el 
+            cual hay un señor que habla y un montón de personillas toman notas: 
+            se trata de ayudar a que emerjan comunidades de investigación, 
+            grupos de afinidad intelectual y académica que se auto-organicen para 
+            desarrollar sus propios itinerarios de investigación y comunicación.
 </p></div>
 <div class="col-sm-3 hidden-xs"><p>
-Los Cursos del OCW de la UNED <strong>no requieren ninguna matrícula</strong>, son de acceso libre, <strong>no exigen pagos</strong> y no tienen fecha de inicio y fin. Dadas las características de este proyecto, la UNED no reconoce ni créditos ni ningún tipo de titulación de estos cursos. </p></div>
+ Por eso los cursos de UNED Abierta son gratuitos 
+            no requieren de titulaciones previas
+            suceden en red y se adaptan por entero a los tiempos y ritmos de cada investigadora
+            generan red y ofrecen la posibilidad de pasar de estudiante a tutor y de tutor a profesor </p></div>
 
 <div class="col-sm-3 col-xs-12">
-<ul>
-<li><a href="#" class="active">Inicio</a></li>
-<li><a href="#">Cursos</a></li>
-<li><a href="#">Ayuda</a></li>
-<li><a href="#">Sobre OCW</a></li>
-<li><a href="#">Noticias</a></li>
-
-</ul>
+        <ul>
+          <li><a href="/wp" class="active">Novedades</a></li>
+          <li><a href="/wp/acerca-de-uned-abierta/contactanos/">Ayuda</a></li>
+          <li><a href="/wp/acerca-de-uned-abierta/">Acerca de UNED Abierta</a></li>
+          <li><a href="/wp/category/noticias/">Noticias</a></li>
+        </ul>
 </div>
 </div>
 </div>
@@ -66,7 +81,7 @@ Los Cursos del OCW de la UNED <strong>no requieren ninguna matrícula</strong>, 
   <div class="container" id="viz-nav">
     <div class="row">
     
-    <div class="col-md-3 col-xs-6">
+    <div class="col-sm-3 col-xs-6">
     <div class="input-group">
     <div class="input-group-addon">Área</div>
      <select id="area-select"class="form-control">
@@ -86,7 +101,7 @@ Los Cursos del OCW de la UNED <strong>no requieren ninguna matrícula</strong>, 
     
     
     
-     <div class="col-md-3 col-xs-6">
+     <div class="col-sm-3 col-xs-6">
      
      <div class="input-group" id="topbar">
            <div class="input-group-addon"><i class="fa fa-search"></i></div>
@@ -104,21 +119,21 @@ Los Cursos del OCW de la UNED <strong>no requieren ninguna matrícula</strong>, 
        
        <label class="radio-inline">
          <input type="radio" id="inlineCheckbox3" name="tiempo" value="todos" checked> Todos
-       </label>
-       &nbsp; | 
+       </label> 
        <label class="radio-inline">
          <input type="radio" id="inlineCheckbox1" name="tiempo" value="ahora"> En Curso
        </label>
        <label class="radio-inline">
          <input type="radio" id="inlineCheckbox2" name="tiempo" value="futuro"> Disponibles en futuro
        </label>
-       
+       <a href="#" class="btn btn-xs help-btn "> <i class="fa fa-question-circle fa-2x"></i> </a>
        </div>
        
        
        <div class="col-xs-12 visible-xs-block">
        <a href="#" id="course-list" class="btn btn-xs" target="_blank"><i class="fa fa-arrow-circle-right"></i>
        Lista de Cursos vista tradicional </a>
+       <a href="#" class="btn btn-xs help-btn"> <i class="fa fa-question-circle fa-2x"></i> </a>
        </div>
        
      </div>
@@ -131,6 +146,16 @@ Los Cursos del OCW de la UNED <strong>no requieren ninguna matrícula</strong>, 
       
       <!-- Canvas -->
        <div id="canvas-container"></div>
+       <div id="help-messages">
+        <div class="inner"> 
+          <h2> Catálogo de cursos online de la UNED </h2>
+
+            <h3>Explora y encuentra los que te interesen seleccionando el curso, un área o un tag. 
+              <br/> Así podrás ver todos los cursos relacionados.</h3>
+           
+           <h3> Visita la página de un curso para inscribirte.</h3>
+        </div>
+       </div>
        
        <!-- message -->
        <div id="messages">
@@ -145,7 +170,7 @@ Los Cursos del OCW de la UNED <strong>no requieren ninguna matrícula</strong>, 
              
              <div class="fecha">
              <i class="fa fa-calendar-o"></i>
-             4 febrero 2016 / 30 junio 2016
+             <span id="fecha-inicio">4 febrero 2016</span>  <span id="fecha-fin">- 30 junio 2016</span>
              </div>
              
              <hr/>
@@ -195,16 +220,16 @@ Los Cursos del OCW de la UNED <strong>no requieren ninguna matrícula</strong>, 
   <div class="row">
   
   <div class="col-md-4">
-  <p><strong>UNED</strong> <i class="fa fa-creative-commons"></i> <span id="anno">2016</span><br/>
-  <a href="#">mail@uned.org</a>
-  </p>
+ <p><strong>UNED</strong> <i class="fa fa-creative-commons"></i> - UNED Abierta <span id="anno">2016</span><br/>
+            <span>soporte.coma</span><span>@</span><span>adm.uned.es</span>
+          </p>
   
   </div>
   
       
    <div class="col-md-8">
-   <p>Vero eros et accumsan et iusto odio dignissim qui blandit praesent. Minim veniam quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip. 
-   </p>
+   <p>Si deseas suscribirte a nuestro boletín de noticias, sigue las instrucciones de nuestra <a href="https://listserv.uned.es/mailman/listinfo/uned-coma">lista de distribución</a>. 
+         </p>
    </div>
    
   
@@ -220,6 +245,7 @@ Los Cursos del OCW de la UNED <strong>no requieren ninguna matrícula</strong>, 
  
  	<script src="libraries/defiant.min.js"></script>
   <script src="libraries/bootstrap.min.js"></script>
+  <script src="libraries/js.cookie.js"></script>
 
 
 <!--  unedd3 files -->

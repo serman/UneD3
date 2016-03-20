@@ -110,7 +110,7 @@ g.area text {
 .node {
   opacity: 0;
   font-family: 'Roboto Condensed', sans-serif;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 300;
   fill: #808080;
   cursor: pointer;
@@ -435,6 +435,7 @@ path.source-derecho.areacentricSelected {
 }
 .helpTagsCircle {
   opacity: 0;
+  display: none;
 }
 .helpTagsCircle circle {
   fill: rgba(255, 255, 255, 0.1);

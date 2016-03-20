@@ -38,9 +38,13 @@ function wrap(text, width) {
 function showHelpCircles(){
 
   var h1=helphoverContainer.append("g").classed("helpCoursesCircle",true)
-  if(initHelpTransition){
+  if(initHelpTransition){ //esto se ejecuta solo si hay que mostrar la transicion de ayuda de inicio
     helphoverContainer.style("display","inherit")
     h1.transition().delay(change_text_help2).duration(1000).style("opacity",1)
+    if(viewmode=="mobile"){  // en el caso de los móviles hay que mostrar otro mensje de ayuda
+      $('#help-messages').show();
+      d3.select('#help-messages').transition().delay(change_text_help3+2000).style("opacity",0).style("display","none")
+    }
   }
 
   h1.append("circle")
@@ -53,7 +57,7 @@ function showHelpCircles(){
 
     h1=svg.append("g").classed("helpTagsCircle",true);
     if(initHelpTransition){
-       h1.transition().delay(change_text_help3).duration(1000).style("opacity",1)
+       h1.transition().delay(change_text_help3).duration(1000).style("opacity",1).style("display","inherit")
        h1.transition().delay(change_text_help3+2000).duration(1000).style("opacity",0)
        h1.transition().delay(change_text_help3+3000).style("display","none")
     }
@@ -82,12 +86,10 @@ function showHelpCircles(){
       .classed("minitexto2",true)
       .attr('dy',60).text("Elige un curso, área o tag, para ver todos los cursos relacionados con él")
 
-     h1.append("text").attr("text-anchor","middle")
-      .classed("minitexto2",true)
-      .attr('dy',90).text("Cada curso pertenece a un área pero puede tener muchos tags asociados")
+     
       h1.append("text").attr("text-anchor","middle")
       .classed("minitexto2",true)
-      .attr('dy',130).text("Visita la página de un curso para inscribirte.")
+      .attr('dy',100).text("Visita la página de un curso para inscribirte.")
 }
 
 /**Returns true if you have to do transition*/
@@ -104,7 +106,6 @@ function cookieCheckTransition(){
 
   if(ntimes>HOWMANYTIMESBEFORENOTSHOWINGTRANSITION) return false;
   else return true;
-
 }
 
 function cleanTagSelections(){
@@ -218,7 +219,7 @@ function getRelatedCoursesCC(course){
   var relatedCourses1=[]
   var relatedCoursesSlug=[]
   for (var i=0; i<course.tags.length; i+=1){
-    var _tag=course.tags[i];
+    var _tag=course.tagsSlug[i];
      var cursostags=svg.selectAll(".node.tag-" + _tag);
      cursostags.each(function(d){ 
         if(d!=course)  {
